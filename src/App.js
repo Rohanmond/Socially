@@ -1,12 +1,9 @@
 import './App.css';
+import Nav from './components/Nav/Nav';
 import logo from './logo.png';
 
 function App() {
-  return (
-    <div className='App'>
-      <h1 className='text-3xl underline'>Hello world</h1>
-    </div>
-  );
+  return <div className='App'></div>;
 }
 
 export default App;
