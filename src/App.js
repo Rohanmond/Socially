@@ -1,10 +1,11 @@
 import './App.css';
-import { Nav } from './components';
+
+import { PostFeedPage, Profile } from './pages';
 
 function App() {
   return (
-    <div className='w-screen min-h-screen bg-background'>
-      <Nav />
+    <div className='min-h-screen bg-background'>
+      <Profile />
     </div>
   );
 }
