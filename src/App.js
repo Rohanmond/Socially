@@ -5,7 +5,7 @@ import { PostFeedPage, Profile } from './pages';
 function App() {
   return (
     <div className='min-h-screen bg-background'>
-      <Profile />
+      <PostFeedPage />
     </div>
   );
 }
