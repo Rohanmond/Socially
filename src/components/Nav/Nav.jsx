@@ -24,7 +24,7 @@ export const Nav = () => {
             <i className='ri-search-line'></i>
           </li>
           <li title='feed' className='cursor-pointer'>
-            <i class='ri-home-8-line'></i>
+            <i className='ri-home-8-line'></i>
           </li>
           <li title='follow' className='cursor-pointer'>
             <i className='ri-heart-line'></i>

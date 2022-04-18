@@ -126,11 +126,11 @@ export const PostFeedPage = () => {
               {/**Post footer */}
               <div className='flex gap-4 flex-grow py-1  items-center justify-evenly font-normal text-txt-secondary-color'>
                 <div className='flex items-center  cursor-pointer gap-1'>
-                  <i class='ri-heart-line'></i>
+                  <i className='ri-heart-line'></i>
                   <span>140 likes</span>
                 </div>
                 <div className='flex items-center cursor-pointer gap-1'>
-                  <i class='ri-chat-1-line'></i>
+                  <i className='ri-chat-1-line'></i>
                   <span>comments</span>
                 </div>
                 <div className='flex items-center cursor-pointer gap-1'>

@@ -1,11 +1,11 @@
 import './App.css';
 
-import { PostFeedPage, Profile } from './pages';
+import { Login, PostFeedPage, Profile, Signup } from './pages';
 
 function App() {
   return (
     <div className='min-h-screen bg-background'>
-      <PostFeedPage />
+      <Signup />
     </div>
   );
 }
