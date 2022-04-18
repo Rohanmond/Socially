@@ -1,6 +1,33 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useAuth } from '../../contexts';
 
 export const Signup = () => {
+  const { token, signupHandler } = useAuth();
+  const navigate = useNavigate();
+  const location = useLocation();
+  const [signupForm, setSignupForm] = useState({
+    firstName: '',
+    lastName: '',
+    email: '',
+    password: '',
+  });
+
+  useEffect(() => {
+    if (token) {
+      navigate(location.state.from.pathname || '/', { replace: true });
+    }
+  }, [token]);
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    signupHandler(
+      signupForm.email,
+      signupForm.password,
+      signupForm.firstName,
+      signupForm.lastName
+    );
+  };
+
   return (
     <div className='w-full min-h-screen flex flex-col bg-white'>
       <div className='py-6 sm:py-3  bg-indigo-100  flex justify-center'>
@@ -22,16 +49,21 @@ export const Signup = () => {
           Sign up
         </h2>
         <div className='mt-12'>
-          <form className='flex  flex-col '>
+          <form className='flex  flex-col' onSubmit={onSubmitHandler}>
             <div className='flex flex-grow  gap-8  '>
               <div className='justify-self-stretch flex-grow'>
                 <div className='text-sm font-bold text-gray-700 tracking-wide'>
                   First Name
                 </div>
                 <input
+                  value={signupForm.firstName}
+                  onChange={(e) =>
+                    setSignupForm({ ...signupForm, firstName: e.target.value })
+                  }
                   className='w-full text-lg p-2  border-b border-gray-300 focus:outline-none focus:border-indigo-500'
                   type='text'
                   placeholder='Mike'
+                  required
                 />
               </div>
               <div className='justify-self-stretch flex-grow'>
@@ -42,6 +74,11 @@ export const Signup = () => {
                   className='w-full text-lg p-2  border-b border-gray-300 focus:outline-none focus:border-indigo-500'
                   type='text'
                   placeholder='Ramdon'
+                  value={signupForm.lastName}
+                  onChange={(e) =>
+                    setSignupForm({ ...signupForm, lastName: e.target.value })
+                  }
+                  required
                 />
               </div>
             </div>
@@ -54,6 +91,11 @@ export const Signup = () => {
                 className='w-full text-lg p-2  border-b border-gray-300 focus:outline-none focus:border-indigo-500'
                 type='email'
                 placeholder='mike@gmail.com'
+                value={signupForm.email}
+                onChange={(e) =>
+                  setSignupForm({ ...signupForm, email: e.target.value })
+                }
+                required
               />
             </div>
             <div className='mt-8'>
@@ -66,6 +108,11 @@ export const Signup = () => {
                 className='w-full text-lg p-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500'
                 type='password'
                 placeholder='Enter your password'
+                value={signupForm.password}
+                onChange={(e) =>
+                  setSignupForm({ ...signupForm, password: e.target.value })
+                }
+                required
               />
             </div>
             <div className='mt-10 flex flex-col gap-4'>
@@ -73,22 +120,17 @@ export const Signup = () => {
                 className='bg-primary text-white p-3 sm:p-2 w-full rounded-full tracking-wide
                                   font-semibold font-display focus:outline-none focus:shadow-outline active:bg-blue-500
                                   shadow-lg'
+                type='submit'
               >
-                Log In
-              </button>
-              <button
-                className='bg-primary outline-primary text-white p-3 sm:p-2 w-full rounded-full tracking-wide
-                                  font-semibold font-display focus:outline-none focus:shadow-outline active:bg-blue-500
-                                  shadow-lg'
-              >
-                Log In With Test Credentials
+                Sign up
               </button>
             </div>
           </form>
           <div className='mt-12 sm:mt-8 mb-6 text-sm font-display font-semibold text-gray-700 text-center'>
-            Already having an account ?
+            Already having an account ?{' '}
             <Link
               to={'/login'}
+              replace={true}
               className='cursor-pointer text-indigo-600 hover:text-indigo-800'
             >
               Sign in

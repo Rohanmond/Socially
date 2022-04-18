@@ -5,7 +5,10 @@ export const Nav = () => {
   return (
     <nav className='w-full sticky top-0 min h-20 sm:h-18 left-0 right-0 leading-10 z-50 bg-nav-background shadow'>
       <div className='flex justify-between relative items-center p-4 sm:p-2  h-full'>
-        <div className='flex gap-2 items-center cursor-pointer'>
+        <div
+          onClick={() => navigate('/')}
+          className='flex gap-2 items-center cursor-pointer'
+        >
           <img
             className='h-12 sm:h-10 max-w-full align-middle'
             src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650084912/logo_tzzpf3.png'
