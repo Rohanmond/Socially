@@ -1,6 +1,21 @@
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
+import { useAuth } from '../../contexts';
 
 export const Login = () => {
+  const { loginHandler, token, user } = useAuth();
+  const location = useLocation();
+  const navigate = useNavigate();
+  console.log(loginHandler);
+  const onSubmitHandler = (e) => {
+    e.preventDefault();
+    loginHandler('rohan@gmail.com', '1234abcd');
+  };
+  useEffect(() => {
+    if (token) {
+      navigate(location.state.from.pathname || '/', { replace: true });
+    }
+  }, [token]);
   return (
     <div className='w-full min-h-screen flex flex-col bg-white'>
       <div className='py-6 bg-indigo-100  flex justify-center'>
@@ -22,7 +37,7 @@ export const Login = () => {
           Sign in
         </h2>
         <div className='mt-12'>
-          <form>
+          <form onSubmit={onSubmitHandler}>
             <div>
               <div className='text-sm font-bold text-gray-700 tracking-wide'>
                 Email Address
@@ -54,6 +69,7 @@ export const Login = () => {
                 Log In
               </button>
               <button
+                type='submit'
                 className='bg-primary outline-primary text-white p-3 sm:p-2 w-full rounded-full tracking-wide
                                 font-semibold font-display focus:outline-none focus:shadow-outline active:bg-blue-500
                                 shadow-lg'

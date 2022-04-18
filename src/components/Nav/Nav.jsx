@@ -1,4 +1,7 @@
+import { useNavigate } from 'react-router-dom';
+
 export const Nav = () => {
+  const navigate = useNavigate();
   return (
     <nav className='w-full sticky top-0 min h-20 sm:h-18 left-0 right-0 leading-10 z-50 bg-nav-background shadow'>
       <div className='flex justify-between relative items-center p-4 sm:p-2  h-full'>
@@ -32,6 +35,7 @@ export const Nav = () => {
 
           <li className='cursor-pointer'>
             <img
+              onClick={() => navigate('/profile')}
               className='w-12 h-12 rounded-full'
               src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650096757/1_vztwsr.jpg'
               alt='profile'
