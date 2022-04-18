@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+
 export const Signup = () => {
   return (
     <div className='w-full min-h-screen flex flex-col bg-white'>
@@ -85,9 +87,9 @@ export const Signup = () => {
           </form>
           <div className='mt-12 sm:mt-8 mb-6 text-sm font-display font-semibold text-gray-700 text-center'>
             Don't have an account ?{' '}
-            <a className='cursor-pointer text-indigo-600 hover:text-indigo-800'>
+            <Link className='cursor-pointer text-indigo-600 hover:text-indigo-800'>
               Sign up
-            </a>
+            </Link>
           </div>
         </div>
       </div>
