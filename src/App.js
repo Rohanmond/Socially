@@ -1,4 +1,4 @@
-import { Route, Router, Routes } from 'react-router-dom';
+import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { MockAPI } from './components';
 
@@ -12,6 +12,7 @@ function App() {
         <Route path='/profile' element={<Profile />} />
         <Route path='/login' element={<Login />} />
         <Route path='/signup' element={<Signup />} />
+        <Route path='/mockman' element={<MockAPI />} />
       </Routes>
     </div>
   );
