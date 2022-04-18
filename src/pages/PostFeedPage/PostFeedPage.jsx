@@ -23,11 +23,11 @@ export const PostFeedPage = () => {
                       src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650096757/1_vztwsr.jpg'
                       alt=''
                     />
-                    <textarea
-                      className='grow resize-none focus:outline-none font-light text-txt-secondary-color'
+                    <input
+                      className='grow  focus:outline-none font-light text-txt-secondary-color'
                       placeholder='Write something here'
                       type='text'
-                    ></textarea>
+                    />
                   </div>
                   <hr className='font-extralight text-secondary' />
                   <ul className='flex gap-4 font-light items-center'>

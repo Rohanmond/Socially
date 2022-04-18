@@ -32,15 +32,15 @@ export const Profile = () => {
 
             <div className='flex justify-evenly items-center  bg-nav-background gap-10 rounded-lg drop-shadow-2xl  p-4 sm:p-3 sm:text-sm'>
               <div className='cursor-pointer flex gap-1 text-primary'>
-                <i class='ri-home-heart-line'></i>
+                <i className='ri-home-heart-line'></i>
                 <p>POSTS</p>
               </div>
               <div className='cursor-pointer flex gap-1'>
-                <i class='ri-bookmark-3-line'></i>
+                <i className='ri-bookmark-3-line'></i>
                 <p>SAVED</p>
               </div>
               <div className='cursor-pointer flex gap-1'>
-                <i class='ri-heart-2-line'></i>
+                <i className='ri-heart-2-line'></i>
                 <p>FOLLOWERS</p>
               </div>
             </div>
@@ -79,11 +79,11 @@ export const Profile = () => {
               {/**Post footer */}
               <div className='flex gap-4 flex-grow py-1  items-center justify-evenly font-normal text-txt-secondary-color'>
                 <div className='flex items-center  cursor-pointer gap-1'>
-                  <i class='ri-heart-line'></i>
+                  <i className='ri-heart-line'></i>
                   <span>140 likes</span>
                 </div>
                 <div className='flex items-center cursor-pointer gap-1'>
-                  <i class='ri-chat-1-line'></i>
+                  <i className='ri-chat-1-line'></i>
                   <span>comments</span>
                 </div>
                 <div className='flex items-center cursor-pointer gap-1'>

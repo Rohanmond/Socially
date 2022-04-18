@@ -86,9 +86,12 @@ export const Signup = () => {
             </div>
           </form>
           <div className='mt-12 sm:mt-8 mb-6 text-sm font-display font-semibold text-gray-700 text-center'>
-            Don't have an account ?{' '}
-            <Link className='cursor-pointer text-indigo-600 hover:text-indigo-800'>
-              Sign up
+            Already having an account ?
+            <Link
+              to={'/login'}
+              className='cursor-pointer text-indigo-600 hover:text-indigo-800'
+            >
+              Sign in
             </Link>
           </div>
         </div>
