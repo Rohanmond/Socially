@@ -21,7 +21,7 @@ export const PostFeedPage = () => {
                     <img
                       className='h-14 w-14 rounded-full'
                       src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650096757/1_vztwsr.jpg'
-                      alt=''
+                      alt='profile-img'
                     />
                     <input
                       className='grow  focus:outline-none font-light text-txt-secondary-color'
@@ -34,7 +34,7 @@ export const PostFeedPage = () => {
                     <li className='flex items-center gap-3 bg-secondary-background py-2 px-3 rounded-md cursor-pointer'>
                       <img
                         src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650190023/07_dffvl5.png'
-                        alt=''
+                        alt='phot-video'
                       />
                       <p className='text-primary text-sm font-semibold'>
                         Photo/Video
@@ -43,7 +43,7 @@ export const PostFeedPage = () => {
                     <li className='flex items-center gap-3 bg-secondary-background py-2 px-3 rounded-md cursor-pointer'>
                       <img
                         src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650190352/08_xnw23j.png'
-                        alt=''
+                        alt='tag-friend'
                       />
                       <p className='text-primary text-sm font-semibold'>
                         Tag Friend
@@ -98,7 +98,7 @@ export const PostFeedPage = () => {
                 <img
                   className='rounded-full h-12 w-12'
                   src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650191393/01_jxbjlo.jpg'
-                  alt=''
+                  alt='post-hero'
                 />
                 <div className='flex justify-between flex-grow'>
                   <div className='flex flex-col'>
@@ -120,7 +120,7 @@ export const PostFeedPage = () => {
                 <img
                   className='rounded-lg'
                   src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650194819/1_erzjab.jpg'
-                  alt=''
+                  alt='post-details'
                 />
               </div>
               {/**Post footer */}
@@ -145,7 +145,7 @@ export const PostFeedPage = () => {
                   <img
                     className='rounded-full w-9 h-9 mt-1'
                     src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650205531/02_zqttxd.jpg'
-                    alt=''
+                    alt='comment-profile-pic'
                   />
                   <div>
                     <p className='font-normal'>Monty Carlo</p>
@@ -167,7 +167,7 @@ export const PostFeedPage = () => {
                   <img
                     className='rounded-full w-9 h-9 mt-1'
                     src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650096757/1_vztwsr.jpg'
-                    alt=''
+                    alt='comment-profile-pic'
                   />
                   <div>
                     <p className='font-normal'>Monty Carlo</p>
@@ -189,7 +189,7 @@ export const PostFeedPage = () => {
                   <img
                     className='rounded-full w-9 h-9 mt-1'
                     src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650191393/01_jxbjlo.jpg'
-                    alt=''
+                    alt='comment-profile-pic'
                   />
                   <div>
                     <p className='font-normal'>Monty Carlo</p>

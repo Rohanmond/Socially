@@ -14,7 +14,7 @@ export const Profile = () => {
               <img
                 className='h-40 w-40 sm:h-24 sm:w-24  '
                 src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650218517/11_s7w5qi.png'
-                alt=''
+                alt='profile'
               />
 
               <div className=' flex flex-col justify-center items-center gap-5 sm:gap-2'>
@@ -51,7 +51,7 @@ export const Profile = () => {
                 <img
                   className='rounded-full h-12 w-12'
                   src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650191393/01_jxbjlo.jpg'
-                  alt=''
+                  alt='post-header'
                 />
                 <div className='flex justify-between flex-grow'>
                   <div className='flex flex-col'>
@@ -73,7 +73,7 @@ export const Profile = () => {
                 <img
                   className='rounded-lg'
                   src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650194819/1_erzjab.jpg'
-                  alt=''
+                  alt='post-details'
                 />
               </div>
               {/**Post footer */}
@@ -98,7 +98,7 @@ export const Profile = () => {
                   <img
                     className='rounded-full w-9 h-9 mt-1'
                     src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650205531/02_zqttxd.jpg'
-                    alt=''
+                    alt='profile-comment'
                   />
                   <div>
                     <p className='font-normal'>Monty Carlo</p>
@@ -120,7 +120,7 @@ export const Profile = () => {
                   <img
                     className='rounded-full w-9 h-9 mt-1'
                     src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650096757/1_vztwsr.jpg'
-                    alt=''
+                    alt='profile-comment'
                   />
                   <div>
                     <p className='font-normal'>Monty Carlo</p>
@@ -142,7 +142,7 @@ export const Profile = () => {
                   <img
                     className='rounded-full w-9 h-9 mt-1'
                     src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650191393/01_jxbjlo.jpg'
-                    alt=''
+                    alt='profile-comment'
                   />
                   <div>
                     <p className='font-normal'>Monty Carlo</p>

@@ -6,7 +6,7 @@ export const Nav = () => {
           <img
             className='h-12 sm:h-10 max-w-full align-middle'
             src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650084912/logo_tzzpf3.png'
-            alt=''
+            alt='hero'
           />
           <span className='text-3xl sm:hidden'>Socially</span>
         </div>
@@ -34,7 +34,7 @@ export const Nav = () => {
             <img
               className='w-12 h-12 rounded-full'
               src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650096757/1_vztwsr.jpg'
-              alt=''
+              alt='profile'
             />
           </li>
         </ul>

@@ -9,7 +9,7 @@ export const Signup = () => {
             <img
               className='w-12 h-12'
               src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650084912/logo_tzzpf3.png'
-              alt=''
+              alt='hero'
             />
           </div>
           <div className='text-2xl text-indigo-800 tracking-wide ml-2 font-semibold'>
