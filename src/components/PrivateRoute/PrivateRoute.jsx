@@ -1,9 +1,9 @@
+import { useSelector } from 'react-redux';
 import { Navigate, useLocation } from 'react-router-dom';
-import { useAuth } from '../../contexts';
 
 export const PrivateRoute = ({ children }) => {
   const location = useLocation();
-  const { token } = useAuth();
+  const { token } = useSelector((store) => store.authentication);
   return token ? (
     children
   ) : (

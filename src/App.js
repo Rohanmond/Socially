@@ -1,8 +1,7 @@
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import { MockAPI, PrivateRoute } from './components';
-
-import { Login, PostFeedPage, Profile, Signup } from './pages';
+import { Login, PostFeedPage, Profile, Signup } from './features';
 
 function App() {
   return (

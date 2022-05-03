@@ -13,7 +13,6 @@ export const signUpService = async ({
   firstName,
   lastName,
 }) => {
-  console.log('services', email, firstName, lastName);
   return axios.post('/api/auth/signup', {
     email,
     password,
