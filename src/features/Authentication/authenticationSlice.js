@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
 import { loginService, signUpService } from '../../Services/services';
+import { ToastHandler, ToastType } from '../../utils/toastUtils';
 
 const initialState = {
   token: JSON.parse(localStorage.getItem('loginItems'))?.token,
@@ -65,7 +66,7 @@ const authenticationSlice = createSlice({
     },
     [loginHandler.rejected]: (state, action) => {
       state.isLoading = false;
-      console.log(action);
+      ToastHandler(ToastType.Error, action.payload);
     },
     [signupHandler.pending]: (state) => {
       state.isLoading = true;
@@ -84,7 +85,7 @@ const authenticationSlice = createSlice({
     },
     [signupHandler.rejected]: (state, action) => {
       state.isLoading = false;
-      console.log(action);
+      ToastHandler(ToastType.Error, action.payload);
     },
   },
 });
