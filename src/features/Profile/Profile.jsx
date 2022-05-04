@@ -1,6 +1,10 @@
+import { useDispatch } from 'react-redux';
 import { Nav } from '../../components';
+import { logoutHandler } from '../Authentication/authenticationSlice';
 
 export const Profile = () => {
+  const dispatch = useDispatch();
+
   return (
     <>
       <Nav />
@@ -24,7 +28,10 @@ export const Profile = () => {
                   <p>230 followers</p>
                   <p>658 following</p>
                 </div>
-                <button className='text-white text-base  sm:text-xs bg-red-500 py-1 px-3 rounded-md active:bg-red-600'>
+                <button
+                  onClick={() => dispatch(logoutHandler())}
+                  className='text-white text-base  sm:text-xs bg-red-500 py-1 px-3 rounded-md active:bg-red-600'
+                >
                   Logout
                 </button>
               </div>
