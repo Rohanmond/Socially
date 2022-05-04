@@ -22,7 +22,14 @@ export const Profile = () => {
               />
 
               <div className=' flex flex-col justify-center items-center gap-5 sm:gap-2'>
-                <p className='text-3xl  sm:text-xl text-center'>Lorem Ipsum</p>
+                <div className='flex  items-center gap-2'>
+                  <p className='text-3xl  sm:text-xl text-center'>
+                    Lorem Ipsum
+                  </p>
+                  <button className='py-1 px-2 ring-1 rounded-md hover:bg-secondary-background text-sm'>
+                    Edit profile
+                  </button>
+                </div>
                 <div className='flex gap-2   text-sm sm:text-xs'>
                   <p>0 posts</p>
                   <p>230 followers</p>
