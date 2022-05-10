@@ -12,14 +12,8 @@ export const users = [
     password: '1234abcd',
     createdAt: formatDate(),
     updatedAt: formatDate(),
-  },
-  {
-    _id: 'asfdfdfsa',
-    firstName: 'John',
-    lastName: 'Doe',
-    email: 'john@gmail.com',
-    password: '1234abcd',
-    createdAt: formatDate(),
-    updatedAt: formatDate(),
+    pic: 'https://res.cloudinary.com/donqbxlnc/image/upload/v1651664931/avatar-1577909_960_720_cl1ooh.png',
+    bio: 'Aspiring Software Developer',
+    username: 'mondalrohan108',
   },
 ];

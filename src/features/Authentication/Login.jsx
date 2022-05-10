@@ -47,7 +47,7 @@ export const Login = () => {
   }, [token]);
 
   return (
-    <div className='w-full min-h-screen flex  flex-col bg-white'>
+    <div className='w-full  min-h-screen flex  flex-col bg-white'>
       <div className='py-6 bg-indigo-100  flex justify-center'>
         <div className='cursor-pointer flex items-center justify-center'>
           <div>

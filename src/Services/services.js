@@ -18,5 +18,8 @@ export const signUpService = async ({
     password,
     firstName,
     lastName,
+    username: `${lastName.toLowerCase()}${firstName.toLowerCase()}`,
+    bio: 'Lorem ipsum, dolor sit amet consectetur adipisicing elit.',
+    pic: 'https://res.cloudinary.com/donqbxlnc/image/upload/v1651664931/avatar-1577909_960_720_cl1ooh.png',
   });
 };
