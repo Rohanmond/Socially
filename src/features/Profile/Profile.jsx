@@ -1,12 +1,19 @@
-import { useDispatch } from 'react-redux';
+import { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Nav } from '../../components';
 import { logoutHandler } from '../Authentication/authenticationSlice';
+import { ProfileModal } from './components/ProfileModal/ProfileModal';
 
 export const Profile = () => {
   const dispatch = useDispatch();
-
+  const [showProfileModal, setShowProfileModal] = useState(false);
+  const { user } = useSelector((store) => store.authentication);
+  console.log(user);
   return (
     <>
+      {showProfileModal ? (
+        <ProfileModal setShowProfileModal={setShowProfileModal} />
+      ) : null}
       <Nav />
       <main className='p-4'>
         {/*divider */}
@@ -16,13 +23,45 @@ export const Profile = () => {
             {/* profile */}
             <div className='flex justify-evenly items-center  bg-nav-background gap-10 rounded-lg drop-shadow-2xl  p-5'>
               <img
-                className='h-40 w-40 sm:h-24 sm:w-24  '
-                src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650218517/11_s7w5qi.png'
+                className='h-40 object-cover w-40 sm:h-24 sm:w-24 rounded-full'
+                src={user?.pic}
                 alt='profile'
               />
 
-              <div className=' flex flex-col justify-center items-center gap-5 sm:gap-2'>
-                <p className='text-3xl  sm:text-xl text-center'>Lorem Ipsum</p>
+              <div className=' flex flex-col justify-center items-center gap-4 sm:gap-2'>
+                <div className='flex  items-center gap-2'>
+                  <p className='text-3xl  sm:text-xl text-center'>
+                    {user?.firstName} {user?.lastName}
+                  </p>
+                  <button
+                    onClick={() => setShowProfileModal(true)}
+                    className='py-1 px-2 ring-1 rounded-md hover:bg-secondary-background text-sm'
+                  >
+                    Edit profile
+                  </button>
+                </div>
+                <div className='flex gap-1 text-sm sm:text-xs'>
+                  <p>@{user?.userHandler}</p>
+                </div>
+                {user?.bio ? (
+                  <div className='flex gap-2 text-sm sm:text-xs'>
+                    <p>
+                      <span>{user?.bio}</span>
+                    </p>
+                  </div>
+                ) : null}
+                {user?.link ? (
+                  <div className='flex gap-2 text-sm sm:text-xs'>
+                    <a
+                      className='text-blue-500'
+                      href={`https://${user?.link}`}
+                      rel='noreferrer'
+                      target={'_blank'}
+                    >
+                      {user?.link}
+                    </a>
+                  </div>
+                ) : null}
                 <div className='flex gap-2   text-sm sm:text-xs'>
                   <p>0 posts</p>
                   <p>230 followers</p>

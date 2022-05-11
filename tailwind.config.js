@@ -11,6 +11,7 @@ module.exports = {
       'txt-color': '#000000',
       'txt-secondary-color': '#64748b',
       'txt-hover-color': '#94a3b8',
+      'background-dim': 'rgb(0,0,0,0.5)',
       ...colors,
     },
 

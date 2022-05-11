@@ -48,7 +48,14 @@ export const Signup = () => {
       setSignupFormError(newFormError);
       return;
     }
-    dispatch(signupHandler(signupForm));
+    dispatch(
+      signupHandler({
+        username: signupForm.email,
+        password: signupForm.password,
+        firstName: signupForm.firstName,
+        lastName: signupForm.lastName,
+      })
+    );
   };
 
   return (

@@ -38,7 +38,12 @@ export const Login = () => {
       setLoginInputError(newFormError);
       return;
     }
-    dipatch(loginHandler(loginInput));
+    dipatch(
+      loginHandler({
+        username: loginInput.email,
+        password: loginInput.password,
+      })
+    );
   };
   useEffect(() => {
     if (token) {
@@ -47,7 +52,7 @@ export const Login = () => {
   }, [token]);
 
   return (
-    <div className='w-full min-h-screen flex  flex-col bg-white'>
+    <div className='w-full  min-h-screen flex  flex-col bg-white'>
       <div className='py-6 bg-indigo-100  flex justify-center'>
         <div className='cursor-pointer flex items-center justify-center'>
           <div>
