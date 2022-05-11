@@ -89,7 +89,7 @@ export const ProfileModal = ({ setShowProfileModal }) => {
               Link
             </p>
             <input
-              className='flex-1 focus:outline-none'
+              className='flex-1 border border-solid border-txt-secondary-color rounded-md px-2 focus:outline-none'
               value={userData.link}
               onChange={(e) =>
                 setUserData({ ...userData, link: e.target.value })
