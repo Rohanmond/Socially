@@ -42,7 +42,7 @@ export const Nav = () => {
           <li className='cursor-pointer'>
             <img
               onClick={() => navigate('/profile')}
-              className='w-12 h-12 rounded-full'
+              className='w-12 h-12 object-cover rounded-full'
               src={user?.pic}
               alt='profile'
             />

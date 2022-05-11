@@ -23,7 +23,7 @@ export const Profile = () => {
             {/* profile */}
             <div className='flex justify-evenly items-center  bg-nav-background gap-10 rounded-lg drop-shadow-2xl  p-5'>
               <img
-                className='h-40 w-40 sm:h-24 sm:w-24 rounded-full'
+                className='h-40 object-cover w-40 sm:h-24 sm:w-24 rounded-full'
                 src={user?.pic}
                 alt='profile'
               />
