@@ -2,13 +2,13 @@ import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Nav } from '../../components';
 import { logoutHandler } from '../Authentication/authenticationSlice';
-import { ProfileModal } from './ProfileModal/ProfileModal';
+import { ProfileModal } from './components/ProfileModal/ProfileModal';
 
 export const Profile = () => {
   const dispatch = useDispatch();
   const [showProfileModal, setShowProfileModal] = useState(false);
   const { user } = useSelector((store) => store.authentication);
-
+  console.log(user);
   return (
     <>
       {showProfileModal ? (
@@ -41,13 +41,27 @@ export const Profile = () => {
                   </button>
                 </div>
                 <div className='flex gap-1 text-sm sm:text-xs'>
-                  <p>@{user?.username}</p>
+                  <p>@{user?.userHandler}</p>
                 </div>
-                <div className='flex gap-2 text-sm sm:text-xs'>
-                  <p>
-                    <span>{user?.bio}</span>
-                  </p>
-                </div>
+                {user?.bio ? (
+                  <div className='flex gap-2 text-sm sm:text-xs'>
+                    <p>
+                      <span>{user?.bio}</span>
+                    </p>
+                  </div>
+                ) : null}
+                {user?.link ? (
+                  <div className='flex gap-2 text-sm sm:text-xs'>
+                    <a
+                      className='text-blue-500'
+                      href={`https://${user?.link}`}
+                      rel='noreferrer'
+                      target={'_blank'}
+                    >
+                      {user?.link}
+                    </a>
+                  </div>
+                ) : null}
                 <div className='flex gap-2   text-sm sm:text-xs'>
                   <p>0 posts</p>
                   <p>230 followers</p>

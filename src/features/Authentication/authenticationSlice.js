@@ -1,6 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 
-import { loginService, signUpService } from '../../Services/services';
+import {
+  loginService,
+  signUpService,
+  userUpdateService,
+} from '../../Services/services';
 import { ToastHandler, ToastType } from '../../utils/toastUtils';
 
 const initialState = {
@@ -11,9 +15,9 @@ const initialState = {
 
 export const loginHandler = createAsyncThunk(
   'authentication/loginHandler',
-  async ({ email, password }, thunkAPI) => {
+  async ({ username, password }, thunkAPI) => {
     try {
-      const response = await loginService({ email, password });
+      const response = await loginService({ username, password });
       return response.data;
     } catch (err) {
       return thunkAPI.rejectWithValue('username or password is incorrect');
@@ -23,10 +27,10 @@ export const loginHandler = createAsyncThunk(
 
 export const signupHandler = createAsyncThunk(
   'authentication/signupHandler',
-  async ({ email, password, firstName, lastName }, thunkAPI) => {
+  async ({ username, password, firstName, lastName }, thunkAPI) => {
     try {
       const response = await signUpService({
-        email,
+        username,
         password,
         firstName,
         lastName,
@@ -34,6 +38,24 @@ export const signupHandler = createAsyncThunk(
       return response.data;
     } catch (err) {
       return thunkAPI.rejectWithValue('Email already exist');
+    }
+  }
+);
+
+export const userUpdateHandler = createAsyncThunk(
+  'authentication/userUpdateHandler',
+  async ({ userData, token }, thunkAPI) => {
+    try {
+      const response = await userUpdateService({
+        userData,
+        encodedToken: token,
+      });
+      return response.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(
+        'There is some error while updating user',
+        err
+      );
     }
   }
 );
@@ -84,6 +106,21 @@ const authenticationSlice = createSlice({
       );
     },
     [signupHandler.rejected]: (state, action) => {
+      state.isLoading = false;
+      ToastHandler(ToastType.Error, action.payload);
+    },
+    [userUpdateHandler.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [userUpdateHandler.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.user = action.payload.user;
+      localStorage.setItem(
+        'loginItems',
+        JSON.stringify({ token: state.token, user: action.payload.user })
+      );
+    },
+    [userUpdateHandler.rejected]: (state, action) => {
       state.isLoading = false;
       ToastHandler(ToastType.Error, action.payload);
     },

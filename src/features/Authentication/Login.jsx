@@ -38,7 +38,12 @@ export const Login = () => {
       setLoginInputError(newFormError);
       return;
     }
-    dipatch(loginHandler(loginInput));
+    dipatch(
+      loginHandler({
+        username: loginInput.email,
+        password: loginInput.password,
+      })
+    );
   };
   useEffect(() => {
     if (token) {
