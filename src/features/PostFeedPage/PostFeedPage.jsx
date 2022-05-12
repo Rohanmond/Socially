@@ -1,13 +1,25 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Nav } from '../../components';
 import { useOutsideClickHandler } from '../../custom-hooks';
+import PostFeedCard from './components/PostFeedCard/PostFeedCard';
+import { getAllPosts } from './PostsSlice';
 
 export const PostFeedPage = () => {
   const { user } = useSelector((store) => store.authentication);
   const emojiContainerRef = useRef();
   const { resetMenu } = useOutsideClickHandler(emojiContainerRef);
   const [showEmojis, setShowEmojis] = useState(false);
+  const { allPosts } = useSelector((store) => store.posts);
+  const [postInputForm, setPostInputForm] = useState({
+    input: '',
+    pic: '',
+  });
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getAllPosts());
+  }, []);
 
   useEffect(() => {
     if (resetMenu) setShowEmojis(false);
@@ -40,7 +52,8 @@ export const PostFeedPage = () => {
     '😭',
     '🥶',
   ];
-  console.log(user);
+  console.log(user, 'user');
+  console.log(allPosts, 'allPosts');
   return (
     <>
       <Nav />
@@ -66,16 +79,24 @@ export const PostFeedPage = () => {
                     <input
                       className='grow focus:outline-none font-light text-txt-secondary-color'
                       placeholder='Write something here'
+                      value={postInputForm.input}
+                      onChange={(e) =>
+                        setPostInputForm({
+                          ...postInputForm,
+                          input: e.target.value,
+                        })
+                      }
                       type='text'
                     />
                   </div>
+                  {postInputForm.pic ? <img src='' alt='' /> : null}
                   <hr className='font-extralight text-secondary' />
                   <ul className='flex gap-4 font-light items-center'>
                     <li className='flex items-center gap-3 bg-secondary-background py-2 px-3 rounded-md cursor-pointer'>
                       <img
                         className='h-6 w-6'
                         src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650190023/07_dffvl5.png'
-                        alt='phot-video'
+                        alt='phot'
                       />
                       <p className='text-primary text-sm font-semibold'>
                         Photo/GIF
@@ -85,8 +106,18 @@ export const PostFeedPage = () => {
                       onClick={(e) => {
                         setShowEmojis(true);
                         console.log(e);
+                        if (
+                          e.target.childNodes.length === 1 &&
+                          e.target.innerText !== 'Emojis'
+                        ) {
+                          setPostInputForm({
+                            ...postInputForm,
+                            input: postInputForm.input + e.target.innerText,
+                          });
+                          setShowEmojis(false);
+                        }
                       }}
-                      className='relative  flex items-center gap-3 bg-secondary-background py-2 px-3 rounded-md cursor-pointer'
+                      className='relative flex items-center gap-3 bg-secondary-background py-2 px-3 rounded-md cursor-pointer'
                     >
                       <img
                         className='h-6 w-6'
@@ -117,7 +148,12 @@ export const PostFeedPage = () => {
                   </ul>
                 </div>
               </div>
-              <button className='mb-4 mx-4 p-2 bg-primary active:bg-blue-500 text-white rounded-lg'>
+              <button
+                disabled={postInputForm.input ? false : true}
+                className={`mb-4 mx-4 p-2 bg-primary active:bg-blue-500 text-white rounded-lg ${
+                  postInputForm.input ? '' : 'cursor-not-allowed'
+                }`}
+              >
                 Post
               </button>
             </div>
@@ -157,6 +193,11 @@ export const PostFeedPage = () => {
               </button>
             </div>
             {/**Post-feed */}
+            <div className='flex flex-col gap-4'>
+              {allPosts.map((el) => {
+                return <PostFeedCard postData={el} />;
+              })}
+            </div>
             {/* <div className='flex flex-col gap-4 bg-nav-background rounded-lg drop-shadow-2xl p-5'>
               {/** post header }
               <div className='flex gap-4  flex-grow'>
