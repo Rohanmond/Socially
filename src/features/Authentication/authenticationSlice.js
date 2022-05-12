@@ -1,10 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-
 import {
   loginService,
   signUpService,
   userUpdateService,
-} from '../../Services/services';
+} from '../../Services/authServices';
+
 import { ToastHandler, ToastType } from '../../utils/toastUtils';
 
 const initialState = {

@@ -23,6 +23,7 @@ export const ProfileModal = ({ setShowProfileModal }) => {
 
   const onFileChange = async (e) => {
     const file = e.target.files[0];
+    console.log(file);
     const toBase64 = (file) =>
       new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -34,10 +35,6 @@ export const ProfileModal = ({ setShowProfileModal }) => {
     let base64File = await toBase64(file);
     setUserData({ ...userData, pic: base64File });
   };
-  // const updateImageHandler = (e) => {
-  //   const file = e.target.files[0];
-  //   setUserData({ ...userData, pic: file });
-  // };
 
   console.log(userData.pic, 'file');
   return (

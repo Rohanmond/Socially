@@ -7,8 +7,6 @@ import { MockAPI, PrivateRoute } from './components';
 import { Login, PostFeedPage, Profile, Signup } from './features';
 
 function App() {
-  const { user } = useSelector((store) => store.authentication);
-  console.log(user);
   return (
     <div className='min-h-screen bg-background'>
       <ToastContainer

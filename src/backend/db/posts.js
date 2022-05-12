@@ -1,5 +1,5 @@
-import { v4 as uuid } from "uuid";
-import { formatDate } from "../utils/authUtils";
+import { v4 as uuid } from 'uuid';
+import { formatDate } from '../utils/authUtils';
 
 /**
  * Posts can be added here.
@@ -9,27 +9,31 @@ import { formatDate } from "../utils/authUtils";
 export const posts = [
   {
     _id: uuid(),
+    pic: 'https://res.cloudinary.com/donqbxlnc/image/upload/v1652342774/photo-1652298926911-9d628f82e7de_xnxfvn.jpg',
     content:
-      "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam veniam, voluptates illum repellendus vitae blanditiis voluptatum omnis reprehenderit corrupti officia.',
     likes: {
       likeCount: 0,
       likedBy: [],
       dislikedBy: [],
     },
-    username: "adarshbalika",
+    comments: [],
+    userId: 'asassdafdgdk',
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },
   {
     _id: uuid(),
     content:
-      "At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor repellendus. Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis voluptatibus maiores alias consequatur aut perferendis doloribus asperiores repellat.",
+      'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas, esse.',
+    pic: 'https://res.cloudinary.com/donqbxlnc/image/upload/v1652342874/photo-1652335223113-9919b4e052d5_ecguab.jpg',
     likes: {
       likeCount: 0,
       likedBy: [],
       dislikedBy: [],
     },
-    username: "shubhamsoni",
+    comments: [],
+    userId: 'asassdafdgdk',
     createdAt: formatDate(),
     updatedAt: formatDate(),
   },

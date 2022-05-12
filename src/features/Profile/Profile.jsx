@@ -21,7 +21,7 @@ export const Profile = () => {
           {/* profile container */}
           <div className='flex flex-col w-3/5 md:w-4/5 sm:w-full  gap-4 '>
             {/* profile */}
-            <div className='flex justify-evenly items-center  bg-nav-background gap-10 rounded-lg drop-shadow-2xl  p-5'>
+            <div className='flex justify-evenly items-center  bg-nav-background gap-10 sm:gap-6 rounded-lg drop-shadow-2xl  p-5'>
               <img
                 className='h-40 object-cover w-40 sm:h-24 sm:w-24 rounded-full'
                 src={user?.pic}
@@ -30,12 +30,12 @@ export const Profile = () => {
 
               <div className=' flex flex-col justify-center items-center gap-4 sm:gap-2'>
                 <div className='flex  items-center gap-2'>
-                  <p className='text-3xl  sm:text-xl text-center'>
+                  <p className='text-3xl  sm:text-base text-center'>
                     {user?.firstName} {user?.lastName}
                   </p>
                   <button
                     onClick={() => setShowProfileModal(true)}
-                    className='py-1 px-2 ring-1 rounded-md hover:bg-secondary-background text-sm'
+                    className='py-1 px-2 ring-1 rounded-md hover:bg-secondary-background text-sm sm:text-xs'
                   >
                     Edit profile
                   </button>
@@ -62,7 +62,7 @@ export const Profile = () => {
                     </a>
                   </div>
                 ) : null}
-                <div className='flex gap-2   text-sm sm:text-xs'>
+                <div className='flex gap-2 px-2  text-sm sm:text-xs'>
                   <p>0 posts</p>
                   <p>230 followers</p>
                   <p>658 following</p>
