@@ -47,7 +47,6 @@ export const deletePost = createAsyncThunk(
   'posts/deletePost',
   async ({ postId, authToken }, thunkAPI) => {
     try {
-      console.log(postId, authToken, 'delete');
       const response = await deletePostService(postId, authToken);
 
       return response.data.posts;
@@ -81,7 +80,6 @@ const postsSlice = createSlice({
 
     [addPost.pending]: (state) => {
       state.isLoading = true;
-      console.log('pemding');
     },
     [addPost.fulfilled]: (state, action) => {
       state.isLoading = false;
@@ -112,10 +110,11 @@ const postsSlice = createSlice({
     [deletePost.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.allPosts = action.payload;
+      ToastHandler(ToastType.Success, 'Post deleted successfully');
     },
     [deletePost.rejected]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
+      ToastHandler(ToastType.Error, action.payload);
     },
   },
 });
