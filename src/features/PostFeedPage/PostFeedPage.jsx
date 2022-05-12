@@ -3,16 +3,16 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Nav } from '../../components';
 import { useOutsideClickHandler } from '../../custom-hooks';
 import PostFeedCard from './components/PostFeedCard/PostFeedCard';
-import { getAllPosts } from './PostsSlice';
+import { addPost, getAllPosts } from './PostsSlice';
 
 export const PostFeedPage = () => {
-  const { user } = useSelector((store) => store.authentication);
+  const { user, token } = useSelector((store) => store.authentication);
   const emojiContainerRef = useRef();
   const { resetMenu } = useOutsideClickHandler(emojiContainerRef);
   const [showEmojis, setShowEmojis] = useState(false);
   const { allPosts } = useSelector((store) => store.posts);
   const [postInputForm, setPostInputForm] = useState({
-    input: '',
+    content: '',
     pic: '',
   });
   const dispatch = useDispatch();
@@ -52,6 +52,22 @@ export const PostFeedPage = () => {
     '😭',
     '🥶',
   ];
+
+  const onFileChange = async (e) => {
+    const file = e.target.files[0];
+    console.log(file);
+    const toBase64 = (file) =>
+      new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result);
+        reader.onerror = (error) => reject(error);
+      });
+
+    let base64File = await toBase64(file);
+    setPostInputForm({ ...postInputForm, pic: base64File });
+  };
+
   console.log(user, 'user');
   console.log(allPosts, 'allPosts');
   return (
@@ -79,20 +95,30 @@ export const PostFeedPage = () => {
                     <input
                       className='grow focus:outline-none font-light text-txt-secondary-color'
                       placeholder='Write something here'
-                      value={postInputForm.input}
+                      value={postInputForm.content}
                       onChange={(e) =>
                         setPostInputForm({
                           ...postInputForm,
-                          input: e.target.value,
+                          content: e.target.value,
                         })
                       }
                       type='text'
                     />
                   </div>
-                  {postInputForm.pic ? <img src='' alt='' /> : null}
+                  {postInputForm.pic ? (
+                    <div className='relative'>
+                      <img src={postInputForm.pic} alt='post pic' />
+                      <i
+                        onClick={() =>
+                          setPostInputForm({ ...postInputForm, pic: '' })
+                        }
+                        className='absolute top-1 right-1 text-4xl text-txt-hover-color cursor-pointer fas fa-times-circle'
+                      ></i>
+                    </div>
+                  ) : null}
                   <hr className='font-extralight text-secondary' />
                   <ul className='flex gap-4 font-light items-center'>
-                    <li className='flex items-center gap-3 bg-secondary-background py-2 px-3 rounded-md cursor-pointer'>
+                    <li className='relative flex items-center gap-3 bg-secondary-background py-2 px-3 rounded-md cursor-pointer'>
                       <img
                         className='h-6 w-6'
                         src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650190023/07_dffvl5.png'
@@ -101,18 +127,23 @@ export const PostFeedPage = () => {
                       <p className='text-primary text-sm font-semibold'>
                         Photo/GIF
                       </p>
+                      <input
+                        className='cursor-pointer absolute w-28 opacity-0'
+                        accept='image/apng, image/avif, image/gif, image/jpeg, image/png, image/svg+xml, image/jpg,image/webp'
+                        type='file'
+                        onChange={onFileChange}
+                      />
                     </li>
                     <li
                       onClick={(e) => {
                         setShowEmojis(true);
-                        console.log(e);
                         if (
                           e.target.childNodes.length === 1 &&
                           e.target.innerText !== 'Emojis'
                         ) {
                           setPostInputForm({
                             ...postInputForm,
-                            input: postInputForm.input + e.target.innerText,
+                            content: postInputForm.content + e.target.innerText,
                           });
                           setShowEmojis(false);
                         }
@@ -149,9 +180,17 @@ export const PostFeedPage = () => {
                 </div>
               </div>
               <button
-                disabled={postInputForm.input ? false : true}
+                onClick={() =>
+                  dispatch(
+                    addPost({
+                      postData: { ...postInputForm, userId: user._id },
+                      authToken: token,
+                    })
+                  )
+                }
+                disabled={postInputForm.content ? false : true}
                 className={`mb-4 mx-4 p-2 bg-primary active:bg-blue-500 text-white rounded-lg ${
-                  postInputForm.input ? '' : 'cursor-not-allowed'
+                  postInputForm.content ? '' : 'cursor-not-allowed'
                 }`}
               >
                 Post

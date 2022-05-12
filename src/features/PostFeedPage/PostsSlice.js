@@ -22,6 +22,7 @@ export const addPost = createAsyncThunk(
   'posts/addPost',
   async ({ postData, authToken }, thunkAPI) => {
     try {
+      console.log(postData, authToken, 'inside add post');
       const response = await addPostService(postData, authToken);
       return response.data.posts;
     } catch (err) {
@@ -69,7 +70,7 @@ const postsSlice = createSlice({
     },
     [getAllPosts.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.posts = action.payload;
+      state.allPosts = action.payload;
     },
     [getAllPosts.rejected]: (state, action) => {
       state.isLoading = false;
@@ -78,10 +79,12 @@ const postsSlice = createSlice({
 
     [addPost.pending]: (state) => {
       state.isLoading = true;
+      console.log('pemding');
     },
     [addPost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.posts = action.payload;
+      state.allPosts = action.payload;
+      console.log('ful', action.payload);
     },
     [addPost.rejected]: (state, action) => {
       state.isLoading = false;
@@ -93,7 +96,7 @@ const postsSlice = createSlice({
     },
     [editPost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.posts = action.payload;
+      state.allPosts = action.payload;
     },
     [editPost.rejected]: (state, action) => {
       state.isLoading = false;
@@ -105,7 +108,7 @@ const postsSlice = createSlice({
     },
     [deletePost.fulfilled]: (state, action) => {
       state.isLoading = false;
-      state.posts = action.payload;
+      state.allPosts = action.payload;
     },
     [deletePost.rejected]: (state, action) => {
       state.isLoading = false;
