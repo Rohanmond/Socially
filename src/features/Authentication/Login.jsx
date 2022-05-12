@@ -2,12 +2,10 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginHandler } from './authenticationSlice';
-import { validateEmail, validatePassword } from './auth-utils';
+import { validateEmail } from './auth-utils';
 
 export const Login = () => {
-  const { token, user, isLoading } = useSelector(
-    (store) => store.authentication
-  );
+  const { token, isLoading } = useSelector((store) => store.authentication);
   const dipatch = useDispatch();
   const [loginInput, setLoginInput] = useState({
     email: '',

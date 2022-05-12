@@ -6,6 +6,7 @@
     "@reduxjs/toolkit": "^1.8.1",
     "axios": "^0.26.1",
     "dayjs": "^1.11.0",
+    "emoji-api": "^2.0.1",
     "jwt-decode": "^3.1.2",
     "jwt-encode": "^1.0.1",
     "miragejs": "^0.1.43",

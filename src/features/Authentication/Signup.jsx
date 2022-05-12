@@ -5,9 +5,7 @@ import { signupHandler } from './authenticationSlice';
 import { validateEmail, validatePassword } from './auth-utils';
 
 export const Signup = () => {
-  const { token, user, isLoading } = useSelector(
-    (store) => store.authentication
-  );
+  const { token, isLoading } = useSelector((store) => store.authentication);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const location = useLocation();

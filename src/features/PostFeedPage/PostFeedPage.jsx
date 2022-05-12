@@ -1,6 +1,46 @@
+import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
 import { Nav } from '../../components';
+import { useOutsideClickHandler } from '../../custom-hooks';
 
 export const PostFeedPage = () => {
+  const { user } = useSelector((store) => store.authentication);
+  const emojiContainerRef = useRef();
+  const { resetMenu } = useOutsideClickHandler(emojiContainerRef);
+  const [showEmojis, setShowEmojis] = useState(false);
+
+  useEffect(() => {
+    if (resetMenu) setShowEmojis(false);
+  }, [resetMenu]);
+
+  const emojiLib = [
+    '😂',
+    '😅',
+    '😁',
+    '🙄',
+    '😱',
+    '🥹',
+    '🥵',
+    '😇',
+    '😆',
+    '🤣',
+    '👀',
+    '👍',
+    '😎',
+    '🤨',
+    '😒',
+    '😊',
+    '😰',
+    '😄',
+    '🥳',
+    '😘',
+    '🙃',
+    '🤯',
+    '👆',
+    '😭',
+    '🥶',
+  ];
+  console.log(user);
   return (
     <>
       <Nav />
@@ -19,12 +59,12 @@ export const PostFeedPage = () => {
                   {/** enter text section */}
                   <div className='flex items-center gap-4 grow'>
                     <img
-                      className='h-14 w-14 rounded-full'
-                      src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650096757/1_vztwsr.jpg'
+                      className='h-14 w-14 rounded-full object-cover'
+                      src={user?.pic}
                       alt='profile-img'
                     />
                     <input
-                      className='grow  focus:outline-none font-light text-txt-secondary-color'
+                      className='grow focus:outline-none font-light text-txt-secondary-color'
                       placeholder='Write something here'
                       type='text'
                     />
@@ -33,21 +73,46 @@ export const PostFeedPage = () => {
                   <ul className='flex gap-4 font-light items-center'>
                     <li className='flex items-center gap-3 bg-secondary-background py-2 px-3 rounded-md cursor-pointer'>
                       <img
+                        className='h-6 w-6'
                         src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650190023/07_dffvl5.png'
                         alt='phot-video'
                       />
                       <p className='text-primary text-sm font-semibold'>
-                        Photo/Video
+                        Photo/GIF
                       </p>
                     </li>
-                    <li className='flex items-center gap-3 bg-secondary-background py-2 px-3 rounded-md cursor-pointer'>
+                    <li
+                      onClick={(e) => {
+                        setShowEmojis(true);
+                        console.log(e);
+                      }}
+                      className='relative  flex items-center gap-3 bg-secondary-background py-2 px-3 rounded-md cursor-pointer'
+                    >
                       <img
-                        src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650190352/08_xnw23j.png'
-                        alt='tag-friend'
+                        className='h-6 w-6'
+                        src='https://res.cloudinary.com/donqbxlnc/image/upload/v1652278871/Sunglasses_Emoji_be26cc0a-eef9-49e5-8da2-169bb417cc0b_grande_tz0jya.png'
+                        alt='emojis'
                       />
                       <p className='text-primary text-sm font-semibold'>
-                        Tag Friend
+                        Emojis
                       </p>
+                      {showEmojis ? (
+                        <div
+                          ref={emojiContainerRef}
+                          className='absolute w-48 p-4 flex flex-wrap justify-center items-center gap-1 rounded-lg  bg-secondary-background '
+                        >
+                          {emojiLib.map((el) => {
+                            return (
+                              <span
+                                key={el}
+                                className='cursor-pointer text-2xl'
+                              >
+                                {el}
+                              </span>
+                            );
+                          })}
+                        </div>
+                      ) : null}
                     </li>
                   </ul>
                 </div>
@@ -92,8 +157,8 @@ export const PostFeedPage = () => {
               </button>
             </div>
             {/**Post-feed */}
-            <div className='flex flex-col gap-4 bg-nav-background rounded-lg drop-shadow-2xl p-5'>
-              {/** post header */}
+            {/* <div className='flex flex-col gap-4 bg-nav-background rounded-lg drop-shadow-2xl p-5'>
+              {/** post header }
               <div className='flex gap-4  flex-grow'>
                 <img
                   className='rounded-full h-12 w-12'
@@ -110,7 +175,7 @@ export const PostFeedPage = () => {
                   <i className='ri-more-fill text-xl cursor-pointer'></i>
                 </div>
               </div>
-              {/**Post details */}
+              {/**Post details *}
               <div className='flex flex-col gap-2 flex-grow'>
                 <p>
                   Yesterday with @Karen Miller and @Marvin Stemperd at the
@@ -123,7 +188,7 @@ export const PostFeedPage = () => {
                   alt='post-details'
                 />
               </div>
-              {/**Post footer */}
+              {/**Post footer *}
               <div className='flex gap-4 flex-grow py-1  items-center justify-evenly font-normal text-txt-secondary-color'>
                 <div className='flex items-center  cursor-pointer gap-1'>
                   <i className='ri-heart-line'></i>
@@ -138,9 +203,9 @@ export const PostFeedPage = () => {
                   <span>Share</span>
                 </div>
               </div>
-              {/**Post comment section */}
+              {/**Post comment section *}
               <div className='flex gap-3 flex-col border-t-2  pt-6'>
-                {/**Comment different person */}
+                {/**Comment different person *}
                 <div className='flex gap-4'>
                   <img
                     className='rounded-full w-9 h-9 mt-1'
@@ -218,7 +283,7 @@ export const PostFeedPage = () => {
                   />
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </main>
