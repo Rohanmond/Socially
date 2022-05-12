@@ -1,5 +1,5 @@
 const PostFeedCard = ({ postData }) => {
-  const {_id,content,createdAt,likes,}
+  const { _id, content, createdAt, likes, pic, userId } = postData;
   return (
     <div className='flex flex-col gap-4 bg-nav-background rounded-lg drop-shadow-2xl p-5'>
       {/** post header */}
