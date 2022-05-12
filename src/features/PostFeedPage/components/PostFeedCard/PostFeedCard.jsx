@@ -1,20 +1,24 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useOutsideClickHandler } from '../../../../custom-hooks';
 import { getUserById } from '../../../../Services/userServices';
+import { deletePost } from '../../PostsSlice';
+import { openEditPostHandler } from '../../toggleEditPostModalSlice';
+import { EditPostModal } from '../EditPostModal';
 
 const PostFeedCard = ({ postData }) => {
   const { _id, content, createdAt, likes, pic, userId } = postData;
-  const { user: authUser } = useSelector((store) => store.authentication);
+  const { user: authUser, token } = useSelector(
+    (store) => store.authentication
+  );
   const [user, setUser] = useState(null);
   const menuRef = useRef();
+  const dispatch = useDispatch();
   const { resetMenu } = useOutsideClickHandler(menuRef);
   const [openMenu, setOpenMenu] = useState(false);
 
   useEffect(() => {
-    console.log('inside use');
     if (resetMenu) {
-      console.log('inside reset');
       setOpenMenu(false);
     }
   }, [resetMenu]);
@@ -25,16 +29,12 @@ const PostFeedCard = ({ postData }) => {
       setUser(res.data.user);
     })();
   }, [userId]);
-  console.log(resetMenu, 'reset');
-  console.log(user, 'user in [post');
-  console.log(authUser, 'authuser');
 
   return (
     <>
       {user ? (
         <div className='flex flex-col gap-4 bg-nav-background rounded-lg drop-shadow-2xl p-5'>
           {/** post header */}
-
           <div className='flex gap-4  flex-grow'>
             <img
               className='rounded-full h-12 w-12 object-cover'
@@ -67,6 +67,9 @@ const PostFeedCard = ({ postData }) => {
                       {user._id === authUser._id && (
                         <button
                           type='button'
+                          onClick={() =>
+                            dispatch(openEditPostHandler({ postData }))
+                          }
                           className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
                         >
                           <i className='far fa-edit'></i>
@@ -75,6 +78,11 @@ const PostFeedCard = ({ postData }) => {
                       )}
                       {user._id === authUser._id && (
                         <button
+                          onClick={() => {
+                            dispatch(
+                              deletePost({ postId: _id, authToken: token })
+                            );
+                          }}
                           type='button'
                           className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
                         >

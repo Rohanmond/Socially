@@ -23,9 +23,7 @@ export const addPost = createAsyncThunk(
   'posts/addPost',
   async ({ postData, authToken }, thunkAPI) => {
     try {
-      console.log(postData, authToken, 'inside add post');
       const response = await addPostService(postData, authToken);
-      console.log(response, 'res inside add Post');
       return response.data.posts;
     } catch (err) {
       thunkAPI.rejectWithValue(err.response.data);
@@ -49,7 +47,9 @@ export const deletePost = createAsyncThunk(
   'posts/deletePost',
   async ({ postId, authToken }, thunkAPI) => {
     try {
+      console.log(postId, authToken, 'delete');
       const response = await deletePostService(postId, authToken);
+
       return response.data.posts;
     } catch (err) {
       thunkAPI.rejectWithValue(err.response.data);
@@ -76,7 +76,7 @@ const postsSlice = createSlice({
     },
     [getAllPosts.rejected]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
+      ToastHandler(ToastType.Error, action.payload);
     },
 
     [addPost.pending]: (state) => {
@@ -90,7 +90,7 @@ const postsSlice = createSlice({
     },
     [addPost.rejected]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
+      ToastHandler(ToastType.Error, action.payload);
     },
 
     [editPost.pending]: (state) => {
@@ -99,10 +99,11 @@ const postsSlice = createSlice({
     [editPost.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.allPosts = action.payload;
+      ToastHandler(ToastType.Success, 'Post updated successfully');
     },
     [editPost.rejected]: (state, action) => {
       state.isLoading = false;
-      console.log(action.payload);
+      ToastHandler(ToastType.Error, action.payload);
     },
 
     [deletePost.pending]: (state) => {

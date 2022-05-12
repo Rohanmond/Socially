@@ -111,6 +111,7 @@ export const createPostHandler = function (schema, request) {
  * */
 export const editPostHandler = function (schema, request) {
   const user = requiresAuth.call(this, request);
+  console.log(user, 'editPost user');
   try {
     if (!user) {
       return new Response(
@@ -126,16 +127,17 @@ export const editPostHandler = function (schema, request) {
     const postId = request.params.postId;
     const { postData } = JSON.parse(request.requestBody);
     let post = schema.posts.findBy({ _id: postId }).attrs;
-    if (post.username !== user.username) {
-      return new Response(
-        400,
-        {},
-        {
-          errors: ["Cannot edit a Post doesn't belong to the logged in User."],
-        }
-      );
-    }
+    // if (post.username !== user.username) {
+    //   return new Response(
+    //     400,
+    //     {},
+    //     {
+    //       errors: ["Cannot edit a Post doesn't belong to the logged in User."],
+    //     }
+    //   );
+    // }
     post = { ...post, ...postData };
+    console.log(post, 'post sdd');
     this.db.posts.update({ _id: postId }, post);
     return new Response(201, {}, { posts: this.db.posts });
   } catch (error) {
@@ -255,6 +257,7 @@ export const dislikePostHandler = function (schema, request) {
  * */
 export const deletePostHandler = function (schema, request) {
   const user = requiresAuth.call(this, request);
+  console.log(user, 'deletecontr');
   try {
     if (!user) {
       return new Response(
@@ -268,8 +271,10 @@ export const deletePostHandler = function (schema, request) {
       );
     }
     const postId = request.params.postId;
+    console.log(postId, 'porId');
     let post = schema.posts.findBy({ _id: postId }).attrs;
-    if (post.username !== user.username) {
+    console.log(post, 'schem,a');
+    if (post.userId !== user._id) {
       return new Response(
         400,
         {},

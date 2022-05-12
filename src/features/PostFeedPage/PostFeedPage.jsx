@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Nav } from '../../components';
 import { useOutsideClickHandler } from '../../custom-hooks';
+import { EditPostModal } from './components/EditPostModal';
 import PostFeedCard from './components/PostFeedCard/PostFeedCard';
 import { addPost, getAllPosts } from './PostsSlice';
 
@@ -11,6 +12,9 @@ export const PostFeedPage = () => {
   const { resetMenu } = useOutsideClickHandler(emojiContainerRef);
   const [showEmojis, setShowEmojis] = useState(false);
   const { allPosts } = useSelector((store) => store.posts);
+  const { openModal, postData } = useSelector(
+    (store) => store.toggleEditPostModal
+  );
   const [postInputForm, setPostInputForm] = useState({
     content: '',
     pic: '',
@@ -55,7 +59,6 @@ export const PostFeedPage = () => {
 
   const onFileChange = async (e) => {
     const file = e.target.files[0];
-    console.log(file);
     const toBase64 = (file) =>
       new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -68,16 +71,15 @@ export const PostFeedPage = () => {
     setPostInputForm({ ...postInputForm, pic: base64File });
   };
 
-  console.log(user, 'user');
-  console.log(allPosts, 'allPosts');
   return (
     <>
       <Nav />
+      {openModal ? <EditPostModal postData={postData} /> : null}
       <main className='p-4'>
         {/*divider */}
         <div className='flex justify-center'>
           {/* news feed */}
-          <div className='flex flex-col    w-2/4 md:w-4/5 sm:w-full  gap-4 '>
+          <div className='flex flex-col  w-2/5 md:w-4/5 sm:w-full  gap-4 '>
             {/* create post section */}
             <div className='flex flex-col bg-nav-background rounded-lg drop-shadow-2xl divide-y divide-blue-200'>
               <div className='p-4'>
