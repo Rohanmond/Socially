@@ -71,6 +71,7 @@ export const PostFeedPage = () => {
     setPostInputForm({ ...postInputForm, pic: base64File });
   };
 
+  console.log(allPosts);
   return (
     <>
       <Nav />

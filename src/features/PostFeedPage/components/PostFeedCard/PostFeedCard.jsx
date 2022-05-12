@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useOutsideClickHandler } from '../../../../custom-hooks';
 import { getUserById } from '../../../../Services/userServices';
-import { deletePost } from '../../PostsSlice';
+import { deletePost, dislikePost, likePost } from '../../PostsSlice';
 import { openEditPostHandler } from '../../toggleEditPostModalSlice';
 import { EditPostModal } from '../EditPostModal';
 
@@ -11,6 +11,7 @@ const PostFeedCard = ({ postData }) => {
   const { user: authUser, token } = useSelector(
     (store) => store.authentication
   );
+
   const [user, setUser] = useState(null);
   const menuRef = useRef();
   const dispatch = useDispatch();
@@ -106,12 +107,29 @@ const PostFeedCard = ({ postData }) => {
           {/**Post footer */}
           <div className='flex  gap-4 sm:gap-2 flex-grow py-1  items-center justify-evenly font-normal text-txt-secondary-color'>
             <div className='flex items-center gap-1 cursor-pointer'>
-              <i className='far fa-thumbs-up'></i>
-              <span>140</span>
+              {!likes.likedBy.some((el) => el._id === authUser._id) ? (
+                <i
+                  onClick={() =>
+                    dispatch(likePost({ postId: _id, authToken: token }))
+                  }
+                  className='far fa-thumbs-up'
+                ></i>
+              ) : (
+                <i className='fas fa-thumbs-up'></i>
+              )}
+              {likes.likeCount > 0 ? <span>{likes.likeCount}</span> : null}
             </div>
             <div className='flex items-center cursor-pointer gap-1'>
-              <i className='far fa-thumbs-down'></i>
-              <span></span>
+              {!likes.dislikedBy.some((el) => el._id === authUser._id) ? (
+                <i
+                  onClick={() =>
+                    dispatch(dislikePost({ postId: _id, authToken: token }))
+                  }
+                  className='far fa-thumbs-down'
+                ></i>
+              ) : (
+                <i className='fas fa-thumbs-down'></i>
+              )}
             </div>
             <div className='flex items-center gap-1 cursor-pointer'>
               <i className='far fa-comment'></i>
