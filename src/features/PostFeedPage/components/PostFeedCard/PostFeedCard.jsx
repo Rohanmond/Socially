@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useOutsideClickHandler } from '../../../../custom-hooks';
 import { getUserById } from '../../../../Services/userServices';
 import { deletePost, dislikePost, likePost } from '../../PostsSlice';
@@ -11,7 +12,7 @@ const PostFeedCard = ({ postData }) => {
   const { user: authUser, token } = useSelector(
     (store) => store.authentication
   );
-
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const menuRef = useRef();
   const dispatch = useDispatch();
@@ -26,8 +27,12 @@ const PostFeedCard = ({ postData }) => {
 
   useEffect(() => {
     (async () => {
-      const res = await getUserById(userId);
-      setUser(res.data.user);
+      try {
+        const res = await getUserById(userId);
+        setUser(res.data.user);
+      } catch (err) {
+        console.log(err);
+      }
     })();
   }, [userId]);
 
@@ -38,12 +43,16 @@ const PostFeedCard = ({ postData }) => {
           {/** post header */}
           <div className='flex gap-4  flex-grow'>
             <img
-              className='rounded-full h-12 w-12 object-cover'
+              onClick={() => navigate(`/profile/${user?.userHandler}`)}
+              className='cursor-pointer rounded-full h-12 w-12 object-cover'
               src={user.pic}
               alt='post-hero'
             />
             <div className='flex justify-between flex-grow'>
-              <div className='flex flex-col'>
+              <div
+                onClick={() => navigate(`/profile/${user?.userHandler}`)}
+                className='flex flex-col cursor-pointer'
+              >
                 <p className='text-xl'>{`${user.firstName} ${user.lastName}`}</p>
                 <p className='text-xs text-txt-secondary-color'>
                   {new Date(createdAt).toDateString()}{' '}
@@ -117,7 +126,9 @@ const PostFeedCard = ({ postData }) => {
               ) : (
                 <i className='fas fa-thumbs-up'></i>
               )}
-              {likes.likeCount > 0 ? <span>{likes.likeCount}</span> : null}
+              {likes.likedBy.length > 0 ? (
+                <span>{likes.likedBy.length}</span>
+              ) : null}
             </div>
             <div className='flex items-center cursor-pointer gap-1'>
               {!likes.dislikedBy.some((el) => el._id === authUser._id) ? (

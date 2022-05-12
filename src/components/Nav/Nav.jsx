@@ -41,7 +41,7 @@ export const Nav = () => {
 
           <li className='cursor-pointer'>
             <img
-              onClick={() => navigate('/profile')}
+              onClick={() => navigate(`/profile/${user.userHandler}`)}
               className='w-12 h-12 object-cover rounded-full'
               src={user?.pic}
               alt='profile'

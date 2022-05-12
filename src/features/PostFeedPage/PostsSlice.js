@@ -142,9 +142,7 @@ const postsSlice = createSlice({
       state.isLoading = false;
       ToastHandler(ToastType.Error, action.payload);
     },
-    [likePost.pending]: (state) => {
-      state.isLoading = true;
-    },
+    [likePost.pending]: (state) => {},
     [likePost.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.allPosts = action.payload;
@@ -153,12 +151,11 @@ const postsSlice = createSlice({
       state.isLoading = false;
       ToastHandler(ToastType.Error, action.payload);
     },
-    [dislikePost.pending]: (state) => {
-      state.isLoading = true;
-    },
+    [dislikePost.pending]: (state) => {},
     [dislikePost.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.allPosts = action.payload;
+      console.log(action);
     },
     [dislikePost.rejected]: (state, action) => {
       state.isLoading = false;

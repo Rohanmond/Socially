@@ -35,6 +35,22 @@ export const getUserHandler = function (schema, request) {
   }
 };
 
+export const getUserByUserHandler = function (schema, request) {
+  const userHandler = request.params.userHandler;
+  try {
+    const user = schema.users.findBy({ userHandler }).attrs;
+    return new Response(200, {}, { user });
+  } catch (error) {
+    return new Response(
+      500,
+      {},
+      {
+        error,
+      }
+    );
+  }
+};
+
 /**
  * This handler handles updating user details.
  * send POST Request at /api/users/edit
