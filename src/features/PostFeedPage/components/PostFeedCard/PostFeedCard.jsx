@@ -1,4 +1,5 @@
 const PostFeedCard = ({ postData }) => {
+  const {_id,content,createdAt,likes,}
   return (
     <div className='flex flex-col gap-4 bg-nav-background rounded-lg drop-shadow-2xl p-5'>
       {/** post header */}
@@ -32,14 +33,18 @@ const PostFeedCard = ({ postData }) => {
         />
       </div>
       {/**Post footer */}
-      <div className='flex gap-4 flex-grow py-1  items-center justify-evenly font-normal text-txt-secondary-color'>
-        <div className='flex items-center  cursor-pointer gap-1'>
-          <i className='ri-heart-line'></i>
-          <span>140 likes</span>
+      <div className='flex  gap-4 sm:gap-2 flex-grow py-1  items-center justify-evenly font-normal text-txt-secondary-color'>
+        <div className='flex items-center gap-1 cursor-pointer'>
+          <i className='far fa-thumbs-up'></i>
+          <span>140</span>
         </div>
         <div className='flex items-center cursor-pointer gap-1'>
-          <i className='ri-chat-1-line'></i>
-          <span>comments</span>
+          <i className='far fa-thumbs-down'></i>
+          <span></span>
+        </div>
+        <div className='flex items-center gap-1 cursor-pointer'>
+          <i className='far fa-comment'></i>
+          <span>10</span>
         </div>
         <div className='flex items-center cursor-pointer gap-1'>
           <i className='ri-share-line'></i>
