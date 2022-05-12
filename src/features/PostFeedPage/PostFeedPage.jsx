@@ -77,7 +77,7 @@ export const PostFeedPage = () => {
         {/*divider */}
         <div className='flex justify-center'>
           {/* news feed */}
-          <div className='flex flex-col    w-3/5 md:w-4/5 sm:w-full  gap-4 '>
+          <div className='flex flex-col    w-2/4 md:w-4/5 sm:w-full  gap-4 '>
             {/* create post section */}
             <div className='flex flex-col bg-nav-background rounded-lg drop-shadow-2xl divide-y divide-blue-200'>
               <div className='p-4'>
@@ -145,6 +145,7 @@ export const PostFeedPage = () => {
                             ...postInputForm,
                             content: postInputForm.content + e.target.innerText,
                           });
+
                           setShowEmojis(false);
                         }
                       }}
@@ -180,14 +181,15 @@ export const PostFeedPage = () => {
                 </div>
               </div>
               <button
-                onClick={() =>
+                onClick={() => {
                   dispatch(
                     addPost({
                       postData: { ...postInputForm, userId: user._id },
                       authToken: token,
                     })
-                  )
-                }
+                  );
+                  setPostInputForm({ content: '', pic: '' });
+                }}
                 disabled={postInputForm.content ? false : true}
                 className={`mb-4 mx-4 p-2 bg-primary active:bg-blue-500 text-white rounded-lg ${
                   postInputForm.content ? '' : 'cursor-not-allowed'

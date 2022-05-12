@@ -5,6 +5,7 @@ import {
   editPostService,
   getAllPostsService,
 } from '../../Services/postServices';
+import { ToastHandler, ToastType } from '../../utils/toastUtils';
 
 export const getAllPosts = createAsyncThunk(
   'posts/getAllPosts',
@@ -24,6 +25,7 @@ export const addPost = createAsyncThunk(
     try {
       console.log(postData, authToken, 'inside add post');
       const response = await addPostService(postData, authToken);
+      console.log(response, 'res inside add Post');
       return response.data.posts;
     } catch (err) {
       thunkAPI.rejectWithValue(err.response.data);
@@ -84,7 +86,7 @@ const postsSlice = createSlice({
     [addPost.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.allPosts = action.payload;
-      console.log('ful', action.payload);
+      ToastHandler(ToastType.Success, 'Post created successfully');
     },
     [addPost.rejected]: (state, action) => {
       state.isLoading = false;

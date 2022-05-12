@@ -1,114 +1,181 @@
+import { useEffect, useRef, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useOutsideClickHandler } from '../../../../custom-hooks';
+import { getUserById } from '../../../../Services/userServices';
+
 const PostFeedCard = ({ postData }) => {
   const { _id, content, createdAt, likes, pic, userId } = postData;
+  const { user: authUser } = useSelector((store) => store.authentication);
+  const [user, setUser] = useState(null);
+  const menuRef = useRef();
+  const { resetMenu } = useOutsideClickHandler(menuRef);
+  const [openMenu, setOpenMenu] = useState(false);
+
+  useEffect(() => {
+    console.log('inside use');
+    if (resetMenu) {
+      console.log('inside reset');
+      setOpenMenu(false);
+    }
+  }, [resetMenu]);
+
+  useEffect(() => {
+    (async () => {
+      const res = await getUserById(userId);
+      setUser(res.data.user);
+    })();
+  }, [userId]);
+  console.log(resetMenu, 'reset');
+  console.log(user, 'user in [post');
+  console.log(authUser, 'authuser');
+
   return (
-    <div className='flex flex-col gap-4 bg-nav-background rounded-lg drop-shadow-2xl p-5'>
-      {/** post header */}
-      <div className='flex gap-4  flex-grow'>
-        <img
-          className='rounded-full h-12 w-12'
-          src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650191393/01_jxbjlo.jpg'
-          alt='post-hero'
-        />
-        <div className='flex justify-between flex-grow'>
-          <div className='flex flex-col'>
-            <p className='text-xl'>Anna Sthesia</p>
-            <p className='text-xs text-txt-secondary-color'>
-              July 26 2018, 01:03pm
-            </p>
-          </div>
-          <i className='ri-more-fill text-xl cursor-pointer'></i>
-        </div>
-      </div>
-      {/**Post details */}
-      <div className='flex flex-col gap-2 flex-grow'>
-        <p>
-          Yesterday with @Karen Miller and @Marvin Stemperd at the #Rock'n'Rolla
-          concert in LA. Was totally fantastic! People were really excited about
-          this one!
-        </p>
-        <img
-          className='rounded-lg'
-          src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650194819/1_erzjab.jpg'
-          alt='post-details'
-        />
-      </div>
-      {/**Post footer */}
-      <div className='flex  gap-4 sm:gap-2 flex-grow py-1  items-center justify-evenly font-normal text-txt-secondary-color'>
-        <div className='flex items-center gap-1 cursor-pointer'>
-          <i className='far fa-thumbs-up'></i>
-          <span>140</span>
-        </div>
-        <div className='flex items-center cursor-pointer gap-1'>
-          <i className='far fa-thumbs-down'></i>
-          <span></span>
-        </div>
-        <div className='flex items-center gap-1 cursor-pointer'>
-          <i className='far fa-comment'></i>
-          <span>10</span>
-        </div>
-        <div className='flex items-center cursor-pointer gap-1'>
-          <i className='ri-share-line'></i>
-          <span>Share</span>
-        </div>
-      </div>
-      {/**Post comment section */}
-      <div className='flex gap-3 flex-col border-t-2  pt-6'>
-        {/**Comment different person */}
-        <div className='flex gap-4'>
-          <img
-            className='rounded-full w-9 h-9 mt-1'
-            src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650205531/02_zqttxd.jpg'
-            alt='comment-profile-pic'
-          />
-          <div>
-            <p className='font-normal'>Monty Carlo</p>
-            <p className='font-light text-txt-secondary-color'>
-              Lorem ipsum dolor sit amet
-            </p>
-            <div className='flex gap-3'>
-              <p className='font-light text-primary cursor-pointer'>Like</p>
-              <p className='font-light text-primary cursor-pointer'>Reply</p>
+    <>
+      {user ? (
+        <div className='flex flex-col gap-4 bg-nav-background rounded-lg drop-shadow-2xl p-5'>
+          {/** post header */}
+
+          <div className='flex gap-4  flex-grow'>
+            <img
+              className='rounded-full h-12 w-12 object-cover'
+              src={user.pic}
+              alt='post-hero'
+            />
+            <div className='flex justify-between flex-grow'>
+              <div className='flex flex-col'>
+                <p className='text-xl'>{`${user.firstName} ${user.lastName}`}</p>
+                <p className='text-xs text-txt-secondary-color'>
+                  {new Date(createdAt).toDateString()}{' '}
+                  {new Date(createdAt).toLocaleTimeString()}
+                </p>
+              </div>
+              <div className='relative'>
+                <i
+                  onClick={() => setOpenMenu(!openMenu)}
+                  className='ri-more-fill text-xl cursor-pointer'
+                ></i>
+                {openMenu ? (
+                  <div ref={menuRef} className='absolute right-0'>
+                    <div className='w-40 text-txt-secondary-color bg-secondary-background border border-gray-200 rounded-lg'>
+                      <button
+                        type='button'
+                        className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
+                      >
+                        <i className='far fa-bookmark'></i>
+                        Save post
+                      </button>
+                      {user._id === authUser._id && (
+                        <button
+                          type='button'
+                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
+                        >
+                          <i className='far fa-edit'></i>
+                          Edit post
+                        </button>
+                      )}
+                      {user._id === authUser._id && (
+                        <button
+                          type='button'
+                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
+                        >
+                          <i className='far fa-trash-alt'></i>
+                          Delete post
+                        </button>
+                      )}
+                    </div>
+                  </div>
+                ) : null}
+              </div>
             </div>
           </div>
-        </div>
-
-        <div className='flex gap-4'>
-          <img
-            className='rounded-full w-9 h-9 mt-1'
-            src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650096757/1_vztwsr.jpg'
-            alt='comment-profile-pic'
-          />
-          <div>
-            <p className='font-normal'>Monty Carlo</p>
-            <p className='font-light text-txt-secondary-color'>
-              Lorem ipsum dolor sit amet
-            </p>
-            <div className='flex gap-3'>
-              <p className='font-light text-primary cursor-pointer'>Like</p>
-              <p className='font-light text-primary cursor-pointer'>Reply</p>
+          {/**Post details */}
+          <div className='flex flex-col gap-6 flex-grow'>
+            <p className='px-4'>{content}</p>
+            {pic ? (
+              <img className='rounded-lg' src={pic} alt='post-details' />
+            ) : null}
+          </div>
+          {/**Post footer */}
+          <div className='flex  gap-4 sm:gap-2 flex-grow py-1  items-center justify-evenly font-normal text-txt-secondary-color'>
+            <div className='flex items-center gap-1 cursor-pointer'>
+              <i className='far fa-thumbs-up'></i>
+              <span>140</span>
+            </div>
+            <div className='flex items-center cursor-pointer gap-1'>
+              <i className='far fa-thumbs-down'></i>
+              <span></span>
+            </div>
+            <div className='flex items-center gap-1 cursor-pointer'>
+              <i className='far fa-comment'></i>
+              <span>10</span>
+            </div>
+            <div className='flex items-center cursor-pointer gap-1'>
+              <i className='ri-share-line'></i>
+              <span>Share</span>
             </div>
           </div>
-        </div>
+          {/**Post comment section */}
+          <div className='flex gap-3 flex-col border-t-2  pt-6'>
+            {/**Comment different person */}
+            <div className='flex gap-4'>
+              <img
+                className='rounded-full w-9 h-9 mt-1'
+                src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650205531/02_zqttxd.jpg'
+                alt='comment-profile-pic'
+              />
+              <div>
+                <p className='font-normal'>Monty Carlo</p>
+                <p className='font-light text-txt-secondary-color'>
+                  Lorem ipsum dolor sit amet
+                </p>
+                <div className='flex gap-3'>
+                  <p className='font-light text-primary cursor-pointer'>Like</p>
+                  <p className='font-light text-primary cursor-pointer'>
+                    Reply
+                  </p>
+                </div>
+              </div>
+            </div>
 
-        <div className='flex gap-4 flex-grow pl-12'>
-          <img
-            className='rounded-full w-9 h-9 mt-1'
-            src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650191393/01_jxbjlo.jpg'
-            alt='comment-profile-pic'
-          />
-          <div>
-            <p className='font-normal'>Monty Carlo</p>
-            <p className='font-light text-txt-secondary-color'>
-              Thank you for your reply!
-            </p>
-            <p className='font-light text-primary cursor-pointer'>Like</p>
-          </div>
-        </div>
+            <div className='flex gap-4'>
+              <img
+                className='rounded-full w-9 h-9 mt-1'
+                src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650096757/1_vztwsr.jpg'
+                alt='comment-profile-pic'
+              />
+              <div>
+                <p className='font-normal'>Monty Carlo</p>
+                <p className='font-light text-txt-secondary-color'>
+                  Lorem ipsum dolor sit amet
+                </p>
+                <div className='flex gap-3'>
+                  <p className='font-light text-primary cursor-pointer'>Like</p>
+                  <p className='font-light text-primary cursor-pointer'>
+                    Reply
+                  </p>
+                </div>
+              </div>
+            </div>
 
-        <div>
-          <input
-            placeholder='Enter your comment'
-            className='mt-3
+            <div className='flex gap-4 flex-grow pl-12'>
+              <img
+                className='rounded-full w-9 h-9 mt-1'
+                src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650191393/01_jxbjlo.jpg'
+                alt='comment-profile-pic'
+              />
+              <div>
+                <p className='font-normal'>Monty Carlo</p>
+                <p className='font-light text-txt-secondary-color'>
+                  Thank you for your reply!
+                </p>
+                <p className='font-light text-primary cursor-pointer'>Like</p>
+              </div>
+            </div>
+
+            <div>
+              <input
+                placeholder='Enter your comment'
+                className='mt-3
         block
         w-full
         rounded-sm
@@ -117,11 +184,13 @@ const PostFeedCard = ({ postData }) => {
         border
         shadow-sm
         focus:border-primary'
-            type='text'
-          />
+                type='text'
+              />
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
+      ) : null}
+    </>
   );
 };
 
