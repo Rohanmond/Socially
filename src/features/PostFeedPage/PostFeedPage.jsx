@@ -234,7 +234,7 @@ export const PostFeedPage = () => {
             {/**Post-feed */}
             <div className='flex flex-col gap-4'>
               {allPosts.map((el) => {
-                return <PostFeedCard postData={el} />;
+                return <PostFeedCard key={el._id} postData={el} />;
               })}
             </div>
             {/* <div className='flex flex-col gap-4 bg-nav-background rounded-lg drop-shadow-2xl p-5'>
