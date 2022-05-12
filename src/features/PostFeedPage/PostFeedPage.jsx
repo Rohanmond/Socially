@@ -78,7 +78,7 @@ export const PostFeedPage = () => {
         <div className='fixed z-50 top-0 left-0 w-full h-full flex justify-center items-center'>
           <img
             src='https://res.cloudinary.com/donqbxlnc/image/upload/v1651565040/auth-loader_atroq7.gif'
-            alt=''
+            alt='loader'
           />
         </div>
       ) : null}
