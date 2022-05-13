@@ -71,6 +71,7 @@ export const PostFeedPage = () => {
     setPostInputForm({ ...postInputForm, pic: base64File });
   };
 
+  console.log(allPosts);
   return (
     <>
       <Nav />
@@ -245,9 +246,11 @@ export const PostFeedPage = () => {
             </div>
             {/**Post-feed */}
             <div className='flex flex-col gap-4'>
-              {allPosts.map((el) => {
-                return <PostFeedCard key={el._id} postData={el} />;
-              })}
+              {[...allPosts]
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                .map((el) => {
+                  return <PostFeedCard key={el._id} postData={el} />;
+                })}
             </div>
           </div>
         </div>

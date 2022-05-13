@@ -2,8 +2,10 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
   addPostService,
   deletePostService,
+  dislikePostService,
   editPostService,
   getAllPostsService,
+  likePostService,
 } from '../../Services/postServices';
 import { ToastHandler, ToastType } from '../../utils/toastUtils';
 
@@ -49,6 +51,30 @@ export const deletePost = createAsyncThunk(
     try {
       const response = await deletePostService(postId, authToken);
 
+      return response.data.posts;
+    } catch (err) {
+      thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const likePost = createAsyncThunk(
+  'post/likePost',
+  async ({ postId, authToken }, thunkAPI) => {
+    try {
+      const response = await likePostService(postId, authToken);
+      return response.data.posts;
+    } catch (err) {
+      thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const dislikePost = createAsyncThunk(
+  'post/dislikePost',
+  async ({ postId, authToken }, thunkAPI) => {
+    try {
+      const response = await dislikePostService(postId, authToken);
       return response.data.posts;
     } catch (err) {
       thunkAPI.rejectWithValue(err.response.data);
@@ -113,6 +139,25 @@ const postsSlice = createSlice({
       ToastHandler(ToastType.Success, 'Post deleted successfully');
     },
     [deletePost.rejected]: (state, action) => {
+      state.isLoading = false;
+      ToastHandler(ToastType.Error, action.payload);
+    },
+    [likePost.pending]: (state) => {},
+    [likePost.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.allPosts = action.payload;
+    },
+    [likePost.rejected]: (state, action) => {
+      state.isLoading = false;
+      ToastHandler(ToastType.Error, action.payload);
+    },
+    [dislikePost.pending]: (state) => {},
+    [dislikePost.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.allPosts = action.payload;
+      console.log(action);
+    },
+    [dislikePost.rejected]: (state, action) => {
       state.isLoading = false;
       ToastHandler(ToastType.Error, action.payload);
     },

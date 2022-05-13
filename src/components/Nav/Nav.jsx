@@ -32,17 +32,14 @@ export const Nav = () => {
           <li title='search' className='cursor-pointer hidden sm:block'>
             <i className='ri-search-line'></i>
           </li>
-          <li title='feed' className='cursor-pointer'>
+          <li title='feed' className='cursor-pointer flex items-center'>
             <i className='ri-home-8-line'></i>
-          </li>
-          <li title='follow' className='cursor-pointer'>
-            <i className='ri-heart-line'></i>
           </li>
 
           <li className='cursor-pointer'>
             <img
-              onClick={() => navigate('/profile')}
-              className='w-12 h-12 object-cover rounded-full'
+              onClick={() => navigate(`/profile/${user.userHandler}`)}
+              className='w-8 h-8 object-cover rounded-full'
               src={user?.pic}
               alt='profile'
             />

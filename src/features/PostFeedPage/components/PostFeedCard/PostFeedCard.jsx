@@ -1,16 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { useOutsideClickHandler } from '../../../../custom-hooks';
 import { getUserById } from '../../../../Services/userServices';
-import { deletePost } from '../../PostsSlice';
+import {
+  postBookmark,
+  removeBookmark,
+} from '../../../Authentication/authenticationSlice';
+import { deletePost, dislikePost, likePost } from '../../PostsSlice';
 import { openEditPostHandler } from '../../toggleEditPostModalSlice';
-import { EditPostModal } from '../EditPostModal';
 
 const PostFeedCard = ({ postData }) => {
   const { _id, content, createdAt, likes, pic, userId } = postData;
   const { user: authUser, token } = useSelector(
     (store) => store.authentication
   );
+  const navigate = useNavigate();
   const [user, setUser] = useState(null);
   const menuRef = useRef();
   const dispatch = useDispatch();
@@ -25,8 +30,12 @@ const PostFeedCard = ({ postData }) => {
 
   useEffect(() => {
     (async () => {
-      const res = await getUserById(userId);
-      setUser(res.data.user);
+      try {
+        const res = await getUserById(userId);
+        setUser(res.data.user);
+      } catch (err) {
+        console.log(err);
+      }
     })();
   }, [userId]);
 
@@ -37,12 +46,16 @@ const PostFeedCard = ({ postData }) => {
           {/** post header */}
           <div className='flex gap-4  flex-grow'>
             <img
-              className='rounded-full h-12 w-12 object-cover'
+              onClick={() => navigate(`/profile/${user?.userHandler}`)}
+              className='cursor-pointer rounded-full h-12 w-12 object-cover'
               src={user.pic}
               alt='post-hero'
             />
             <div className='flex justify-between flex-grow'>
-              <div className='flex flex-col'>
+              <div
+                onClick={() => navigate(`/profile/${user?.userHandler}`)}
+                className='flex flex-col cursor-pointer'
+              >
                 <p className='text-xl'>{`${user.firstName} ${user.lastName}`}</p>
                 <p className='text-xs text-txt-secondary-color'>
                   {new Date(createdAt).toDateString()}{' '}
@@ -57,13 +70,33 @@ const PostFeedCard = ({ postData }) => {
                 {openMenu ? (
                   <div ref={menuRef} className='absolute right-0'>
                     <div className='w-40 text-txt-secondary-color bg-secondary-background border border-gray-200 rounded-lg'>
-                      <button
-                        type='button'
-                        className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
-                      >
-                        <i className='far fa-bookmark'></i>
-                        Save post
-                      </button>
+                      {authUser.bookmarks.some((el) => el === _id) ? (
+                        <button
+                          type='button'
+                          onClick={() => {
+                            dispatch(removeBookmark({ postId: _id, token }));
+                            setOpenMenu(false);
+                          }}
+                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg text-red-500 hover:text-red-500 focus:z-10   focus:text-red-600'
+                        >
+                          <i className='far fa-trash-alt'></i>
+                          Remove safe
+                        </button>
+                      ) : (
+                        <button
+                          type='button'
+                          onClick={() => {
+                            dispatch(
+                              postBookmark({ postId: _id, token: token })
+                            );
+                            setOpenMenu(false);
+                          }}
+                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
+                        >
+                          <i className='far fa-bookmark'></i>
+                          Save post
+                        </button>
+                      )}
                       {user._id === authUser._id && (
                         <button
                           type='button'
@@ -84,7 +117,7 @@ const PostFeedCard = ({ postData }) => {
                             );
                           }}
                           type='button'
-                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
+                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg hover:text-red-500 focus:z-10   focus:text-red-700'
                         >
                           <i className='far fa-trash-alt'></i>
                           Delete post
@@ -106,12 +139,31 @@ const PostFeedCard = ({ postData }) => {
           {/**Post footer */}
           <div className='flex  gap-4 sm:gap-2 flex-grow py-1  items-center justify-evenly font-normal text-txt-secondary-color'>
             <div className='flex items-center gap-1 cursor-pointer'>
-              <i className='far fa-thumbs-up'></i>
-              <span>140</span>
+              {!likes.likedBy.some((el) => el._id === authUser._id) ? (
+                <i
+                  onClick={() =>
+                    dispatch(likePost({ postId: _id, authToken: token }))
+                  }
+                  className='far fa-thumbs-up'
+                ></i>
+              ) : (
+                <i className='fas fa-thumbs-up'></i>
+              )}
+              {likes.likedBy.length > 0 ? (
+                <span>{likes.likedBy.length}</span>
+              ) : null}
             </div>
             <div className='flex items-center cursor-pointer gap-1'>
-              <i className='far fa-thumbs-down'></i>
-              <span></span>
+              {!likes.dislikedBy.some((el) => el._id === authUser._id) ? (
+                <i
+                  onClick={() =>
+                    dispatch(dislikePost({ postId: _id, authToken: token }))
+                  }
+                  className='far fa-thumbs-down'
+                ></i>
+              ) : (
+                <i className='fas fa-thumbs-down'></i>
+              )}
             </div>
             <div className='flex items-center gap-1 cursor-pointer'>
               <i className='far fa-comment'></i>

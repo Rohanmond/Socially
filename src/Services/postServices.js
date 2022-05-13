@@ -37,4 +37,6 @@ export {
   addPostService,
   editPostService,
   deletePostService,
+  likePostService,
+  dislikePostService,
 };
