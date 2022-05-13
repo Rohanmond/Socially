@@ -4,6 +4,10 @@ import {
   signUpService,
   userUpdateService,
 } from '../../Services/authServices';
+import {
+  postBookmarkService,
+  removeBookmarkService,
+} from '../../Services/userServices';
 
 import { ToastHandler, ToastType } from '../../utils/toastUtils';
 
@@ -56,6 +60,30 @@ export const userUpdateHandler = createAsyncThunk(
         'There is some error while updating user',
         err
       );
+    }
+  }
+);
+
+export const postBookmark = createAsyncThunk(
+  'authentication/postBookmark',
+  async ({ postId, token }, thunkAPI) => {
+    try {
+      const response = await postBookmarkService(postId, token);
+      return response.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const removeBookmark = createAsyncThunk(
+  'authentication/removeBookmark',
+  async ({ postId, token }, thunkAPI) => {
+    try {
+      const response = await removeBookmarkService(postId, token);
+      return response.data;
+    } catch (err) {
+      return thunkAPI.rejectWithValue(err.response.data);
     }
   }
 );
@@ -121,6 +149,34 @@ const authenticationSlice = createSlice({
       );
     },
     [userUpdateHandler.rejected]: (state, action) => {
+      state.isLoading = false;
+      ToastHandler(ToastType.Error, action.payload);
+    },
+    [postBookmark.pending]: (state) => {},
+    [postBookmark.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      const newUser = { ...state.user, bookmarks: action.payload.bookmarks };
+      state.user = newUser;
+      localStorage.setItem(
+        'loginItems',
+        JSON.stringify({ token: state.token, user: newUser })
+      );
+    },
+    [postBookmark.rejected]: (state, action) => {
+      state.isLoading = false;
+      ToastHandler(ToastType.Error, action.payload);
+    },
+    [removeBookmark.pending]: (state) => {},
+    [removeBookmark.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      const newUser = { ...state.user, bookmarks: action.payload.bookmarks };
+      state.user = newUser;
+      localStorage.setItem(
+        'loginItems',
+        JSON.stringify({ token: state.token, user: newUser })
+      );
+    },
+    [removeBookmark.rejected]: (state, action) => {
       state.isLoading = false;
       ToastHandler(ToastType.Error, action.payload);
     },

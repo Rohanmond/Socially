@@ -3,6 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useOutsideClickHandler } from '../../../../custom-hooks';
 import { getUserById } from '../../../../Services/userServices';
+import {
+  postBookmark,
+  removeBookmark,
+} from '../../../Authentication/authenticationSlice';
 import { deletePost, dislikePost, likePost } from '../../PostsSlice';
 import { openEditPostHandler } from '../../toggleEditPostModalSlice';
 
@@ -66,13 +70,31 @@ const PostFeedCard = ({ postData }) => {
                 {openMenu ? (
                   <div ref={menuRef} className='absolute right-0'>
                     <div className='w-40 text-txt-secondary-color bg-secondary-background border border-gray-200 rounded-lg'>
-                      <button
-                        type='button'
-                        className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
-                      >
-                        <i className='far fa-bookmark'></i>
-                        Save post
-                      </button>
+                      {authUser.bookmarks.some((el) => el === _id) ? (
+                        <button
+                          type='button'
+                          onClick={() =>
+                            dispatch(removeBookmark({ postId: _id, token }))
+                          }
+                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg text-red-500 hover:text-red-500 focus:z-10   focus:text-red-600'
+                        >
+                          <i className='far fa-trash-alt'></i>
+                          Remove safe
+                        </button>
+                      ) : (
+                        <button
+                          type='button'
+                          onClick={() =>
+                            dispatch(
+                              postBookmark({ postId: _id, token: token })
+                            )
+                          }
+                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
+                        >
+                          <i className='far fa-bookmark'></i>
+                          Save post
+                        </button>
+                      )}
                       {user._id === authUser._id && (
                         <button
                           type='button'
