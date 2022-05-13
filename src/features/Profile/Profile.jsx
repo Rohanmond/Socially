@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { Nav } from '../../components';
+import { useOutsideClickHandler } from '../../custom-hooks';
 import { getUserByHandler } from '../../Services/userServices';
 import { ToastHandler, ToastType } from '../../utils/toastUtils';
 import {
@@ -16,6 +17,7 @@ import { ProfileModal } from './components/ProfileModal/ProfileModal';
 export const Profile = () => {
   const dispatch = useDispatch();
   const { userHandler } = useParams();
+  const navigate = useNavigate();
   const [showProfileModal, setShowProfileModal] = useState(false);
   const { user: authUser } = useSelector((store) => store.authentication);
   const { allPosts, isLoading } = useSelector((store) => store.posts);
@@ -23,11 +25,20 @@ export const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [isCurrUser, setIsCurrUser] = useState(false);
   const [subNav, setSubNav] = useState('posts');
+  const [openFollowModal, setOpenFollowModal] = useState([]);
+  const openFollowRef = useRef();
+  const { resetMenu } = useOutsideClickHandler(openFollowRef);
   const { token } = useSelector((store) => store.authentication);
 
   useEffect(() => {
     dispatch(getAllPosts());
   }, []);
+
+  useEffect(() => {
+    if (resetMenu) {
+      setOpenFollowModal([]);
+    }
+  }, [resetMenu]);
 
   useEffect(() => {
     (async () => {
@@ -65,14 +76,43 @@ export const Profile = () => {
           />
         </div>
       ) : null}
+      {openFollowModal.length > 0 ? (
+        <div className='h-screen w-screen fixed flex justify-center items-center z-50 bg-background-dim'>
+          <div
+            ref={openFollowRef}
+            className='flex flex-col gap-4 p-6 h-3/5 z-50 overflow-y-scroll rounded-xl  sm:w-9/12 w-1/3 bg-background'
+          >
+            {openFollowModal.map((el) => {
+              return (
+                <div
+                  onClick={() => {
+                    navigate(`/profile/${el.userHandler}`);
+                    setOpenFollowModal([]);
+                  }}
+                  className='cursor-pointer flex justify-between items-center'
+                >
+                  <img
+                    className='w-20 sm:w-16 sm:h-16 h-20 object-cover rounded-full'
+                    src={el.pic}
+                    alt='user pic'
+                  />
+                  <p className='font-medium text-lg text-txt-secondary-color'>
+                    {el.firstName} {el.lastName}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      ) : null}
       <Nav />
-      <main className='p-2'>
+      <main className='p-2 mt-4'>
         {/*divider */}
         <div className='flex justify-center'>
           {/* profile container */}
           <div className='flex flex-col w-2/5 md:w-4/5 sm:w-full  gap-4 '>
             {/* profile */}
-            <div className='flex justify-evenly items-center  bg-nav-background gap-10 sm:gap-6 rounded-lg drop-shadow-2xl  p-5'>
+            <div className='flex justify-around items-center  bg-nav-background gap-10 sm:gap-6 rounded-lg drop-shadow-2xl  p-5'>
               <img
                 className='h-40 object-cover w-40 sm:h-24 sm:w-24 rounded-full'
                 src={user?.pic}
@@ -147,13 +187,26 @@ export const Profile = () => {
                     </a>
                   </div>
                 ) : null}
-                <div className='flex gap-2 px-2  text-sm sm:text-xs'>
-                  <p>
+                <div className='flex gap-2  justify-between text-base sm:text-sm'>
+                  <p
+                    onClick={() => setSubNav('posts')}
+                    className='cursor-pointer'
+                  >
                     {allPosts.filter((el) => el.userId === user?._id).length}{' '}
                     posts
                   </p>
-                  <p>{user?.followers?.length} followers</p>
-                  <p>{user?.following?.length} following</p>
+                  <p
+                    onClick={() => setOpenFollowModal(user?.followers)}
+                    className='cursor-pointer'
+                  >
+                    {user?.followers?.length} followers
+                  </p>
+                  <p
+                    onClick={() => setOpenFollowModal(user?.following)}
+                    className='cursor-pointer'
+                  >
+                    {user?.following?.length} following
+                  </p>
                 </div>
                 {isCurrUser ? (
                   <button
@@ -187,17 +240,16 @@ export const Profile = () => {
                   <p>BOOKMARKED</p>
                 </div>
               ) : null}
-              {isCurrUser ? (
-                <div
-                  onClick={() => setSubNav('followers')}
-                  className={`cursor-pointer flex gap-1  ${
-                    subNav === 'followers' ? 'text-primary' : ''
-                  }`}
-                >
-                  <i className='ri-heart-2-line'></i>
-                  <p>FOLLOWERS</p>
-                </div>
-              ) : null}
+
+              <div
+                onClick={() => setSubNav('activities')}
+                className={`cursor-pointer flex gap-1  ${
+                  subNav === 'activities' ? 'text-primary' : ''
+                }`}
+              >
+                <i className='ri-heart-2-line'></i>
+                <p>ACTIVITIES</p>
+              </div>
             </div>
             {/**Post-feed */}
             {subNav === 'posts' ? (
@@ -242,7 +294,7 @@ export const Profile = () => {
                   })}
               </div>
             ) : (
-              <div>followers</div>
+              <div>Activities is coming soon</div>
             )}
           </div>
         </div>

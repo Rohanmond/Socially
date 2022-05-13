@@ -9,7 +9,7 @@ export const FollowChip = ({ user }) => {
   const dispatch = useDispatch();
   const { token } = useSelector((store) => store.authentication);
   return (
-    <div className='h-48 follow-container-width bg-yellow-400 rounded-lg flex flex-col gap-4 items-center justify-center'>
+    <div className='h-48 follow-container-width bg-nav-background rounded-lg flex flex-col gap-4 items-center justify-center'>
       <div className=''>
         <img
           onClick={() => navigate(`/profile/${user?.userHandler}`)}
