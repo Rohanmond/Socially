@@ -4,9 +4,13 @@ import { useParams } from 'react-router-dom';
 import { Nav } from '../../components';
 import { getUserByHandler } from '../../Services/userServices';
 import { ToastHandler, ToastType } from '../../utils/toastUtils';
-import { logoutHandler } from '../Authentication/authenticationSlice';
+import {
+  logoutHandler,
+  userUpdateHandler,
+} from '../Authentication/authenticationSlice';
 import PostFeedCard from '../PostFeedPage/components/PostFeedCard/PostFeedCard';
 import { getAllPosts } from '../PostFeedPage/PostsSlice';
+import { followUser, unFollowUser } from '../PostFeedPage/UserSlice';
 import { ProfileModal } from './components/ProfileModal/ProfileModal';
 
 export const Profile = () => {
@@ -19,6 +23,7 @@ export const Profile = () => {
   const [loading, setLoading] = useState(false);
   const [isCurrUser, setIsCurrUser] = useState(false);
   const [subNav, setSubNav] = useState('posts');
+  const { token } = useSelector((store) => store.authentication);
 
   useEffect(() => {
     dispatch(getAllPosts());
@@ -74,8 +79,8 @@ export const Profile = () => {
                 alt='profile'
               />
 
-              <div className=' flex flex-col justify-center gap-4 sm:gap-2'>
-                <div className='flex  items-center gap-2'>
+              <div className=' flex flex-col justify-center  gap-4 sm:gap-2'>
+                <div className='flex  items-center justify-between gap-2'>
                   <p className='text-3xl  sm:text-base text-center'>
                     {user?.firstName} {user?.lastName}
                   </p>
@@ -86,7 +91,39 @@ export const Profile = () => {
                     >
                       Edit profile
                     </button>
-                  ) : null}
+                  ) : authUser.following.some((us) => us._id === user?._id) ? (
+                    <button
+                      onClick={() =>
+                        dispatch(
+                          unFollowUser({
+                            followUserId: user._id,
+                            token,
+                            dispatch,
+                            userUpdateHandler,
+                          })
+                        )
+                      }
+                      className='py-1 px-2 ring-1 rounded-md hover:bg-secondary-background text-sm sm:text-xs'
+                    >
+                      Unfollow
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() =>
+                        dispatch(
+                          followUser({
+                            followUserId: user._id,
+                            token,
+                            dispatch,
+                            userUpdateHandler,
+                          })
+                        )
+                      }
+                      className='py-1 px-2 ring-1 rounded-md hover:bg-secondary-background text-sm sm:text-xs'
+                    >
+                      Follow
+                    </button>
+                  )}
                 </div>
                 <div className='flex gap-1 text-sm sm:text-xs'>
                   <p>@{user?.userHandler}</p>
@@ -115,8 +152,8 @@ export const Profile = () => {
                     {allPosts.filter((el) => el.userId === user?._id).length}{' '}
                     posts
                   </p>
-                  <p>230 followers</p>
-                  <p>658 following</p>
+                  <p>{user?.followers?.length} followers</p>
+                  <p>{user?.following?.length} following</p>
                 </div>
                 {isCurrUser ? (
                   <button
@@ -169,7 +206,9 @@ export const Profile = () => {
                   .length === 0 ? (
                   <div className='bg-nav-background p-3 rounded-lg drop-shadow-2xl'>
                     <p className='text-center text-xl'>
-                      You haven't post anything yet
+                      {isCurrUser
+                        ? "You haven't post anything yet"
+                        : `${user?.firstName} haven't post anything yet`}
                     </p>
                   </div>
                 ) : null}

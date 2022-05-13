@@ -1,5 +1,9 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { getAllUsersService } from '../../Services/userServices';
+import {
+  followUserService,
+  getAllUsersService,
+  unFollowUserService,
+} from '../../Services/userServices';
 import { ToastHandler, ToastType } from '../../utils/toastUtils';
 
 const initialState = {
@@ -19,6 +23,33 @@ export const getAllUsers = createAsyncThunk(
   }
 );
 
+export const followUser = createAsyncThunk(
+  'users/followUser',
+  async ({ followUserId, token, dispatch, userUpdateHandler }, thunkAPI) => {
+    try {
+      console.log(followUserId, token, dispatch, userUpdateHandler);
+      const response = await followUserService(followUserId, token);
+      dispatch(userUpdateHandler({ userData: response.data.user, token }));
+      return response.data;
+    } catch (err) {
+      thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const unFollowUser = createAsyncThunk(
+  'users/unFollowUser',
+  async ({ followUserId, token, dispatch, userUpdateHandler }, thunkAPI) => {
+    try {
+      const response = await unFollowUserService(followUserId, token);
+      dispatch(userUpdateHandler({ userData: response.data.user, token }));
+      return response.data;
+    } catch (err) {
+      thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
 const usersSlice = createSlice({
   name: 'users',
   initialState,
@@ -32,6 +63,32 @@ const usersSlice = createSlice({
       state.allUsers = action.payload;
     },
     [getAllUsers.rejected]: (state, action) => {
+      state.isLoading = false;
+      ToastHandler(ToastType.Error, action.payload);
+    },
+
+    [followUser.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [followUser.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      console.log(action);
+      state.allUsers = action.payload.allUsers;
+    },
+    [followUser.rejected]: (state, action) => {
+      state.isLoading = false;
+      ToastHandler(ToastType.Error, action.payload);
+    },
+
+    [unFollowUser.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [unFollowUser.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      console.log(action);
+      state.allUsers = action.payload.allUsers;
+    },
+    [unFollowUser.rejected]: (state, action) => {
       state.isLoading = false;
       ToastHandler(ToastType.Error, action.payload);
     },

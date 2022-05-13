@@ -1,0 +1,3 @@
+.follow-chip-scroll::-webkit-scrollbar {
+  display: none;
+}

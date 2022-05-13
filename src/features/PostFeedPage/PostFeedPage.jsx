@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Nav } from '../../components';
+import './PostFeedPage.css';
 import { useOutsideClickHandler } from '../../custom-hooks';
 import { EditPostModal } from './components/EditPostModal';
 import { FollowChip } from './components/FollowChip/FollowChip';
@@ -76,6 +77,7 @@ export const PostFeedPage = () => {
   };
 
   console.log(allUsers);
+  console.log(user);
   return (
     <>
       <Nav />
@@ -215,14 +217,14 @@ export const PostFeedPage = () => {
             </div>
 
             {/**Scrollable follow chips */}
-            <div className='flex flex-col gap-2 bg-nav-background rounded-lg drop-shadow-2xl p-4'>
-              <div className='p-1'>
-                <div className='w-full flex gap-1 flex-nowrap overflow-x-scroll'>
+            <div className='flex flex-col gap-2  rounded-lg drop-shadow-2xl '>
+              <div className=''>
+                <div className='follow-chip-scroll w-full flex gap-1 flex-nowrap overflow-x-scroll'>
                   {allUsers
                     .filter(
                       (us) =>
                         user._id !== us._id &&
-                        !user.following.some((id) => id === us._id)
+                        !user.following.some((eachUs) => eachUs._id === us._id)
                     )
                     .map((el) => {
                       return <FollowChip key={el._id} user={el} />;

@@ -24,6 +24,20 @@ const removeBookmarkService = async (postId, authorization) =>
     { headers: { authorization } }
   );
 
+const followUserService = async (followUserId, authorization) =>
+  axios.post(
+    `/api/users/follow/${followUserId}`,
+    {},
+    { headers: { authorization } }
+  );
+
+const unFollowUserService = async (followUserId, authorization) =>
+  axios.post(
+    `/api/users/unfollow/${followUserId}`,
+    {},
+    { headers: { authorization } }
+  );
+
 export {
   getAllUsersService,
   getUserById,
@@ -31,4 +45,6 @@ export {
   getAllBookmarkService,
   postBookmarkService,
   removeBookmarkService,
+  followUserService,
+  unFollowUserService,
 };
