@@ -164,6 +164,14 @@ export const Profile = () => {
             {subNav === 'posts' ? (
               <div className='flex flex-col gap-4'>
                 {[...allPosts.filter((el) => el.userId === user?._id)]
+                  .length === 0 ? (
+                  <div className='bg-nav-background p-3 rounded-lg drop-shadow-2xl'>
+                    <p className='text-center text-xl'>
+                      You haven't post anything yet
+                    </p>
+                  </div>
+                ) : null}
+                {[...allPosts.filter((el) => el.userId === user?._id)]
                   .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
                   .map((el) => {
                     return <PostFeedCard key={el._id} postData={el} />;
@@ -171,6 +179,17 @@ export const Profile = () => {
               </div>
             ) : subNav === 'bookmarked' ? (
               <div className='flex flex-col gap-4'>
+                {[
+                  ...allPosts.filter((el) =>
+                    authUser.bookmarks.some((bookmark) => bookmark === el._id)
+                  ),
+                ].length === 0 ? (
+                  <div className='bg-nav-background p-3 rounded-lg drop-shadow-2xl'>
+                    <p className='text-center text-xl'>
+                      You haven't bookmarked anything yet
+                    </p>
+                  </div>
+                ) : null}
                 {[
                   ...allPosts.filter((el) =>
                     authUser.bookmarks.some((bookmark) => bookmark === el._id)
