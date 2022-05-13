@@ -19,7 +19,7 @@ export const posts = [
     },
     comments: [],
     userId: 'asassdafdgdk',
-    createdAt: formatDate(),
+    createdAt: '2022-01-25T10:38:12+05:30',
     updatedAt: formatDate(),
   },
   {
@@ -34,7 +34,7 @@ export const posts = [
     },
     comments: [],
     userId: 'asassdafdgdk',
-    createdAt: formatDate(),
+    createdAt: '2022-01-25T10:38:12+05:30',
     updatedAt: formatDate(),
   },
 ];

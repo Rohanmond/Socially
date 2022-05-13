@@ -10,7 +10,7 @@ export const users = [
     lastName: 'Mondal',
     username: 'rohan@gmail.com',
     password: '1234abcd',
-    createdAt: formatDate(),
+    createdAt: '2022-01-25T10:38:12+05:30',
     updatedAt: formatDate(),
     userHandler: 'rohan',
     pic: 'https://res.cloudinary.com/donqbxlnc/image/upload/v1651664931/avatar-1577909_960_720_cl1ooh.png',

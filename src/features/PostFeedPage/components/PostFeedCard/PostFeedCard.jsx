@@ -73,9 +73,10 @@ const PostFeedCard = ({ postData }) => {
                       {authUser.bookmarks.some((el) => el === _id) ? (
                         <button
                           type='button'
-                          onClick={() =>
-                            dispatch(removeBookmark({ postId: _id, token }))
-                          }
+                          onClick={() => {
+                            dispatch(removeBookmark({ postId: _id, token }));
+                            setOpenMenu(false);
+                          }}
                           className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg text-red-500 hover:text-red-500 focus:z-10   focus:text-red-600'
                         >
                           <i className='far fa-trash-alt'></i>
@@ -84,11 +85,12 @@ const PostFeedCard = ({ postData }) => {
                       ) : (
                         <button
                           type='button'
-                          onClick={() =>
+                          onClick={() => {
                             dispatch(
                               postBookmark({ postId: _id, token: token })
-                            )
-                          }
+                            );
+                            setOpenMenu(false);
+                          }}
                           className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
                         >
                           <i className='far fa-bookmark'></i>
@@ -115,7 +117,7 @@ const PostFeedCard = ({ postData }) => {
                             );
                           }}
                           type='button'
-                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
+                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg hover:text-red-500 focus:z-10   focus:text-red-700'
                         >
                           <i className='far fa-trash-alt'></i>
                           Delete post
