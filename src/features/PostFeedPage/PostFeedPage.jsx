@@ -3,8 +3,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Nav } from '../../components';
 import { useOutsideClickHandler } from '../../custom-hooks';
 import { EditPostModal } from './components/EditPostModal';
+import { FollowChip } from './components/FollowChip/FollowChip';
 import PostFeedCard from './components/PostFeedCard/PostFeedCard';
 import { addPost, getAllPosts } from './PostsSlice';
+import { getAllUsers } from './UserSlice';
 
 export const PostFeedPage = () => {
   const { user, token } = useSelector((store) => store.authentication);
@@ -15,6 +17,7 @@ export const PostFeedPage = () => {
   const { openModal, postData } = useSelector(
     (store) => store.toggleEditPostModal
   );
+  const { allUsers } = useSelector((store) => store.users);
   const [postInputForm, setPostInputForm] = useState({
     content: '',
     pic: '',
@@ -23,6 +26,7 @@ export const PostFeedPage = () => {
 
   useEffect(() => {
     dispatch(getAllPosts());
+    dispatch(getAllUsers());
   }, []);
 
   useEffect(() => {
@@ -71,7 +75,7 @@ export const PostFeedPage = () => {
     setPostInputForm({ ...postInputForm, pic: base64File });
   };
 
-  console.log(allPosts);
+  console.log(allUsers);
   return (
     <>
       <Nav />
@@ -213,36 +217,18 @@ export const PostFeedPage = () => {
             {/**Scrollable follow chips */}
             <div className='flex flex-col gap-2 bg-nav-background rounded-lg drop-shadow-2xl p-4'>
               <div className='p-1'>
-                <div className='flex gap-1 flex-nowrap overflow-x-scroll'>
-                  <div className='w-28 h-40 bg-yellow-400 rounded-lg'>
-                    Hello Loremsddsdsd
-                  </div>
-                  <div className='w-28 h-40 bg-yellow-400 rounded-lg'>
-                    Hello Loremsddsdsd
-                  </div>
-                  <div className='w-28 h-40 bg-yellow-400 rounded-lg'>
-                    Hello Loremsddsdsd
-                  </div>
-                  <div className='w-28 h-40 bg-yellow-400 rounded-lg'>
-                    Hello Loremsddsdsd
-                  </div>
-                  <div className='w-28 h-40 bg-yellow-400 rounded-lg'>
-                    Hello Loremsddsdsd
-                  </div>
-                  <div className='w-28 h-40 bg-yellow-400 rounded-lg'>
-                    Hello Loremsddsdsd
-                  </div>
-                  <div className='w-28 h-40 bg-yellow-400 rounded-lg'>
-                    Hello Loremsddsdsd
-                  </div>
-                  <div className='w-28 h-40 bg-yellow-400 rounded-lg'>
-                    Hello Loremsddsdsd
-                  </div>
+                <div className='w-full flex gap-1 flex-nowrap overflow-x-scroll'>
+                  {allUsers
+                    .filter(
+                      (us) =>
+                        user._id !== us._id &&
+                        !user.following.some((id) => id === us._id)
+                    )
+                    .map((el) => {
+                      return <FollowChip key={el._id} user={el} />;
+                    })}
                 </div>
               </div>
-              <button className='p-2 bg-primary active:bg-blue-500 text-white rounded-lg'>
-                See More People
-              </button>
             </div>
             {/**Post-feed */}
             <div className='flex flex-col gap-4'>

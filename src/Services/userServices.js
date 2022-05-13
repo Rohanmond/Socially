@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const getAllUsers = async () => axios.get('/api/users');
+const getAllUsersService = async () => axios.get('/api/users');
 
 const getUserById = async (userId) => axios.get(`/api/users/id/${userId}`);
 
@@ -25,7 +25,7 @@ const removeBookmarkService = async (postId, authorization) =>
   );
 
 export {
-  getAllUsers,
+  getAllUsersService,
   getUserById,
   getUserByHandler,
   getAllBookmarkService,

@@ -47,7 +47,6 @@ export const Profile = () => {
     return () => clearTimeout(id);
   }, [subNav]);
 
-  console.log(user);
   return (
     <>
       {showProfileModal ? (
@@ -103,7 +102,7 @@ export const Profile = () => {
                   <div className='flex gap-2 text-sm sm:text-xs'>
                     <a
                       className='text-blue-500'
-                      href={`https://${user?.link}`}
+                      href={user?.link}
                       rel='noreferrer'
                       target={'_blank'}
                     >
