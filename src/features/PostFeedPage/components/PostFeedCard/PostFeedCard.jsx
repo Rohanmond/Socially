@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import './PostFeedCard.css';
 import { useOutsideClickHandler } from '../../../../custom-hooks';
 import { getUserById } from '../../../../Services/userServices';
 import {
@@ -47,7 +48,7 @@ const PostFeedCard = ({ postData }) => {
           <div className='flex gap-4  flex-grow'>
             <img
               onClick={() => navigate(`/profile/${user?.userHandler}`)}
-              className='cursor-pointer rounded-full h-12 w-12 object-cover'
+              className='cursor-pointer rounded-full w-14 h-14 object-cover'
               src={user.pic}
               alt='post-hero'
             />
@@ -133,7 +134,11 @@ const PostFeedCard = ({ postData }) => {
           <div className='flex flex-col gap-6 flex-grow'>
             <p className='px-4'>{content}</p>
             {pic ? (
-              <img className='rounded-lg' src={pic} alt='post-details' />
+              <img
+                className='rounded-lg max-h-96 w-full object-contain'
+                src={pic}
+                alt='post-details'
+              />
             ) : null}
           </div>
           {/**Post footer */}

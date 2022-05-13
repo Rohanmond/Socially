@@ -209,7 +209,9 @@ export const PostFeedPage = () => {
                 }}
                 disabled={postInputForm.content ? false : true}
                 className={`mb-4 mx-4 p-2 bg-primary active:bg-blue-500 text-white rounded-lg ${
-                  postInputForm.content ? '' : 'cursor-not-allowed'
+                  postInputForm.content
+                    ? ''
+                    : 'cursor-not-allowed bg-txt-hover-color active:bg-txt-hover-color'
                 }`}
               >
                 Post
