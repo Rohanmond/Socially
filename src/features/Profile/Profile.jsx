@@ -62,7 +62,7 @@ export const Profile = () => {
         </div>
       ) : null}
       <Nav />
-      <main className='p-4'>
+      <main className='p-2'>
         {/*divider */}
         <div className='flex justify-center'>
           {/* profile container */}
@@ -75,7 +75,7 @@ export const Profile = () => {
                 alt='profile'
               />
 
-              <div className=' flex flex-col justify-center items-center gap-4 sm:gap-2'>
+              <div className=' flex flex-col justify-center gap-4 sm:gap-2'>
                 <div className='flex  items-center gap-2'>
                   <p className='text-3xl  sm:text-base text-center'>
                     {user?.firstName} {user?.lastName}
