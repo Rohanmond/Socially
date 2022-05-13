@@ -5,7 +5,6 @@ import { useOutsideClickHandler } from '../../../../custom-hooks';
 import { getUserById } from '../../../../Services/userServices';
 import { deletePost, dislikePost, likePost } from '../../PostsSlice';
 import { openEditPostHandler } from '../../toggleEditPostModalSlice';
-import { EditPostModal } from '../EditPostModal';
 
 const PostFeedCard = ({ postData }) => {
   const { _id, content, createdAt, likes, pic, userId } = postData;
