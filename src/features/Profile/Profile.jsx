@@ -66,7 +66,7 @@ export const Profile = () => {
         {/*divider */}
         <div className='flex justify-center'>
           {/* profile container */}
-          <div className='flex flex-col w-3/5 md:w-4/5 sm:w-full  gap-4 '>
+          <div className='flex flex-col w-2/5 md:w-4/5 sm:w-full  gap-4 '>
             {/* profile */}
             <div className='flex justify-evenly items-center  bg-nav-background gap-10 sm:gap-6 rounded-lg drop-shadow-2xl  p-5'>
               <img
@@ -112,7 +112,10 @@ export const Profile = () => {
                   </div>
                 ) : null}
                 <div className='flex gap-2 px-2  text-sm sm:text-xs'>
-                  <p>0 posts</p>
+                  <p>
+                    {allPosts.filter((el) => el.userId === user?._id).length}{' '}
+                    posts
+                  </p>
                   <p>230 followers</p>
                   <p>658 following</p>
                 </div>
