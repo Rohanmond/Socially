@@ -21,6 +21,10 @@ export const Profile = () => {
   const [subNav, setSubNav] = useState('posts');
 
   useEffect(() => {
+    dispatch(getAllPosts());
+  }, []);
+
+  useEffect(() => {
     (async () => {
       try {
         setLoading(true);
@@ -36,8 +40,12 @@ export const Profile = () => {
   }, [userHandler]);
 
   useEffect(() => {
-    dispatch(getAllPosts());
-  }, []);
+    setLoading(true);
+    const id = setTimeout(() => {
+      setLoading(false);
+    }, 500);
+    return () => clearTimeout(id);
+  }, [subNav]);
 
   console.log(user);
   return (
@@ -46,7 +54,7 @@ export const Profile = () => {
         <ProfileModal setShowProfileModal={setShowProfileModal} />
       ) : null}
       {loading || isLoading ? (
-        <div className='fixed z-50 top-0 bg-background-dim left-0 w-full h-full flex justify-center items-center'>
+        <div className='fixed z-50 top-0  left-0 w-full h-full flex justify-center items-center'>
           <img
             src='https://res.cloudinary.com/donqbxlnc/image/upload/v1651565040/auth-loader_atroq7.gif'
             alt='loader'
@@ -162,7 +170,17 @@ export const Profile = () => {
                   })}
               </div>
             ) : subNav === 'bookmarked' ? (
-              <div>Bookmarked</div>
+              <div className='flex flex-col gap-4'>
+                {[
+                  ...allPosts.filter((el) =>
+                    authUser.bookmarks.some((bookmark) => bookmark === el._id)
+                  ),
+                ]
+                  .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                  .map((el) => {
+                    return <PostFeedCard key={el._id} postData={el} />;
+                  })}
+              </div>
             ) : (
               <div>followers</div>
             )}
