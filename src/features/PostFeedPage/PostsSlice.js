@@ -1,5 +1,11 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import {
+  addCommentByPostIdService,
+  deleteCommentService,
+  editCommentService,
+  upVoteCommentService,
+} from '../../Services/commentServices';
+import {
   addPostService,
   deletePostService,
   dislikePostService,
@@ -75,6 +81,63 @@ export const dislikePost = createAsyncThunk(
   async ({ postId, authToken }, thunkAPI) => {
     try {
       const response = await dislikePostService(postId, authToken);
+      return response.data.posts;
+    } catch (err) {
+      thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const addComment = createAsyncThunk(
+  'post/addComment',
+  async ({ postId, commentData, token }, thunkAPI) => {
+    try {
+      const response = await addCommentByPostIdService(
+        postId,
+        commentData,
+        token
+      );
+      return response.data.posts;
+    } catch (err) {
+      thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const editComment = createAsyncThunk(
+  'post/editComment',
+  async ({ postId, commentId, commentData, token }, thunkAPI) => {
+    try {
+      const response = await editCommentService(
+        postId,
+        commentId,
+        commentData,
+        token
+      );
+      return response.data.posts;
+    } catch (err) {
+      thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const deleteComment = createAsyncThunk(
+  'post/deleteComment',
+  async ({ postId, commentId, token }, thunkAPI) => {
+    try {
+      const response = await deleteCommentService(postId, commentId, token);
+      return response.data.posts;
+    } catch (err) {
+      thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const likeComment = createAsyncThunk(
+  'post/likeComment',
+  async ({ postId, commentId, token }, thunkAPI) => {
+    try {
+      const response = await upVoteCommentService(postId, commentId, token);
       return response.data.posts;
     } catch (err) {
       thunkAPI.rejectWithValue(err.response.data);
@@ -158,6 +221,53 @@ const postsSlice = createSlice({
       console.log(action);
     },
     [dislikePost.rejected]: (state, action) => {
+      state.isLoading = false;
+      ToastHandler(ToastType.Error, action.payload);
+    },
+
+    [addComment.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [addComment.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.allPosts = action.payload;
+    },
+    [addComment.rejected]: (state, action) => {
+      state.isLoading = false;
+      ToastHandler(ToastType.Error, action.payload);
+    },
+    [editComment.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [editComment.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.allPosts = action.payload;
+    },
+    [editComment.rejected]: (state, action) => {
+      state.isLoading = false;
+      ToastHandler(ToastType.Error, action.payload);
+    },
+
+    [deleteComment.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [deleteComment.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.allPosts = action.payload;
+    },
+    [deleteComment.rejected]: (state, action) => {
+      state.isLoading = false;
+      ToastHandler(ToastType.Error, action.payload);
+    },
+
+    [likeComment.pending]: (state) => {
+      state.isLoading = true;
+    },
+    [likeComment.fulfilled]: (state, action) => {
+      state.isLoading = false;
+      state.allPosts = action.payload;
+    },
+    [likeComment.rejected]: (state, action) => {
       state.isLoading = false;
       ToastHandler(ToastType.Error, action.payload);
     },

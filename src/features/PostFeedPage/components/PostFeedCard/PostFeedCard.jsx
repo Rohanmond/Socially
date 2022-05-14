@@ -8,12 +8,18 @@ import {
   postBookmark,
   removeBookmark,
 } from '../../../Authentication/authenticationSlice';
-import { deletePost, dislikePost, likePost } from '../../PostsSlice';
+import {
+  addComment,
+  deletePost,
+  dislikePost,
+  likePost,
+} from '../../PostsSlice';
 import { openEditPostHandler } from '../../toggleEditPostModalSlice';
 import { ToastHandler, ToastType } from '../../../../utils/toastUtils';
+import { CommentCard } from './components/CommentCard/CommentCard';
 
 const PostFeedCard = ({ postData, individualPage }) => {
-  const { _id, content, createdAt, likes, pic, userId } = postData;
+  const { _id, content, createdAt, likes, pic, userId, comments } = postData;
   const { user: authUser, token } = useSelector(
     (store) => store.authentication
   );
@@ -23,6 +29,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
   const dispatch = useDispatch();
   const { resetMenu } = useOutsideClickHandler(menuRef);
   const [openMenu, setOpenMenu] = useState(false);
+  const [commentInput, setCommentInput] = useState('');
 
   useEffect(() => {
     if (resetMenu) {
@@ -201,7 +208,10 @@ const PostFeedCard = ({ postData, individualPage }) => {
           {individualPage ? (
             <div className='flex gap-3 flex-col border-t-2  pt-6'>
               {/**Comment different person */}
-              <div className='flex gap-4'>
+              {comments.map((el) => {
+                return <CommentCard key={el._id} comment={el} />;
+              })}
+              {/* <div className='flex gap-4'>
                 <img
                   className='rounded-full w-9 h-9 mt-1'
                   src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650205531/02_zqttxd.jpg'
@@ -258,22 +268,38 @@ const PostFeedCard = ({ postData, individualPage }) => {
                   </p>
                   <p className='font-light text-primary cursor-pointer'>Like</p>
                 </div>
-              </div>
+              </div> */}
 
-              <div>
+              <div className='flex w-full  shadow-sm  rounded-md  '>
                 <input
+                  value={commentInput}
                   placeholder='Enter your comment'
-                  className='mt-3
-        block
-        w-full
-        rounded-sm
-        border-txt-hover-color
-        p-2 px-3
-        border
-        shadow-sm
-        focus:border-primary'
+                  className='w-full border border-txt-hover-color focus:border-primary active:border-primary active:outline-none focus:outline-none rounded-l-md p-1.5 px-3'
                   type='text'
+                  onChange={(e) => setCommentInput(e.target.value)}
                 />
+                <button
+                  onClick={() => {
+                    if (commentInput === '') {
+                      ToastHandler(
+                        ToastType.Info,
+                        'Pls Write something in comment box'
+                      );
+                      return;
+                    }
+                    dispatch(
+                      addComment({
+                        postId: _id,
+                        commentData: { content: commentInput, postId: _id },
+                        token,
+                      })
+                    );
+                    setCommentInput('');
+                  }}
+                  className='text-white bg-gradient-to-r from-secondary via-blue-600 to-primary hover:bg-gradient-to-br focus:outline-none   font-medium rounded-r-md text-sm px-4 text-center'
+                >
+                  Post
+                </button>
               </div>
             </div>
           ) : null}

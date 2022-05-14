@@ -22,15 +22,10 @@ export const editCommentService = (
     { headers: { authorization } }
   );
 
-export const deleteCommentService = (
-  postId,
-  commentId,
-  commentData,
-  authorization
-) =>
+export const deleteCommentService = (postId, commentId, authorization) =>
   axios.post(
     `/api/comments/delete/${postId}/${commentId}`,
-    { commentData },
+    {},
     { headers: { authorization } }
   );
 
