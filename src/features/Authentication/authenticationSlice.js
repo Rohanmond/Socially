@@ -106,6 +106,7 @@ const authenticationSlice = createSlice({
       state.isLoading = false;
       state.user = action.payload.foundUser;
       state.token = action.payload.encodedToken;
+      delete action.payload.foundUser.password;
       localStorage.setItem(
         'loginItems',
         JSON.stringify({
@@ -125,6 +126,7 @@ const authenticationSlice = createSlice({
       state.isLoading = false;
       state.user = action.payload.createdUser;
       state.token = action.payload.encodedToken;
+      delete action.payload.createdUser.password;
       localStorage.setItem(
         'loginItems',
         JSON.stringify({
