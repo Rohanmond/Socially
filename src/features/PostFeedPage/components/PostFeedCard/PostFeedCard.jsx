@@ -12,7 +12,7 @@ import { deletePost, dislikePost, likePost } from '../../PostsSlice';
 import { openEditPostHandler } from '../../toggleEditPostModalSlice';
 import { ToastHandler, ToastType } from '../../../../utils/toastUtils';
 
-const PostFeedCard = ({ postData }) => {
+const PostFeedCard = ({ postData, individualPage }) => {
   const { _id, content, createdAt, likes, pic, userId } = postData;
   const { user: authUser, token } = useSelector(
     (store) => store.authentication
@@ -99,7 +99,7 @@ const PostFeedCard = ({ postData }) => {
                           Save post
                         </button>
                       )}
-                      {user._id === authUser._id && (
+                      {user._id === authUser._id && !individualPage && (
                         <button
                           type='button'
                           onClick={() =>
@@ -111,7 +111,7 @@ const PostFeedCard = ({ postData }) => {
                           Edit post
                         </button>
                       )}
-                      {user._id === authUser._id && (
+                      {user._id === authUser._id && !individualPage && (
                         <button
                           onClick={() => {
                             dispatch(
@@ -132,7 +132,10 @@ const PostFeedCard = ({ postData }) => {
             </div>
           </div>
           {/**Post details */}
-          <div className='flex flex-col gap-6 flex-grow'>
+          <div
+            onClick={() => navigate(`/post/${_id}`)}
+            className='flex flex-col gap-6 flex-grow'
+          >
             <p className='px-4'>{content}</p>
             {pic ? (
               <img
@@ -147,9 +150,10 @@ const PostFeedCard = ({ postData }) => {
             <div className='flex items-center gap-1 cursor-pointer'>
               {!likes.likedBy.some((el) => el._id === authUser._id) ? (
                 <i
-                  onClick={() =>
-                    dispatch(likePost({ postId: _id, authToken: token }))
-                  }
+                  onClick={() => {
+                    console.log('click here');
+                    dispatch(likePost({ postId: _id, authToken: token }));
+                  }}
                   className='far fa-thumbs-up'
                 ></i>
               ) : (
@@ -181,67 +185,72 @@ const PostFeedCard = ({ postData }) => {
             </div>
           </div>
           {/**Post comment section */}
-          <div className='flex gap-3 flex-col border-t-2  pt-6'>
-            {/**Comment different person */}
-            <div className='flex gap-4'>
-              <img
-                className='rounded-full w-9 h-9 mt-1'
-                src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650205531/02_zqttxd.jpg'
-                alt='comment-profile-pic'
-              />
-              <div>
-                <p className='font-normal'>Monty Carlo</p>
-                <p className='font-light text-txt-secondary-color'>
-                  Lorem ipsum dolor sit amet
-                </p>
-                <div className='flex gap-3'>
-                  <p className='font-light text-primary cursor-pointer'>Like</p>
-                  <p className='font-light text-primary cursor-pointer'>
-                    Reply
+          {individualPage ? (
+            <div className='flex gap-3 flex-col border-t-2  pt-6'>
+              {/**Comment different person */}
+              <div className='flex gap-4'>
+                <img
+                  className='rounded-full w-9 h-9 mt-1'
+                  src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650205531/02_zqttxd.jpg'
+                  alt='comment-profile-pic'
+                />
+                <div>
+                  <p className='font-normal'>Monty Carlo</p>
+                  <p className='font-light text-txt-secondary-color'>
+                    Lorem ipsum dolor sit amet
                   </p>
+                  <div className='flex gap-3'>
+                    <p className='font-light text-primary cursor-pointer'>
+                      Like
+                    </p>
+                    <p className='font-light text-primary cursor-pointer'>
+                      Reply
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className='flex gap-4'>
-              <img
-                className='rounded-full w-9 h-9 mt-1'
-                src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650096757/1_vztwsr.jpg'
-                alt='comment-profile-pic'
-              />
-              <div>
-                <p className='font-normal'>Monty Carlo</p>
-                <p className='font-light text-txt-secondary-color'>
-                  Lorem ipsum dolor sit amet
-                </p>
-                <div className='flex gap-3'>
-                  <p className='font-light text-primary cursor-pointer'>Like</p>
-                  <p className='font-light text-primary cursor-pointer'>
-                    Reply
+              <div className='flex gap-4'>
+                <img
+                  className='rounded-full w-9 h-9 mt-1'
+                  src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650096757/1_vztwsr.jpg'
+                  alt='comment-profile-pic'
+                />
+                <div>
+                  <p className='font-normal'>Monty Carlo</p>
+                  <p className='font-light text-txt-secondary-color'>
+                    Lorem ipsum dolor sit amet
                   </p>
+                  <div className='flex gap-3'>
+                    <p className='font-light text-primary cursor-pointer'>
+                      Like
+                    </p>
+                    <p className='font-light text-primary cursor-pointer'>
+                      Reply
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
 
-            <div className='flex gap-4 flex-grow pl-12'>
-              <img
-                className='rounded-full w-9 h-9 mt-1'
-                src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650191393/01_jxbjlo.jpg'
-                alt='comment-profile-pic'
-              />
-              <div>
-                <p className='font-normal'>Monty Carlo</p>
-                <p className='font-light text-txt-secondary-color'>
-                  Thank you for your reply!
-                </p>
-                <p className='font-light text-primary cursor-pointer'>Like</p>
+              <div className='flex gap-4 flex-grow pl-12'>
+                <img
+                  className='rounded-full w-9 h-9 mt-1'
+                  src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650191393/01_jxbjlo.jpg'
+                  alt='comment-profile-pic'
+                />
+                <div>
+                  <p className='font-normal'>Monty Carlo</p>
+                  <p className='font-light text-txt-secondary-color'>
+                    Thank you for your reply!
+                  </p>
+                  <p className='font-light text-primary cursor-pointer'>Like</p>
+                </div>
               </div>
-            </div>
 
-            <div>
-              <input
-                placeholder='Enter your comment'
-                className='mt-3
+              <div>
+                <input
+                  placeholder='Enter your comment'
+                  className='mt-3
         block
         w-full
         rounded-sm
@@ -250,10 +259,11 @@ const PostFeedCard = ({ postData }) => {
         border
         shadow-sm
         focus:border-primary'
-                type='text'
-              />
+                  type='text'
+                />
+              </div>
             </div>
-          </div>
+          ) : null}
         </div>
       ) : null}
     </>

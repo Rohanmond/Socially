@@ -5,6 +5,8 @@ const getAllPostsService = () => axios.get('/api/posts');
 const getAllPostsOfUserService = (username) =>
   axios.get(`/api/posts/user/${username}`);
 
+const getPostByIdService = (postId) => axios.get(`/api/posts/${postId}`);
+
 const addPostService = (postData, authorization) =>
   axios.post('/api/posts', { postData }, { headers: { authorization } });
 
@@ -39,4 +41,5 @@ export {
   deletePostService,
   likePostService,
   dislikePostService,
+  getPostByIdService,
 };

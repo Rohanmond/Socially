@@ -3,7 +3,13 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.css';
 import { MockAPI, PrivateRoute } from './components';
-import { Login, PostFeedPage, Profile, Signup } from './features';
+import {
+  Login,
+  PostFeedPage,
+  PostIndividualPage,
+  Profile,
+  Signup,
+} from './features';
 
 function App() {
   return (
@@ -32,6 +38,14 @@ function App() {
           element={
             <PrivateRoute>
               <Profile />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/post/:postId'
+          element={
+            <PrivateRoute>
+              <PostIndividualPage />
             </PrivateRoute>
           }
         />
