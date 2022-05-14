@@ -29,7 +29,7 @@ export const Nav = () => {
       setSearchData([]);
     }
   }, [resetMenu]);
-  console.log(searchedData, 'search');
+
   return (
     <nav className='w-full sticky top-0 min h-20 sm:h-18 left-0 right-0 leading-10 z-50 bg-nav-background shadow'>
       <div className='flex justify-between relative items-center p-4 sm:p-2  h-full'>
