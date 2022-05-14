@@ -161,6 +161,7 @@ const authenticationSlice = createSlice({
         'loginItems',
         JSON.stringify({ token: state.token, user: newUser })
       );
+      ToastHandler(ToastType.Success, 'Bookmark added successfully');
     },
     [postBookmark.rejected]: (state, action) => {
       state.isLoading = false;
@@ -175,6 +176,7 @@ const authenticationSlice = createSlice({
         'loginItems',
         JSON.stringify({ token: state.token, user: newUser })
       );
+      ToastHandler(ToastType.Success, 'Removed successfully');
     },
     [removeBookmark.rejected]: (state, action) => {
       state.isLoading = false;

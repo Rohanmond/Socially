@@ -1,12 +1,18 @@
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginHandler } from './authenticationSlice';
 import { validateEmail } from './auth-utils';
+import { useOutsideClickHandler } from '../../custom-hooks';
 
 export const Login = () => {
   const { token, isLoading } = useSelector((store) => store.authentication);
   const dipatch = useDispatch();
+  const [openDropDown, setOpenDropDown] = useState(false);
+  const dropdownRef = useRef();
+  const { resetMenu } = useOutsideClickHandler(dropdownRef);
+  const [testCred, setTestCred] = useState('1');
+
   const [loginInput, setLoginInput] = useState({
     email: '',
     password: '',
@@ -43,6 +49,13 @@ export const Login = () => {
       })
     );
   };
+
+  useEffect(() => {
+    if (resetMenu) {
+      setOpenDropDown(false);
+    }
+  }, [resetMenu]);
+
   useEffect(() => {
     if (token) {
       navigate(location?.state?.from?.pathname || '/', { replace: true });
@@ -160,18 +173,114 @@ export const Login = () => {
               <button
                 type='submit'
                 onClick={() => {
-                  setLoginInput({
-                    email: 'rohan@gmail.com',
-                    password: '1234abcd',
-                  });
+                  switch (testCred) {
+                    case '1': {
+                      setLoginInput({
+                        email: 'rohan@gmail.com',
+                        password: '1234abcd',
+                      });
+                      break;
+                    }
+                    case '2': {
+                      setLoginInput({
+                        email: 'rajanighosh@gmail.com',
+                        password: '1234abcd',
+                      });
+                      break;
+                    }
+                    case '3': {
+                      setLoginInput({
+                        email: 'devikagill@gmail.com',
+                        password: '1234asdf',
+                      });
+                      break;
+                    }
+                    case '4': {
+                      setLoginInput({
+                        email: 'suhashdugar@gmail.com',
+                        password: '1234asdf',
+                      });
+                      break;
+                    }
+                    default:
+                  }
+
                   setLoginInputError({ email: '', password: '' });
                 }}
                 className='bg-primary outline-primary text-white p-3 sm:p-2 w-full rounded-full tracking-wide
                                 font-semibold font-display focus:outline-none focus:shadow-outline active:bg-blue-500
                                 shadow-lg'
               >
-                Log In With Test Credentials
+                Log In With Test Credentials {testCred}
               </button>
+            </div>
+            <div className='mt-4 rounded-full flex flex-col items-center'>
+              <div className='relative'>
+                <div
+                  onClick={() => setOpenDropDown((dr) => !dr)}
+                  className='cursor-pointer flex justify-center rounded-full border border-gray-300 shadow-sm px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 focus:ring-indigo-500'
+                >
+                  Test Credentials Options
+                  <svg
+                    className='-mr-1 ml-2 h-5 w-5'
+                    xmlns='http://www.w3.org/2000/svg'
+                    viewBox='0 0 20 20'
+                    fill='currentColor'
+                    aria-hidden='true'
+                  >
+                    <path
+                      fillRule='evenodd'
+                      d='M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z'
+                      clipRule='evenodd'
+                    />
+                  </svg>
+                </div>
+                {openDropDown ? (
+                  <div
+                    ref={dropdownRef}
+                    className='origin-top-right absolute right-0 mt-2 w-1/2 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 focus:outline-none'
+                  >
+                    <div className='py-1'>
+                      <div
+                        onClick={() => {
+                          setTestCred('1');
+                          setOpenDropDown(false);
+                        }}
+                        className='cursor-pointer text-txt-secondary-color block w-full text-left px-4 py-2 text-sm'
+                      >
+                        Test 1
+                      </div>
+                      <div
+                        onClick={() => {
+                          setTestCred('2');
+                          setOpenDropDown(false);
+                        }}
+                        className='cursor-pointer text-txt-secondary-color block w-full text-left px-4 py-2 text-sm'
+                      >
+                        Test 2
+                      </div>
+                      <div
+                        onClick={() => {
+                          setTestCred('3');
+                          setOpenDropDown(false);
+                        }}
+                        className='cursor-pointer text-txt-secondary-color block w-full text-left px-4 py-2 text-sm'
+                      >
+                        Test 3
+                      </div>
+                      <button
+                        onClick={() => {
+                          setTestCred('4');
+                          setOpenDropDown(false);
+                        }}
+                        className='cursor-pointer text-txt-secondary-color block w-full text-left px-4 py-2 text-sm'
+                      >
+                        Test 4
+                      </button>
+                    </div>
+                  </div>
+                ) : null}
+              </div>
             </div>
           </form>
           <div className='mt-12 text-sm font-display font-semibold text-gray-700 text-center'>

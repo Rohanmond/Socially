@@ -188,7 +188,9 @@ export const EditPostModal = () => {
           }}
           disabled={postInputForm.content ? false : true}
           className={`mb-4 mx-4 p-2 bg-primary active:bg-blue-500 text-white rounded-lg ${
-            postInputForm.content ? '' : 'cursor-not-allowed'
+            postInputForm.content
+              ? ''
+              : 'cursor-not-allowed bg-txt-secondary-color active:bg-txt-secondary-color'
           }`}
         >
           Post
