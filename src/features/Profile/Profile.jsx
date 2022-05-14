@@ -297,17 +297,15 @@ export const Profile = () => {
               [
                 ...allPosts.filter((post) => {
                   return (
-                    post.userId === authUser._id ||
-                    post.likes.likedBy.some((us) => us._id === authUser._id) ||
-                    post.likes.dislikedBy.some(
-                      (us) => us._id === authUser._id
-                    ) ||
+                    post.userId === user._id ||
+                    post.likes.likedBy.some((us) => us._id === user._id) ||
+                    post.likes.dislikedBy.some((us) => us._id === user._id) ||
                     post.comments.some(
                       (comment) =>
-                        comment.user._id === authUser._id ||
+                        comment.user._id === user._id ||
                         post.comments.some((comment) =>
                           comment.replies.some(
-                            (reply) => reply.user._id === authUser._id
+                            (reply) => reply.user._id === user._id
                           )
                         )
                     )
