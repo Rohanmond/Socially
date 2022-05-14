@@ -13,11 +13,6 @@ import {
 } from './features';
 
 function App() {
-  const { user } = useSelector((store) => store.authentication);
-  const { allPosts } = useSelector((store) => store.posts);
-
-  console.log(JSON.stringify(allPosts));
-  console.log(JSON.stringify(user));
   return (
     <div className='min-h-screen bg-background'>
       <ToastContainer
@@ -52,6 +47,14 @@ function App() {
           element={
             <PrivateRoute>
               <PostIndividualPage />
+            </PrivateRoute>
+          }
+        />
+        <Route
+          path='/explore'
+          element={
+            <PrivateRoute>
+              <PostFeedPage />
             </PrivateRoute>
           }
         />

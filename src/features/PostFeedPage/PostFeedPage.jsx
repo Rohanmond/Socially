@@ -8,8 +8,10 @@ import { FollowChip } from './components/FollowChip/FollowChip';
 import PostFeedCard from './components/PostFeedCard/PostFeedCard';
 import { addPost, getAllPosts } from './PostsSlice';
 import { getAllUsers } from './UserSlice';
+import { useLocation } from 'react-router-dom';
 
 export const PostFeedPage = () => {
+  const location = useLocation();
   const { user, token } = useSelector((store) => store.authentication);
   const emojiContainerRef = useRef();
   const { resetMenu } = useOutsideClickHandler(emojiContainerRef);
@@ -18,6 +20,7 @@ export const PostFeedPage = () => {
   const { openModal, postData } = useSelector(
     (store) => store.toggleEditPostModal
   );
+  const [customLoader, setCustomLoader] = useState(false);
   const { allUsers } = useSelector((store) => store.users);
   const [postInputForm, setPostInputForm] = useState({
     content: '',
@@ -25,11 +28,30 @@ export const PostFeedPage = () => {
   });
   const dispatch = useDispatch();
   const [subNav, setSubNav] = useState('latest');
+  const [filteredPosts, setFilteredPost] = useState([]);
 
   useEffect(() => {
     dispatch(getAllPosts());
     dispatch(getAllUsers());
   }, []);
+
+  useEffect(() => {
+    console.log(user, allPosts);
+    setCustomLoader(true);
+    if (location.pathname.includes('explore')) setFilteredPost(allPosts);
+    else
+      setFilteredPost(
+        allPosts.filter(
+          (post) =>
+            user?.followers?.some((p) => p?._id === post?.userId) ||
+            user?.following?.some((p) => p?._id === post?.userId)
+        )
+      );
+    const id = setTimeout(() => {
+      setCustomLoader(false);
+    }, 500);
+    return () => clearTimeout(id);
+  }, [allPosts, user, location]);
 
   useEffect(() => {
     if (resetMenu) setShowEmojis(false);
@@ -72,10 +94,12 @@ export const PostFeedPage = () => {
     setPostInputForm({ ...postInputForm, pic: base64File });
   };
 
+  console.log(filteredPosts, 'post');
+
   return (
     <>
       <Nav />
-      {isLoading ? (
+      {isLoading || customLoader ? (
         <div className='fixed z-50 top-0 left-0 w-full h-full flex justify-center items-center'>
           <img
             src='https://res.cloudinary.com/donqbxlnc/image/upload/v1651565040/auth-loader_atroq7.gif'
@@ -251,14 +275,14 @@ export const PostFeedPage = () => {
             {/**Post-feed */}
             <div className='flex flex-col gap-4'>
               {subNav === 'latest'
-                ? [...allPosts]
+                ? [...filteredPosts]
                     .sort(
                       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
                     )
                     .map((el) => {
                       return <PostFeedCard key={el._id} postData={el} />;
                     })
-                : [...allPosts]
+                : [...filteredPosts]
                     .sort((a, b) => b.likes.likeCount - a.likes.likeCount)
                     .map((el) => {
                       return <PostFeedCard key={el._id} postData={el} />;
