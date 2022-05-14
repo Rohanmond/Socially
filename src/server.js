@@ -29,7 +29,6 @@ import {
 import {
   addPostCommentHandler,
   deletePostCommentHandler,
-  downvotePostCommentHandler,
   editPostCommentHandler,
   getPostCommentsHandler,
   upvotePostCommentHandler,
@@ -114,10 +113,6 @@ export function makeServer({ environment = 'development' } = {}) {
       this.post(
         '/comments/upvote/:postId/:commentId',
         upvotePostCommentHandler.bind(this)
-      );
-      this.post(
-        '/comments/downvote/:postId/:commentId',
-        downvotePostCommentHandler.bind(this)
       );
     },
   });

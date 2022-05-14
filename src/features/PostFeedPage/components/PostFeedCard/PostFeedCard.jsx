@@ -175,11 +175,24 @@ const PostFeedCard = ({ postData, individualPage }) => {
                 <i className='fas fa-thumbs-down'></i>
               )}
             </div>
-            <div className='flex items-center gap-1 cursor-pointer'>
+            <div
+              onClick={() => {
+                if (!individualPage) navigate(`/post/${_id}`);
+              }}
+              className='flex items-center gap-1 cursor-pointer'
+            >
               <i className='far fa-comment'></i>
               <span>10</span>
             </div>
-            <div className='flex items-center cursor-pointer gap-1'>
+            <div
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `http://localhost:3000/post/${_id}`
+                );
+                ToastHandler(ToastType.Success, 'Link Copied');
+              }}
+              className='flex items-center cursor-pointer gap-1'
+            >
               <i className='ri-share-line'></i>
               <span>Share</span>
             </div>
