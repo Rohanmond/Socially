@@ -141,7 +141,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
           {/**Post details */}
           <div
             onClick={() => navigate(`/post/${_id}`)}
-            className='flex flex-col gap-6 flex-grow'
+            className='cursor-pointer flex flex-col gap-6 flex-grow'
           >
             <p className='px-4'>{content}</p>
             {pic ? (
@@ -188,7 +188,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
               className='flex items-center gap-1 cursor-pointer'
             >
               <i className='far fa-comment'></i>
-              <span>10</span>
+              <span>{comments?.length}</span>
             </div>
             <div
               onClick={() => {
