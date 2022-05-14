@@ -4,6 +4,7 @@ import { authenticationReducer } from '../features/Authentication';
 import { postReducer } from '../features/PostFeedPage/PostsSlice';
 import { toggleEditPostModalReducer } from '../features/PostFeedPage/toggleEditPostModalSlice';
 import { usersReducer } from '../features/PostFeedPage/UserSlice';
+import { postIndividualReducer } from '../features/PostIndividualPage/PostIndividualSlice';
 
 export const store = configureStore({
   reducer: {
@@ -11,5 +12,6 @@ export const store = configureStore({
     posts: postReducer,
     toggleEditPostModal: toggleEditPostModalReducer,
     users: usersReducer,
+    postIndividual: postIndividualReducer,
   },
 });

@@ -8,7 +8,7 @@ import { formatDate } from '../utils/authUtils';
 
 export const posts = [
   {
-    _id: uuid(),
+    _id: 'fsjfhjsdh434jhsjd3',
     pic: 'https://res.cloudinary.com/donqbxlnc/image/upload/v1652342774/photo-1652298926911-9d628f82e7de_xnxfvn.jpg',
     content:
       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quibusdam veniam, voluptates illum repellendus vitae blanditiis voluptatum omnis reprehenderit corrupti officia.',
@@ -23,7 +23,7 @@ export const posts = [
     updatedAt: formatDate(),
   },
   {
-    _id: uuid(),
+    _id: '343asa232sfdgt45',
     content:
       'Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas, esse.',
     pic: 'https://res.cloudinary.com/donqbxlnc/image/upload/v1652342874/photo-1652335223113-9919b4e052d5_ecguab.jpg',

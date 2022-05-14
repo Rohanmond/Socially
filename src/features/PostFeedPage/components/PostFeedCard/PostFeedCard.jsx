@@ -8,12 +8,18 @@ import {
   postBookmark,
   removeBookmark,
 } from '../../../Authentication/authenticationSlice';
-import { deletePost, dislikePost, likePost } from '../../PostsSlice';
+import {
+  addComment,
+  deletePost,
+  dislikePost,
+  likePost,
+} from '../../PostsSlice';
 import { openEditPostHandler } from '../../toggleEditPostModalSlice';
 import { ToastHandler, ToastType } from '../../../../utils/toastUtils';
+import { CommentCard } from './components/CommentCard/CommentCard';
 
-const PostFeedCard = ({ postData }) => {
-  const { _id, content, createdAt, likes, pic, userId } = postData;
+const PostFeedCard = ({ postData, individualPage }) => {
+  const { _id, content, createdAt, likes, pic, userId, comments } = postData;
   const { user: authUser, token } = useSelector(
     (store) => store.authentication
   );
@@ -23,6 +29,7 @@ const PostFeedCard = ({ postData }) => {
   const dispatch = useDispatch();
   const { resetMenu } = useOutsideClickHandler(menuRef);
   const [openMenu, setOpenMenu] = useState(false);
+  const [commentInput, setCommentInput] = useState('');
 
   useEffect(() => {
     if (resetMenu) {
@@ -99,7 +106,7 @@ const PostFeedCard = ({ postData }) => {
                           Save post
                         </button>
                       )}
-                      {user._id === authUser._id && (
+                      {user._id === authUser._id && !individualPage && (
                         <button
                           type='button'
                           onClick={() =>
@@ -111,7 +118,7 @@ const PostFeedCard = ({ postData }) => {
                           Edit post
                         </button>
                       )}
-                      {user._id === authUser._id && (
+                      {user._id === authUser._id && !individualPage && (
                         <button
                           onClick={() => {
                             dispatch(
@@ -132,7 +139,10 @@ const PostFeedCard = ({ postData }) => {
             </div>
           </div>
           {/**Post details */}
-          <div className='flex flex-col gap-6 flex-grow'>
+          <div
+            onClick={() => navigate(`/post/${_id}`)}
+            className='cursor-pointer flex flex-col gap-6 flex-grow'
+          >
             <p className='px-4'>{content}</p>
             {pic ? (
               <img
@@ -147,9 +157,9 @@ const PostFeedCard = ({ postData }) => {
             <div className='flex items-center gap-1 cursor-pointer'>
               {!likes.likedBy.some((el) => el._id === authUser._id) ? (
                 <i
-                  onClick={() =>
-                    dispatch(likePost({ postId: _id, authToken: token }))
-                  }
+                  onClick={() => {
+                    dispatch(likePost({ postId: _id, authToken: token }));
+                  }}
                   className='far fa-thumbs-up'
                 ></i>
               ) : (
@@ -171,89 +181,69 @@ const PostFeedCard = ({ postData }) => {
                 <i className='fas fa-thumbs-down'></i>
               )}
             </div>
-            <div className='flex items-center gap-1 cursor-pointer'>
+            <div
+              onClick={() => {
+                if (!individualPage) navigate(`/post/${_id}`);
+              }}
+              className='flex items-center gap-1 cursor-pointer'
+            >
               <i className='far fa-comment'></i>
-              <span>10</span>
+              <span>{comments?.length}</span>
             </div>
-            <div className='flex items-center cursor-pointer gap-1'>
+            <div
+              onClick={() => {
+                navigator.clipboard.writeText(
+                  `http://localhost:3000/post/${_id}`
+                );
+                ToastHandler(ToastType.Success, 'Link Copied');
+              }}
+              className='flex items-center cursor-pointer gap-1'
+            >
               <i className='ri-share-line'></i>
               <span>Share</span>
             </div>
           </div>
           {/**Post comment section */}
-          <div className='flex gap-3 flex-col border-t-2  pt-6'>
-            {/**Comment different person */}
-            <div className='flex gap-4'>
-              <img
-                className='rounded-full w-9 h-9 mt-1'
-                src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650205531/02_zqttxd.jpg'
-                alt='comment-profile-pic'
-              />
-              <div>
-                <p className='font-normal'>Monty Carlo</p>
-                <p className='font-light text-txt-secondary-color'>
-                  Lorem ipsum dolor sit amet
-                </p>
-                <div className='flex gap-3'>
-                  <p className='font-light text-primary cursor-pointer'>Like</p>
-                  <p className='font-light text-primary cursor-pointer'>
-                    Reply
-                  </p>
-                </div>
+          {individualPage ? (
+            <div className='flex gap-3 flex-col border-t-2  pt-6'>
+              {/**Comment different person */}
+              {comments.map((el) => {
+                return <CommentCard key={el._id} comment={el} />;
+              })}
+
+              <div className='flex w-full  shadow-sm  rounded-md  '>
+                <input
+                  value={commentInput}
+                  placeholder='Enter your comment'
+                  className='w-full border border-txt-hover-color focus:border-primary active:border-primary active:outline-none focus:outline-none rounded-l-md p-1.5 px-3'
+                  type='text'
+                  onChange={(e) => setCommentInput(e.target.value)}
+                />
+                <button
+                  onClick={() => {
+                    if (commentInput === '') {
+                      ToastHandler(
+                        ToastType.Info,
+                        'Pls Write something in comment box'
+                      );
+                      return;
+                    }
+                    dispatch(
+                      addComment({
+                        postId: _id,
+                        commentData: { content: commentInput, postId: _id },
+                        token,
+                      })
+                    );
+                    setCommentInput('');
+                  }}
+                  className='text-white bg-gradient-to-r from-secondary via-blue-600 to-primary hover:bg-gradient-to-br focus:outline-none   font-medium rounded-r-md text-sm px-4 text-center'
+                >
+                  Post
+                </button>
               </div>
             </div>
-
-            <div className='flex gap-4'>
-              <img
-                className='rounded-full w-9 h-9 mt-1'
-                src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650096757/1_vztwsr.jpg'
-                alt='comment-profile-pic'
-              />
-              <div>
-                <p className='font-normal'>Monty Carlo</p>
-                <p className='font-light text-txt-secondary-color'>
-                  Lorem ipsum dolor sit amet
-                </p>
-                <div className='flex gap-3'>
-                  <p className='font-light text-primary cursor-pointer'>Like</p>
-                  <p className='font-light text-primary cursor-pointer'>
-                    Reply
-                  </p>
-                </div>
-              </div>
-            </div>
-
-            <div className='flex gap-4 flex-grow pl-12'>
-              <img
-                className='rounded-full w-9 h-9 mt-1'
-                src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650191393/01_jxbjlo.jpg'
-                alt='comment-profile-pic'
-              />
-              <div>
-                <p className='font-normal'>Monty Carlo</p>
-                <p className='font-light text-txt-secondary-color'>
-                  Thank you for your reply!
-                </p>
-                <p className='font-light text-primary cursor-pointer'>Like</p>
-              </div>
-            </div>
-
-            <div>
-              <input
-                placeholder='Enter your comment'
-                className='mt-3
-        block
-        w-full
-        rounded-sm
-        border-txt-hover-color
-        p-2 px-3
-        border
-        shadow-sm
-        focus:border-primary'
-                type='text'
-              />
-            </div>
-          </div>
+          ) : null}
         </div>
       ) : null}
     </>
