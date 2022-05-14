@@ -294,7 +294,30 @@ export const Profile = () => {
                   })}
               </div>
             ) : (
-              <div>Activities is coming soon</div>
+              [
+                ...allPosts.filter((post) => {
+                  return (
+                    post.userId === authUser._id ||
+                    post.likes.likedBy.some((us) => us._id === authUser._id) ||
+                    post.likes.dislikedBy.some(
+                      (us) => us._id === authUser._id
+                    ) ||
+                    post.comments.some(
+                      (comment) =>
+                        comment.user._id === authUser._id ||
+                        post.comments.some((comment) =>
+                          comment.replies.some(
+                            (reply) => reply.user._id === authUser._id
+                          )
+                        )
+                    )
+                  );
+                }),
+              ]
+                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+                .map((el) => {
+                  return <PostFeedCard key={el._id} postData={el} />;
+                })
             )}
           </div>
         </div>
