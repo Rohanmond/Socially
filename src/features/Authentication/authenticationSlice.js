@@ -12,8 +12,8 @@ import {
 import { ToastHandler, ToastType } from '../../utils/toastUtils';
 
 const initialState = {
-  token: JSON.parse(localStorage.getItem('loginItems'))?.token,
-  user: JSON.parse(localStorage.getItem('loginItems'))?.user,
+  token: JSON.parse(sessionStorage.getItem('loginItems'))?.token,
+  user: JSON.parse(sessionStorage.getItem('loginItems'))?.user,
   isLoading: false,
 };
 
@@ -93,7 +93,7 @@ const authenticationSlice = createSlice({
   initialState,
   reducers: {
     logoutHandler: (state) => {
-      localStorage.removeItem('loginItems');
+      sessionStorage.removeItem('loginItems');
       state.token = null;
       state.user = null;
     },
@@ -106,7 +106,7 @@ const authenticationSlice = createSlice({
       state.isLoading = false;
       state.user = action.payload.foundUser;
       state.token = action.payload.encodedToken;
-      localStorage.setItem(
+      sessionStorage.setItem(
         'loginItems',
         JSON.stringify({
           token: action.payload.encodedToken,
@@ -125,7 +125,7 @@ const authenticationSlice = createSlice({
       state.isLoading = false;
       state.user = action.payload.createdUser;
       state.token = action.payload.encodedToken;
-      localStorage.setItem(
+      sessionStorage.setItem(
         'loginItems',
         JSON.stringify({
           token: action.payload.encodedToken,
@@ -143,7 +143,7 @@ const authenticationSlice = createSlice({
     [userUpdateHandler.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.user = action.payload.user;
-      localStorage.setItem(
+      sessionStorage.setItem(
         'loginItems',
         JSON.stringify({ token: state.token, user: action.payload.user })
       );
@@ -157,7 +157,7 @@ const authenticationSlice = createSlice({
       state.isLoading = false;
       const newUser = { ...state.user, bookmarks: action.payload.bookmarks };
       state.user = newUser;
-      localStorage.setItem(
+      sessionStorage.setItem(
         'loginItems',
         JSON.stringify({ token: state.token, user: newUser })
       );
@@ -172,7 +172,7 @@ const authenticationSlice = createSlice({
       state.isLoading = false;
       const newUser = { ...state.user, bookmarks: action.payload.bookmarks };
       state.user = newUser;
-      localStorage.setItem(
+      sessionStorage.setItem(
         'loginItems',
         JSON.stringify({ token: state.token, user: newUser })
       );
