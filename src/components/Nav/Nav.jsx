@@ -19,14 +19,12 @@ export const Nav = () => {
           />
           <span className='text-3xl sm:hidden'>Socially</span>
         </div>
-        <div className='px-4'>
-          <form className='relative w-96 md:w-60 sm:hidden flex'>
-            <input
-              className='py-1 px-4 rounded-md  w-full h-10 bg-secondary-background text-sm'
-              type='seach'
-              placeholder='search here...'
-            />
-          </form>
+        <div className='px-4 sm:hidden'>
+          <input
+            className='py-1 px-4 rounded-md  w-96 md:w-60 h-10  bg-secondary-background text-sm'
+            type='seach'
+            placeholder='search here...'
+          />
         </div>
         <ul className='text-primary flex items-center gap-4 text-2xl'>
           <li title='search' className='cursor-pointer hidden sm:block'>
