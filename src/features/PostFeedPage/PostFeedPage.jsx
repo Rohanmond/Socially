@@ -45,7 +45,8 @@ export const PostFeedPage = () => {
         allPosts.filter(
           (post) =>
             user?.followers?.some((p) => p?._id === post?.userId) ||
-            user?.following?.some((p) => p?._id === post?.userId)
+            user?.following?.some((p) => p?._id === post?.userId) ||
+            user?._id === post.userId
         )
       );
     const id = setTimeout(() => {
