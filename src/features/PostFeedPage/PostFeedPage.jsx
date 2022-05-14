@@ -24,6 +24,7 @@ export const PostFeedPage = () => {
     pic: '',
   });
   const dispatch = useDispatch();
+  const [subNav, setSubNav] = useState('latest');
 
   useEffect(() => {
     dispatch(getAllPosts());
@@ -211,6 +212,26 @@ export const PostFeedPage = () => {
               </button>
             </div>
 
+            <div className='flex justify-evenly items-center   bg-nav-background gap-10 rounded-lg drop-shadow-2xl  p-4 sm:p-3 '>
+              <div
+                onClick={() => setSubNav('trending')}
+                className={`cursor-pointer flex gap-1  ${
+                  subNav === 'trending' ? 'text-primary' : ''
+                }`}
+              >
+                <p>🔥Trending</p>
+              </div>
+
+              <div
+                onClick={() => setSubNav('latest')}
+                className={`cursor-pointer items-center flex gap-1  ${
+                  subNav === 'latest' ? 'text-primary' : ''
+                }`}
+              >
+                <i className='far fa-clock'></i>
+                <p>Latest</p>
+              </div>
+            </div>
             {/**Scrollable follow chips */}
             <div className='flex flex-col gap-2  rounded-lg drop-shadow-2xl '>
               <div className=''>
@@ -229,11 +250,19 @@ export const PostFeedPage = () => {
             </div>
             {/**Post-feed */}
             <div className='flex flex-col gap-4'>
-              {[...allPosts]
-                .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-                .map((el) => {
-                  return <PostFeedCard key={el._id} postData={el} />;
-                })}
+              {subNav === 'latest'
+                ? [...allPosts]
+                    .sort(
+                      (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+                    )
+                    .map((el) => {
+                      return <PostFeedCard key={el._id} postData={el} />;
+                    })
+                : [...allPosts]
+                    .sort((a, b) => b.likes.likeCount - a.likes.likeCount)
+                    .map((el) => {
+                      return <PostFeedCard key={el._id} postData={el} />;
+                    })}
             </div>
           </div>
         </div>
