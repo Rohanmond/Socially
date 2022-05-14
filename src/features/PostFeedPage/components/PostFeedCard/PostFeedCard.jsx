@@ -193,7 +193,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
             <div
               onClick={() => {
                 navigator.clipboard.writeText(
-                  `http://localhost:3000/post/${_id}`
+                  `https://socially-git-dev-rohanmond.vercel.app/post/${_id}`
                 );
                 ToastHandler(ToastType.Success, 'Link Copied');
               }}
