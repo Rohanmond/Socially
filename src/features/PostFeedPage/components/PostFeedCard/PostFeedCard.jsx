@@ -10,6 +10,7 @@ import {
 } from '../../../Authentication/authenticationSlice';
 import { deletePost, dislikePost, likePost } from '../../PostsSlice';
 import { openEditPostHandler } from '../../toggleEditPostModalSlice';
+import { ToastHandler, ToastType } from '../../../../utils/toastUtils';
 
 const PostFeedCard = ({ postData }) => {
   const { _id, content, createdAt, likes, pic, userId } = postData;
@@ -35,7 +36,7 @@ const PostFeedCard = ({ postData }) => {
         const res = await getUserById(userId);
         setUser(res.data.user);
       } catch (err) {
-        console.log(err);
+        ToastHandler(ToastType.Error, err.response.data);
       }
     })();
   }, [userId]);

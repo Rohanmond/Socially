@@ -23,7 +23,6 @@ export const ProfileModal = ({ setShowProfileModal }) => {
 
   const onFileChange = async (e) => {
     const file = e.target.files[0];
-    console.log(file);
     const toBase64 = (file) =>
       new Promise((resolve, reject) => {
         const reader = new FileReader();
@@ -36,7 +35,6 @@ export const ProfileModal = ({ setShowProfileModal }) => {
     setUserData({ ...userData, pic: base64File });
   };
 
-  console.log(userData.pic, 'file');
   return (
     <div className='h-screen w-screen fixed flex justify-center items-center z-50 bg-background-dim'>
       <div

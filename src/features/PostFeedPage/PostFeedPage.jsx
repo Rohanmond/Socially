@@ -35,31 +35,26 @@ export const PostFeedPage = () => {
   }, [resetMenu]);
 
   const emojiLib = [
-    '😂',
-    '😅',
-    '😁',
-    '🙄',
-    '😱',
-    '🥹',
-    '🥵',
-    '😇',
-    '😆',
-    '🤣',
-    '👀',
-    '👍',
-    '😎',
-    '🤨',
-    '😒',
+    '🙂',
     '😊',
-    '😰',
+    '🤗',
     '😄',
-    '🥳',
+    '😅',
+    '😆',
+    '😂',
+    '🤣',
     '😘',
+    '🥰',
+    '😍',
+    '🤩',
+    '😇',
+    '😎',
+    '😋',
+    '😜',
     '🙃',
+    '😴',
     '🤯',
-    '👆',
-    '😭',
-    '🥶',
+    '🥳',
   ];
 
   const onFileChange = async (e) => {
@@ -76,8 +71,6 @@ export const PostFeedPage = () => {
     setPostInputForm({ ...postInputForm, pic: base64File });
   };
 
-  console.log(allUsers);
-  console.log(user);
   return (
     <>
       <Nav />
