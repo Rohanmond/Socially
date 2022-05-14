@@ -219,7 +219,7 @@ export const Profile = () => {
               </div>
             </div>
 
-            <div className='flex justify-evenly items-center  bg-nav-background gap-10 rounded-lg drop-shadow-2xl  p-4 sm:p-3 sm:text-sm'>
+            <div className='flex justify-evenly items-center sm:text-xs  bg-nav-background gap-10 rounded-lg drop-shadow-2xl  p-4 sm:p-3 '>
               <div
                 onClick={() => setSubNav('posts')}
                 className={`cursor-pointer flex gap-1  ${

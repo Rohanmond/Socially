@@ -63,7 +63,7 @@ export const CommentCard = ({ comment }) => {
                         setIsEdit(true);
                         setOpenMenuModal(false);
                       }}
-                      className='flex  gap-1 items-center w-full px-2.5 py-1 text-xs font-medium border rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
+                      className='flex gap-1 items-center w-full px-2.5 py-1 text-sm font-medium border rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
                     >
                       <i className='far fa-edit'></i>
                       Edit
@@ -76,7 +76,7 @@ export const CommentCard = ({ comment }) => {
                       );
                       setOpenMenuModal(false);
                     }}
-                    className='flex gap-1 items-center w-full px-2.5 py-1 text-xs font-medium border rounded-lg text-red-500 hover:text-red-500 focus:z-10   focus:text-red-600'
+                    className='flex gap-1 items-center w-full px-2.5 py-1 text-sm font-medium border rounded-lg text-red-500 hover:text-red-500 focus:z-10   focus:text-red-600'
                   >
                     <i className='far fa-trash-alt'></i>
                     Delete
