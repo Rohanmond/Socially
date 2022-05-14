@@ -23,7 +23,6 @@ export const PostIndividualPage = () => {
     }
   }, [allPosts]);
 
-  console.log(post);
   return (
     <>
       <Nav />

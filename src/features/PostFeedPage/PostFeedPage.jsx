@@ -70,7 +70,7 @@ export const PostFeedPage = () => {
     let base64File = await toBase64(file);
     setPostInputForm({ ...postInputForm, pic: base64File });
   };
-  console.log(allPosts);
+
   return (
     <>
       <Nav />

@@ -218,7 +218,6 @@ const postsSlice = createSlice({
     [dislikePost.fulfilled]: (state, action) => {
       state.isLoading = false;
       state.allPosts = action.payload;
-      console.log(action);
     },
     [dislikePost.rejected]: (state, action) => {
       state.isLoading = false;

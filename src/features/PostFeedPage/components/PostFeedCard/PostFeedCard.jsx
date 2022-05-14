@@ -158,7 +158,6 @@ const PostFeedCard = ({ postData, individualPage }) => {
               {!likes.likedBy.some((el) => el._id === authUser._id) ? (
                 <i
                   onClick={() => {
-                    console.log('click here');
                     dispatch(likePost({ postId: _id, authToken: token }));
                   }}
                   className='far fa-thumbs-up'
@@ -211,64 +210,6 @@ const PostFeedCard = ({ postData, individualPage }) => {
               {comments.map((el) => {
                 return <CommentCard key={el._id} comment={el} />;
               })}
-              {/* <div className='flex gap-4'>
-                <img
-                  className='rounded-full w-9 h-9 mt-1'
-                  src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650205531/02_zqttxd.jpg'
-                  alt='comment-profile-pic'
-                />
-                <div>
-                  <p className='font-normal'>Monty Carlo</p>
-                  <p className='font-light text-txt-secondary-color'>
-                    Lorem ipsum dolor sit amet
-                  </p>
-                  <div className='flex gap-3'>
-                    <p className='font-light text-primary cursor-pointer'>
-                      Like
-                    </p>
-                    <p className='font-light text-primary cursor-pointer'>
-                      Reply
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className='flex gap-4'>
-                <img
-                  className='rounded-full w-9 h-9 mt-1'
-                  src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650096757/1_vztwsr.jpg'
-                  alt='comment-profile-pic'
-                />
-                <div>
-                  <p className='font-normal'>Monty Carlo</p>
-                  <p className='font-light text-txt-secondary-color'>
-                    Lorem ipsum dolor sit amet
-                  </p>
-                  <div className='flex gap-3'>
-                    <p className='font-light text-primary cursor-pointer'>
-                      Like
-                    </p>
-                    <p className='font-light text-primary cursor-pointer'>
-                      Reply
-                    </p>
-                  </div>
-                </div>
-              </div>
-
-              <div className='flex gap-4 flex-grow pl-12'>
-                <img
-                  className='rounded-full w-9 h-9 mt-1'
-                  src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650191393/01_jxbjlo.jpg'
-                  alt='comment-profile-pic'
-                />
-                <div>
-                  <p className='font-normal'>Monty Carlo</p>
-                  <p className='font-light text-txt-secondary-color'>
-                    Thank you for your reply!
-                  </p>
-                  <p className='font-light text-primary cursor-pointer'>Like</p>
-                </div>
-              </div> */}
 
               <div className='flex w-full  shadow-sm  rounded-md  '>
                 <input

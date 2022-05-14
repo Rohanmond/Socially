@@ -32,7 +32,6 @@ export const CommentCard = ({ comment }) => {
     }
   }, [resetMenu]);
 
-  console.log(allPosts);
   return (
     <>
       <div className='flex flex-col gap-1'>
