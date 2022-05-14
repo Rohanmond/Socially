@@ -1,3 +1,4 @@
+import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -12,6 +13,11 @@ import {
 } from './features';
 
 function App() {
+  const { user } = useSelector((store) => store.authentication);
+  const { allPosts } = useSelector((store) => store.posts);
+
+  console.log(JSON.stringify(allPosts));
+  console.log(JSON.stringify(user));
   return (
     <div className='min-h-screen bg-background'>
       <ToastContainer
