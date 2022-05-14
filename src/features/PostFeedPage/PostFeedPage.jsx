@@ -8,7 +8,7 @@ import { FollowChip } from './components/FollowChip/FollowChip';
 import PostFeedCard from './components/PostFeedCard/PostFeedCard';
 import { addPost, getAllPosts } from './PostsSlice';
 import { getAllUsers } from './UserSlice';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 export const PostFeedPage = () => {
   const location = useLocation();
@@ -29,6 +29,7 @@ export const PostFeedPage = () => {
   const dispatch = useDispatch();
   const [subNav, setSubNav] = useState('latest');
   const [filteredPosts, setFilteredPost] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(getAllPosts());
@@ -277,6 +278,20 @@ export const PostFeedPage = () => {
             </div>
             {/**Post-feed */}
             <div className='flex flex-col gap-4'>
+              {filteredPosts.length === 0 ? (
+                <div className='flex justify-center bg-nav-background rounded-lg drop-shadow-2xl p-5'>
+                  <p className='text-xl text-txt-secondary-color font-medium'>
+                    No posts yet. You can go{' '}
+                    <span
+                      onClick={() => navigate('/explore')}
+                      className='cursor-pointer text-secondary'
+                    >
+                      Explore
+                    </span>{' '}
+                    Feed
+                  </p>
+                </div>
+              ) : null}
               {subNav === 'latest'
                 ? [...filteredPosts]
                     .sort(
