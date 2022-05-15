@@ -64,7 +64,7 @@ export const Nav = () => {
               onClick={() => dispatch(lightThemeHandler())}
               className='cursor-pointer flex items-center'
             >
-              <i className='far fa-sun'></i>
+              <i className='ri-sun-line'></i>
             </li>
           ) : (
             <li
