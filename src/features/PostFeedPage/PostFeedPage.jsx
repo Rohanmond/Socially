@@ -205,7 +205,7 @@ export const PostFeedPage = () => {
                         {showEmojis ? (
                           <div
                             ref={emojiContainerRef}
-                            className='absolute w-48 p-4 flex flex-wrap justify-center items-center gap-1 rounded-lg dark:bg-dark-nav-background  bg-secondary-background '
+                            className='absolute w-48 p-4 flex flex-wrap justify-center items-center gap-2 rounded-lg dark:bg-dark-nav-background  bg-secondary-background '
                           >
                             {emojiLib.map((el) => {
                               return (
