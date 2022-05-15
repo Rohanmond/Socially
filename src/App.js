@@ -12,9 +12,13 @@ import {
   Profile,
   Signup,
 } from './features';
+import { EditPostModal } from './features/PostFeedPage/components/EditPostModal';
 
 function App() {
   const { theme } = useSelector((store) => store.theme);
+  const { openModal, postData } = useSelector(
+    (store) => store.toggleEditPostModal
+  );
 
   console.log(theme);
   return (
@@ -33,6 +37,8 @@ function App() {
           pauseOnFocusLoss
           draggable
         />
+        {openModal ? <EditPostModal postData={postData} /> : null}
+
         <Routes>
           <Route
             path='/'

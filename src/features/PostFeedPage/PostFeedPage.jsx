@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Nav } from '../../components';
 import './PostFeedPage.css';
 import { useOutsideClickHandler } from '../../custom-hooks';
-import { EditPostModal } from './components/EditPostModal';
+
 import { FollowChip } from './components/FollowChip/FollowChip';
 import PostFeedCard from './components/PostFeedCard/PostFeedCard';
 import { addPost, getAllPosts } from './PostsSlice';
@@ -17,9 +17,7 @@ export const PostFeedPage = () => {
   const { resetMenu } = useOutsideClickHandler(emojiContainerRef);
   const [showEmojis, setShowEmojis] = useState(false);
   const { allPosts, isLoading } = useSelector((store) => store.posts);
-  const { openModal, postData } = useSelector(
-    (store) => store.toggleEditPostModal
-  );
+
   const [customLoader, setCustomLoader] = useState(false);
   const { allUsers } = useSelector((store) => store.users);
   const [postInputForm, setPostInputForm] = useState({
@@ -109,7 +107,6 @@ export const PostFeedPage = () => {
           />
         </div>
       ) : null}
-      {openModal ? <EditPostModal postData={postData} /> : null}
       <main className='p-4'>
         {/*divider */}
         <div className='flex justify-center'>

@@ -89,7 +89,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
                           className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium rounded-lg text-red-500 hover:text-red-500 focus:z-10   focus:text-red-600'
                         >
                           <i className='far fa-trash-alt'></i>
-                          Remove safe
+                          Remove saved
                         </button>
                       ) : (
                         <button

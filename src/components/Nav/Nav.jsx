@@ -34,7 +34,7 @@ export const Nav = () => {
   }, [resetMenu]);
 
   return (
-    <nav className='w-full sticky top-0 min h-20 sm:h-18 left-0 right-0 leading-10 z-50 dark:bg-dark-nav-background drop-shadow-xl bg-nav-background shadow'>
+    <nav className='w-full sticky top-0 min h-20 sm:h-18 left-0 right-0 leading-10 z-40 dark:bg-dark-nav-background drop-shadow-xl bg-nav-background shadow'>
       <div className='flex justify-between relative items-center p-4 sm:p-2  h-full'>
         <div
           onClick={() => navigate('/')}
