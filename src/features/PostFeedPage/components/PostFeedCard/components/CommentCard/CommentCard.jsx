@@ -56,14 +56,14 @@ export const CommentCard = ({ comment }) => {
             ) : null}
             {openMenuModal ? (
               <div ref={commentMenuRef} className='absolute right-0'>
-                <div className='w-24  text-txt-secondary-color bg-secondary-background border border-gray-200 rounded-lg'>
+                <div className='w-24  text-txt-secondary-color dark:text-dark-txt-secondary-color bg-secondary-background dark:bg-dark-nav-background rounded-lg'>
                   {authUser._id === user._id ? (
                     <button
                       onClick={() => {
                         setIsEdit(true);
                         setOpenMenuModal(false);
                       }}
-                      className='flex gap-1 items-center w-full px-2.5 py-1.5 text-sm font-medium border rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
+                      className='flex gap-1 items-center w-full px-2.5 py-1.5 text-sm font-medium  rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
                     >
                       <i className='far fa-edit'></i>
                       Edit
@@ -76,7 +76,7 @@ export const CommentCard = ({ comment }) => {
                       );
                       setOpenMenuModal(false);
                     }}
-                    className='flex gap-1 items-center w-full px-2.5 py-1.5 text-sm font-medium border rounded-lg text-red-500 hover:text-red-500 focus:z-10   focus:text-red-600'
+                    className='flex gap-1 items-center w-full px-2.5 py-1.5 text-sm font-medium  rounded-lg text-red-500 hover:text-red-500 focus:z-10   focus:text-red-600'
                   >
                     <i className='far fa-trash-alt'></i>
                     Delete
@@ -95,7 +95,7 @@ export const CommentCard = ({ comment }) => {
           ) : (
             <div className='w-full flex flex-col gap-2 '>
               <input
-                className='w-full bg-background mt-1  border border-txt-hover-color  active:outline-none focus:outline-none rounded-md py-0.5 px-3'
+                className='w-full bg-background dark:bg-dark-background dark:text-dark-txt-secondary-color mt-1  border border-txt-hover-color  active:outline-none focus:outline-none rounded-md py-0.5 px-3'
                 value={editInput}
                 type='text'
                 onChange={(e) => setEditInput(e.target.value)}
@@ -166,7 +166,7 @@ export const CommentCard = ({ comment }) => {
               <input
                 value={replyInput}
                 placeholder='Enter your Reply'
-                className='w-full bg-background mt-1  border border-txt-hover-color  active:outline-none focus:outline-none rounded-md py-0.5 px-3'
+                className='w-full bg-background dark:text-dark-txt-secondary-color dark:bg-dark-background mt-1  border border-txt-hover-color  active:outline-none focus:outline-none rounded-md py-0.5 px-3'
                 type='text'
                 onChange={(e) => setReplyInput(e.target.value)}
               />

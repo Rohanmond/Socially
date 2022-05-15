@@ -1,4 +1,5 @@
 import { configureStore } from '@reduxjs/toolkit';
+import { themeReducer } from '../components/Nav/ThemeSlice';
 import { authenticationReducer } from '../features/Authentication';
 
 import { postReducer } from '../features/PostFeedPage/PostsSlice';
@@ -13,5 +14,6 @@ export const store = configureStore({
     toggleEditPostModal: toggleEditPostModalReducer,
     users: usersReducer,
     postIndividual: postIndividualReducer,
+    theme: themeReducer,
   },
 });

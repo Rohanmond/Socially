@@ -117,7 +117,7 @@ export const PostFeedPage = () => {
           <div className='flex flex-col  w-2/5 md:w-4/5 sm:w-full  gap-4 '>
             {/* create post section */}
             {!location.pathname.includes('/explore') ? (
-              <div className='flex flex-col bg-nav-background rounded-lg drop-shadow-2xl divide-y divide-blue-200'>
+              <div className='flex flex-col bg-nav-background  dark:bg-dark-secondary-background text-dark-txt-color rounded-lg drop-shadow-2xl divide-y dark:divide-primary divide-blue-200'>
                 <div className='p-4'>
                   <h1 className='text-xl'>Create Post</h1>
                 </div>
@@ -131,7 +131,7 @@ export const PostFeedPage = () => {
                         alt='profile-img'
                       />
                       <input
-                        className='grow focus:outline-none font-light text-txt-secondary-color'
+                        className='grow focus:outline-none font-normal text-txt-secondary-color text-lg dark:bg-dark-secondary-background dark:text-dark-txt-secondary-color'
                         placeholder='Write something here'
                         value={postInputForm.content}
                         onChange={(e) =>
@@ -154,9 +154,9 @@ export const PostFeedPage = () => {
                         ></i>
                       </div>
                     ) : null}
-                    <hr className='font-extralight text-secondary' />
-                    <ul className='flex gap-4 font-light items-center'>
-                      <li className='relative flex items-center gap-3 bg-secondary-background py-2 px-3 rounded-md cursor-pointer'>
+
+                    <ul className='border-t border-t-primary flex pt-4 gap-4 font-light items-center'>
+                      <li className='relative flex items-center gap-3 bg-secondary-background dark:bg-dark-nav-background py-2 px-3 rounded-md cursor-pointer'>
                         <img
                           className='h-6 w-6'
                           src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650190023/07_dffvl5.png'
@@ -188,7 +188,7 @@ export const PostFeedPage = () => {
                             setShowEmojis(false);
                           }
                         }}
-                        className='relative flex items-center gap-3 bg-secondary-background py-2 px-3 rounded-md cursor-pointer'
+                        className='relative flex items-center gap-3 bg-secondary-background dark:bg-dark-nav-background py-2 px-3 rounded-md cursor-pointer'
                       >
                         <img
                           className='h-6 w-6'
@@ -201,7 +201,7 @@ export const PostFeedPage = () => {
                         {showEmojis ? (
                           <div
                             ref={emojiContainerRef}
-                            className='absolute w-48 p-4 flex flex-wrap justify-center items-center gap-1 rounded-lg  bg-secondary-background '
+                            className='absolute w-48 p-4 flex flex-wrap justify-center items-center gap-1 rounded-lg dark:bg-dark-nav-background  bg-secondary-background '
                           >
                             {emojiLib.map((el) => {
                               return (
@@ -241,7 +241,7 @@ export const PostFeedPage = () => {
               </div>
             ) : null}
 
-            <div className='flex justify-evenly items-center   bg-nav-background gap-10 rounded-lg drop-shadow-2xl  p-4 sm:p-3 '>
+            <div className='flex justify-evenly items-center   bg-nav-background dark:bg-dark-secondary-background dark:text-dark-txt-color gap-10 rounded-lg drop-shadow-2xl  p-4 sm:p-3 '>
               <div
                 onClick={() => setSubNav('trending')}
                 className={`cursor-pointer flex gap-1  ${

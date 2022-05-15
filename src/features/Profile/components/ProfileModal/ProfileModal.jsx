@@ -39,7 +39,7 @@ export const ProfileModal = ({ setShowProfileModal }) => {
     <div className='h-screen w-screen fixed flex justify-center items-center z-50 bg-background-dim'>
       <div
         ref={ref}
-        className='flex flex-col gap-4 p-5 rounded-xl  sm:w-9/12 w-1/3 bg-background'
+        className='flex flex-col gap-4 p-5 rounded-xl  sm:w-9/12 w-1/3 bg-background dark:bg-dark-secondary-background'
       >
         <div className='flex flex-col gap-4'>
           <div className='flex gap-4'>
@@ -72,7 +72,7 @@ export const ProfileModal = ({ setShowProfileModal }) => {
               Bio
             </p>
             <textarea
-              className='px-2 focus:outline-none'
+              className='px-2 focus:outline-none dark:bg-dark-background dark:text-dark-txt-color'
               value={userData.bio}
               onChange={(e) =>
                 setUserData({ ...userData, bio: e.target.value })
@@ -84,7 +84,7 @@ export const ProfileModal = ({ setShowProfileModal }) => {
               Link
             </p>
             <input
-              className='flex-1 border border-solid border-txt-secondary-color rounded-md px-2 focus:outline-none'
+              className='flex-1 border border-solid border-txt-secondary-color dark:bg-dark-secondary-background dark:text-dark-txt-color rounded-md px-2 focus:outline-none'
               value={userData.link}
               onChange={(e) =>
                 setUserData({ ...userData, link: e.target.value })

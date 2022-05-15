@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
@@ -13,8 +14,17 @@ import {
 } from './features';
 
 function App() {
+  const { theme } = useSelector((store) => store.theme);
+
+  useEffect(() => {
+    const root = window.document.documentElement;
+    if (theme === 'dark') root.classList.add('dark');
+    else root.classList.remove('dark');
+  }, [theme]);
+
+  console.log(theme);
   return (
-    <div className='min-h-screen bg-background'>
+    <div className='min-h-screen dark:bg-dark-background bg-background'>
       <ToastContainer
         position='bottom-right'
         autoClose={false}

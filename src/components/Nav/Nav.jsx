@@ -1,11 +1,13 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useOutsideClickHandler } from '../../custom-hooks';
 import { searchFunc } from '../../utils/searchUtils';
+import { lightThemeHandler } from './ThemeSlice';
 
 export const Nav = () => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const [showSearch, setShowSearch] = useState(false);
   const searchRef = useRef();
   let timerId = useRef();
@@ -31,7 +33,7 @@ export const Nav = () => {
   }, [resetMenu]);
 
   return (
-    <nav className='w-full sticky top-0 min h-20 sm:h-18 left-0 right-0 leading-10 z-50 bg-nav-background shadow'>
+    <nav className='w-full sticky top-0 min h-20 sm:h-18 left-0 right-0 leading-10 z-50 dark:bg-dark-nav-background drop-shadow-xl bg-nav-background shadow'>
       <div className='flex justify-between relative items-center p-4 sm:p-2  h-full'>
         <div
           onClick={() => navigate('/')}
@@ -42,7 +44,9 @@ export const Nav = () => {
             src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650084912/logo_tzzpf3.png'
             alt='hero'
           />
-          <span className='text-3xl sm:hidden'>Socially</span>
+          <span className='text-3xl dark:text-dark-txt-color sm:hidden'>
+            Socially
+          </span>
         </div>
 
         <ul className='text-primary flex items-center gap-4 text-2xl'>
@@ -53,7 +57,13 @@ export const Nav = () => {
           >
             <i className='ri-search-line'></i>
           </li>
-
+          <li
+            title='theme'
+            onClick={() => dispatch(lightThemeHandler())}
+            className='cursor-pointer flex items-center'
+          >
+            <i className='far fa-moon'></i>
+          </li>
           <li
             title='explore'
             onClick={() => navigate('/explore')}
@@ -95,14 +105,14 @@ export const Nav = () => {
           >
             <input
               value={searchInput}
-              className='w-full rounded-lg focus:outline-none px-4'
+              className='w-full bg-dark-background text-dark-txt-secondary-color rounded-lg focus:outline-none px-4'
               type='text'
               onChange={(e) => setSearchInput(e.target.value)}
             />
 
-            <div className='flex w-full flex-col gap-4   max-h-96 z-50 overflow-y-scroll rounded-lg   bg-background'>
+            <div className='flex w-full flex-col gap-4   max-h-96 z-50 overflow-y-scroll rounded-lg   bg-background dark:bg-dark-background'>
               {searchInput !== '' && searchedData.length === 0 ? (
-                <p className='text-center text-lg m-1 font-medium text-txt-secondary-color'>
+                <p className='text-center text-lg m-1 font-medium text-txt-secondary-color dark:text-dark-txt-color'>
                   No user to show
                 </p>
               ) : (
@@ -121,7 +131,7 @@ export const Nav = () => {
                         src={user.pic}
                         alt='user pic'
                       />
-                      <p className='font-medium text-lg text-txt-secondary-color'>
+                      <p className='font-medium text-lg text-txt-secondary-color dark:text-dark-txt-secondary-color'>
                         {user.firstName} {user.lastName}
                       </p>
                     </div>

@@ -51,7 +51,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
   return (
     <>
       {user ? (
-        <div className='flex flex-col gap-4 bg-nav-background rounded-lg drop-shadow-2xl p-5'>
+        <div className='flex flex-col gap-4 bg-nav-background dark:bg-dark-secondary-background dark:text-dark-txt-color rounded-lg drop-shadow-2xl p-5'>
           {/** post header */}
           <div className='flex gap-4  flex-grow'>
             <img
@@ -66,7 +66,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
                 className='flex flex-col cursor-pointer'
               >
                 <p className='text-xl'>{`${user.firstName} ${user.lastName}`}</p>
-                <p className='text-xs text-txt-secondary-color'>
+                <p className='text-xs dark:text-dark-txt-secondary-color text-txt-secondary-color'>
                   {new Date(createdAt).toDateString()}{' '}
                   {new Date(createdAt).toLocaleTimeString()}
                 </p>
@@ -78,7 +78,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
                 ></i>
                 {openMenu ? (
                   <div ref={menuRef} className='absolute right-0'>
-                    <div className='w-40 text-txt-secondary-color bg-secondary-background border border-gray-200 rounded-lg'>
+                    <div className='w-40 text-txt-secondary-color dark:text-dark-txt-secondary-color bg-secondary-background dark:bg-dark-nav-background  border-gray-200 dark:border-none rounded-lg'>
                       {authUser.bookmarks.some((el) => el === _id) ? (
                         <button
                           type='button'
@@ -86,7 +86,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
                             dispatch(removeBookmark({ postId: _id, token }));
                             setOpenMenu(false);
                           }}
-                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg text-red-500 hover:text-red-500 focus:z-10   focus:text-red-600'
+                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium rounded-lg text-red-500 hover:text-red-500 focus:z-10   focus:text-red-600'
                         >
                           <i className='far fa-trash-alt'></i>
                           Remove safe
@@ -100,7 +100,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
                             );
                             setOpenMenu(false);
                           }}
-                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
+                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
                         >
                           <i className='far fa-bookmark'></i>
                           Save post
@@ -112,7 +112,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
                           onClick={() =>
                             dispatch(openEditPostHandler({ postData }))
                           }
-                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
+                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium  rounded-lg hover:text-blue-700 focus:z-10   focus:text-blue-700'
                         >
                           <i className='far fa-edit'></i>
                           Edit post
@@ -126,7 +126,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
                             );
                           }}
                           type='button'
-                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium border rounded-lg hover:text-red-500 focus:z-10   focus:text-red-700'
+                          className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium  rounded-lg hover:text-red-500 focus:z-10   focus:text-red-700'
                         >
                           <i className='far fa-trash-alt'></i>
                           Delete post
@@ -215,7 +215,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
                 <input
                   value={commentInput}
                   placeholder='Enter your comment'
-                  className='w-full border border-txt-hover-color focus:border-primary active:border-primary active:outline-none focus:outline-none rounded-l-md p-1.5 px-3'
+                  className='w-full border border-txt-hover-color dark:bg-dark-background dark:text-dark-txt-secondary-color focus:border-primary active:border-primary active:outline-none focus:outline-none rounded-l-md p-1.5 px-3'
                   type='text'
                   onChange={(e) => setCommentInput(e.target.value)}
                 />
@@ -237,7 +237,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
                     );
                     setCommentInput('');
                   }}
-                  className='text-white bg-gradient-to-r from-secondary via-blue-600 to-primary hover:bg-gradient-to-br focus:outline-none   font-medium rounded-r-md text-sm px-4 text-center'
+                  className='text-white  bg-gradient-to-r from-secondary via-blue-600 to-primary hover:bg-gradient-to-br focus:outline-none   font-medium rounded-r-md text-sm px-4 text-center'
                 >
                   Post
                 </button>

@@ -12,8 +12,14 @@ module.exports = {
       'txt-secondary-color': '#64748b',
       'txt-hover-color': '#94a3b8',
       'background-dim': 'rgb(0,0,0,0.5)',
+      'dark-background': '#1c2440',
+      'dark-nav-background': '#0B1829',
+      'dark-txt-color': '#ffffff',
+      'dark-txt-secondary-color': '#767B9F',
+      'dark-secondary-background': '#1E293B',
       ...colors,
     },
+    darkMode: false,
 
     screens: {
       '2xl': { max: '1535px' },

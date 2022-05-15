@@ -30,31 +30,26 @@ export const EditPostModal = () => {
     }
   }, [editModalResetMenu]);
   const emojiLib = [
-    '😂',
-    '😅',
-    '😁',
-    '🙄',
-    '😱',
-    '🥹',
-    '🥵',
-    '😇',
-    '😆',
-    '🤣',
-    '👀',
-    '👍',
-    '😎',
-    '🤨',
-    '😒',
+    '🙂',
     '😊',
-    '😰',
+    '🤗',
     '😄',
-    '🥳',
+    '😅',
+    '😆',
+    '😂',
+    '🤣',
     '😘',
+    '🥰',
+    '😍',
+    '🤩',
+    '😇',
+    '😎',
+    '😋',
+    '😜',
     '🙃',
+    '😴',
     '🤯',
-    '👆',
-    '😭',
-    '🥶',
+    '🥳',
   ];
 
   const onFileChange = async (e) => {
@@ -76,7 +71,7 @@ export const EditPostModal = () => {
     <div className='fixed p-4 left-0 right-0 top-0 h-screen z-50 flex justify-center items-center bg-background-dim'>
       <div
         ref={editPostModalRef}
-        className='w-2/5 md:w-3/5 sm:w-full  flex flex-col bg-nav-background rounded-lg drop-shadow-2xl divide-y divide-blue-200'
+        className='w-2/5 md:w-3/5 sm:w-full  flex flex-col bg-nav-background dark:bg-dark-background dark:text-dark-txt-color rounded-lg drop-shadow-2xl divide-y divide-blue-200'
       >
         <div className='p-4'>
           <h1 className='text-xl'>Create Post</h1>
@@ -91,7 +86,7 @@ export const EditPostModal = () => {
                 alt='profile-img'
               />
               <input
-                className='grow focus:outline-none font-light text-txt-secondary-color'
+                className='grow focus:outline-none font-light text-txt-secondary-color dark:bg-dark-background'
                 placeholder='Write something here'
                 value={postInputForm.content}
                 onChange={(e) =>
@@ -120,7 +115,7 @@ export const EditPostModal = () => {
             ) : null}
             <hr className='font-extralight text-secondary' />
             <ul className='flex gap-4 font-light items-center'>
-              <li className='relative flex items-center gap-3 bg-secondary-background py-2 px-3 rounded-md cursor-pointer'>
+              <li className='relative flex items-center gap-3 bg-secondary-background dark:bg-dark-nav-background py-2 px-3 rounded-md cursor-pointer'>
                 <img
                   className='h-6 w-6'
                   src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650190023/07_dffvl5.png'
@@ -149,7 +144,7 @@ export const EditPostModal = () => {
                     setShowEmojis(false);
                   }
                 }}
-                className='relative flex items-center gap-3 bg-secondary-background py-2 px-3 rounded-md cursor-pointer'
+                className='relative flex items-center gap-3 bg-secondary-background dark:bg-dark-nav-background py-2 px-3 rounded-md cursor-pointer'
               >
                 <img
                   className='h-6 w-6'
@@ -160,7 +155,7 @@ export const EditPostModal = () => {
                 {showEmojis ? (
                   <div
                     ref={emojiContainerRef}
-                    className='absolute w-48 p-4 flex flex-wrap justify-center items-center gap-1 rounded-lg  bg-secondary-background '
+                    className='absolute w-48 p-4 flex flex-wrap justify-center items-center gap-1 rounded-lg  bg-secondary-background dark:bg-dark-nav-background'
                   >
                     {emojiLib.map((el) => {
                       return (
