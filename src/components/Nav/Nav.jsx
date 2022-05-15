@@ -1,11 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useOutsideClickHandler } from '../../custom-hooks';
 import { searchFunc } from '../../utils/searchUtils';
+import { darkThemeHandler, lightThemeHandler } from './ThemeSlice';
 
 export const Nav = () => {
   const navigate = useNavigate();
+  const { theme } = useSelector((store) => store.theme);
+  const dispatch = useDispatch();
   const [showSearch, setShowSearch] = useState(false);
   const searchRef = useRef();
   let timerId = useRef();
@@ -31,7 +34,7 @@ export const Nav = () => {
   }, [resetMenu]);
 
   return (
-    <nav className='w-full sticky top-0 min h-20 sm:h-18 left-0 right-0 leading-10 z-50 bg-nav-background shadow'>
+    <nav className='w-full sticky top-0 min h-20 sm:h-18 left-0 right-0 leading-10 z-50 dark:bg-dark-nav-background drop-shadow-xl bg-nav-background shadow'>
       <div className='flex justify-between relative items-center p-4 sm:p-2  h-full'>
         <div
           onClick={() => navigate('/')}
@@ -42,7 +45,9 @@ export const Nav = () => {
             src='https://res.cloudinary.com/donqbxlnc/image/upload/v1650084912/logo_tzzpf3.png'
             alt='hero'
           />
-          <span className='text-3xl sm:hidden'>Socially</span>
+          <span className='text-3xl dark:text-dark-txt-color sm:hidden'>
+            Socially
+          </span>
         </div>
 
         <ul className='text-primary flex items-center gap-4 text-2xl'>
@@ -53,7 +58,23 @@ export const Nav = () => {
           >
             <i className='ri-search-line'></i>
           </li>
-
+          {theme === 'dark' ? (
+            <li
+              title='theme'
+              onClick={() => dispatch(lightThemeHandler())}
+              className='cursor-pointer flex items-center'
+            >
+              <i className='ri-sun-line'></i>
+            </li>
+          ) : (
+            <li
+              title='theme'
+              onClick={() => dispatch(darkThemeHandler())}
+              className='cursor-pointer flex items-center'
+            >
+              <i className='far fa-moon'></i>
+            </li>
+          )}
           <li
             title='explore'
             onClick={() => navigate('/explore')}
@@ -87,7 +108,7 @@ export const Nav = () => {
               setSearchData([]);
               setSearchInput('');
             }}
-            className='absolute right-2 sm:mt-24 fas fa-times-circle text-3xl'
+            className='absolute right-2 sm:mt-24 mt-6 text-dark-txt-color fas fa-times-circle text-3xl'
           ></i>
           <div
             ref={searchRef}
@@ -95,14 +116,14 @@ export const Nav = () => {
           >
             <input
               value={searchInput}
-              className='w-full rounded-lg focus:outline-none px-4'
+              className='w-full bg-background dark:bg-dark-background text-dark-txt-secondary-color rounded-lg focus:outline-none px-4'
               type='text'
               onChange={(e) => setSearchInput(e.target.value)}
             />
 
-            <div className='flex w-full flex-col gap-4   max-h-96 z-50 overflow-y-scroll rounded-lg   bg-background'>
+            <div className='flex w-full flex-col gap-4   max-h-96 z-50 overflow-y-auto rounded-lg   bg-background dark:bg-dark-background'>
               {searchInput !== '' && searchedData.length === 0 ? (
-                <p className='text-center text-lg m-1 font-medium text-txt-secondary-color'>
+                <p className='text-center text-lg m-1 font-medium text-txt-secondary-color dark:text-dark-txt-color'>
                   No user to show
                 </p>
               ) : (
@@ -114,14 +135,14 @@ export const Nav = () => {
                         navigate(`/profile/${user.userHandler}`);
                         setShowSearch(false);
                       }}
-                      className='px-4 pt-3 last-of-type:pb-3 cursor-pointer flex justify-between items-center'
+                      className='px-4 pt-3 last-of-type:pb-3 cursor-pointer  flex justify-between items-center'
                     >
                       <img
                         className='w-20 sm:w-16 sm:h-16 h-20 object-cover rounded-full'
                         src={user.pic}
                         alt='user pic'
                       />
-                      <p className='font-medium text-lg text-txt-secondary-color'>
+                      <p className='font-medium text-lg text-txt-secondary-color dark:text-dark-txt-secondary-color'>
                         {user.firstName} {user.lastName}
                       </p>
                     </div>
