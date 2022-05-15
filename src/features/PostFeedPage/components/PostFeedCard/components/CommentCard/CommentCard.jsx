@@ -48,7 +48,8 @@ export const CommentCard = ({ comment }) => {
           >{`${user.firstName} ${user.lastName}`}</p>
           <div className='ml-auto relative'>
             {authUser._id === user._id ||
-            allPosts.find((el) => el._id === postId).userId === authUser._id ? (
+            allPosts.find((el) => el._id === postId)?.userId ===
+              authUser._id ? (
               <i
                 onClick={() => setOpenMenuModal((open) => !open)}
                 className='cursor-pointer text-sm text-txt-secondary-color font-bold fas fa-ellipsis-v'
