@@ -39,8 +39,7 @@ export const ProfileModal = ({ setShowProfileModal }) => {
     <div className='h-screen w-screen fixed flex justify-center items-center z-50 bg-background-dim'>
       <div
         ref={ref}
-        className='flex flex-col gap-4 p-5 rounded-xl  sm:w-9/12 w-1/3 bg-background dark:bg-dark-secondary-background'
-      >
+        className='flex flex-col gap-4 p-5 rounded-xl  sm:w-9/12 md:9/12 lg:w-9/12 w-1/3 bg-background dark:bg-dark-secondary-background'>
         <div className='flex flex-col gap-4'>
           <div className='flex gap-4'>
             <p className='w-16 text-xl font-semibold text-txt-secondary-color'>
