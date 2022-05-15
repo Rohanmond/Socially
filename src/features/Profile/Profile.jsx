@@ -208,7 +208,7 @@ export const Profile = () => {
                     {user?.following?.length} following
                   </p>
                 </div>
-                {isCurrUser ? (
+                {isCurrUser || user === null ? (
                   <button
                     onClick={() => dispatch(logoutHandler())}
                     className='text-white text-base  sm:text-xs bg-red-500 py-1 px-3 rounded-md active:bg-red-600'
