@@ -101,7 +101,7 @@ export const Nav = () => {
         </ul>
       </div>
       {showSearch ? (
-        <div className='absolute top-0 w-screen h-screen flex  justify-center bg-background-dim'>
+        <div className='absolute top-0 w-full h-screen flex  justify-center bg-background-dim'>
           <i
             onClick={() => {
               setShowSearch(false);
