@@ -171,7 +171,7 @@ export const Profile = () => {
                 {user?.bio ? (
                   <div className='flex gap-2 text-sm sm:text-xs'>
                     <p>
-                      <span>{user?.bio}</span>
+                      <span>{isCurrUser ? authUser?.bio : user?.bio}</span>
                     </p>
                   </div>
                 ) : null}
@@ -183,7 +183,7 @@ export const Profile = () => {
                       rel='noreferrer'
                       target={'_blank'}
                     >
-                      {user?.link}
+                      {isCurrUser ? authUser?.link : user?.link}
                     </a>
                   </div>
                 ) : null}
