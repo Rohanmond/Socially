@@ -3,10 +3,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { useOutsideClickHandler } from '../../custom-hooks';
 import { searchFunc } from '../../utils/searchUtils';
-import { lightThemeHandler } from './ThemeSlice';
+import { darkThemeHandler, lightThemeHandler } from './ThemeSlice';
 
 export const Nav = () => {
   const navigate = useNavigate();
+  const { theme } = useSelector((store) => store.theme);
   const dispatch = useDispatch();
   const [showSearch, setShowSearch] = useState(false);
   const searchRef = useRef();
@@ -57,13 +58,23 @@ export const Nav = () => {
           >
             <i className='ri-search-line'></i>
           </li>
-          <li
-            title='theme'
-            onClick={() => dispatch(lightThemeHandler())}
-            className='cursor-pointer flex items-center'
-          >
-            <i className='far fa-moon'></i>
-          </li>
+          {theme === 'dark' ? (
+            <li
+              title='theme'
+              onClick={() => dispatch(lightThemeHandler())}
+              className='cursor-pointer flex items-center'
+            >
+              <i className='far fa-sun'></i>
+            </li>
+          ) : (
+            <li
+              title='theme'
+              onClick={() => dispatch(darkThemeHandler())}
+              className='cursor-pointer flex items-center'
+            >
+              <i className='far fa-moon'></i>
+            </li>
+          )}
           <li
             title='explore'
             onClick={() => navigate('/explore')}
@@ -97,7 +108,7 @@ export const Nav = () => {
               setSearchData([]);
               setSearchInput('');
             }}
-            className='absolute right-2 sm:mt-24 fas fa-times-circle text-3xl'
+            className='absolute right-2 sm:mt-24 mt-6 text-dark-txt-color fas fa-times-circle text-3xl'
           ></i>
           <div
             ref={searchRef}
@@ -105,12 +116,12 @@ export const Nav = () => {
           >
             <input
               value={searchInput}
-              className='w-full bg-dark-background text-dark-txt-secondary-color rounded-lg focus:outline-none px-4'
+              className='w-full bg-background dark:bg-dark-background text-dark-txt-secondary-color rounded-lg focus:outline-none px-4'
               type='text'
               onChange={(e) => setSearchInput(e.target.value)}
             />
 
-            <div className='flex w-full flex-col gap-4   max-h-96 z-50 overflow-y-scroll rounded-lg   bg-background dark:bg-dark-background'>
+            <div className='flex w-full flex-col gap-4   max-h-96 z-50 overflow-y-auto rounded-lg   bg-background dark:bg-dark-background'>
               {searchInput !== '' && searchedData.length === 0 ? (
                 <p className='text-center text-lg m-1 font-medium text-txt-secondary-color dark:text-dark-txt-color'>
                   No user to show
@@ -124,7 +135,7 @@ export const Nav = () => {
                         navigate(`/profile/${user.userHandler}`);
                         setShowSearch(false);
                       }}
-                      className='px-4 pt-3 last-of-type:pb-3 cursor-pointer flex justify-between items-center'
+                      className='px-4 pt-3 last-of-type:pb-3 cursor-pointer  flex justify-between items-center'
                     >
                       <img
                         className='w-20 sm:w-16 sm:h-16 h-20 object-cover rounded-full'

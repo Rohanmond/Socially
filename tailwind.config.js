@@ -1,6 +1,7 @@
 const colors = require('tailwindcss/colors');
 module.exports = {
   content: ['./src/**/*.{html,js,jsx}'],
+  darkMode: 'class',
   theme: {
     colors: {
       primary: '#51B5FF',
@@ -19,7 +20,6 @@ module.exports = {
       'dark-secondary-background': '#1E293B',
       ...colors,
     },
-    darkMode: false,
 
     screens: {
       '2xl': { max: '1535px' },
