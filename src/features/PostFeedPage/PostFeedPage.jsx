@@ -284,8 +284,8 @@ export const PostFeedPage = () => {
             {/**Post-feed */}
             <div className='flex flex-col gap-4'>
               {filteredPosts.length === 0 ? (
-                <div className='flex justify-center bg-nav-background rounded-lg drop-shadow-2xl p-5'>
-                  <p className='text-xl text-txt-secondary-color font-medium'>
+                <div className='flex justify-center bg-nav-background dark:bg-dark-secondary-background rounded-lg drop-shadow-2xl p-5'>
+                  <p className='text-xl text-txt-secondary-color dark:text-dark-txt-secondary-color font-medium'>
                     No posts yet. You can go{' '}
                     <span
                       onClick={() => navigate('/explore')}
