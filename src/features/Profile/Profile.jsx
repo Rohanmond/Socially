@@ -115,7 +115,7 @@ export const Profile = () => {
             <div className='flex justify-around items-center  bg-nav-background dark:bg-dark-secondary-background dark:text-dark-txt-color gap-10 sm:gap-6 rounded-lg drop-shadow-2xl  p-5'>
               <img
                 className='h-40 object-cover w-40 sm:h-24 sm:w-24 rounded-full'
-                src={user?.pic}
+                src={isCurrUser ? authUser?.pic : user?.pic}
                 alt='profile'
               />
 

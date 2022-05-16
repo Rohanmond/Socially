@@ -20,7 +20,6 @@ function App() {
     (store) => store.toggleEditPostModal
   );
 
-  console.log(theme);
   return (
     <div className={`${theme === 'dark' ? 'dark' : ''}`}>
       <div

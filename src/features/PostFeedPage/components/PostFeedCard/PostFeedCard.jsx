@@ -57,7 +57,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
             <img
               onClick={() => navigate(`/profile/${user?.userHandler}`)}
               className='cursor-pointer rounded-full w-14 h-14 object-cover'
-              src={user.pic}
+              src={authUser._id === userId ? authUser?.pic : user?.pic}
               alt='post-hero'
             />
             <div className='flex justify-between flex-grow'>

@@ -35,7 +35,6 @@ export const PostFeedPage = () => {
   }, []);
 
   useEffect(() => {
-    console.log(user, allPosts);
     setCustomLoader(true);
     if (location.pathname.includes('explore')) setFilteredPost(allPosts);
     else
@@ -93,8 +92,6 @@ export const PostFeedPage = () => {
     let base64File = await toBase64(file);
     setPostInputForm({ ...postInputForm, pic: base64File });
   };
-
-  console.log(filteredPosts, 'post');
 
   return (
     <>
@@ -302,8 +299,19 @@ export const PostFeedPage = () => {
                     .map((el) => {
                       return <PostFeedCard key={el._id} postData={el} />;
                     })
-                : [...filteredPosts]
-                    .sort((a, b) => b.likes.likeCount - a.likes.likeCount)
+                : [
+                    ...filteredPosts.filter(
+                      (post) =>
+                        post?.likes?.likeCount > 0 || post?.comments?.length > 0
+                    ),
+                  ]
+                    .sort((a, b) => {
+                      return (
+                        b?.likes?.likeCount +
+                        b?.comments?.length -
+                        (a?.likes?.likeCount + a?.comments?.length)
+                      );
+                    })
                     .map((el) => {
                       return <PostFeedCard key={el._id} postData={el} />;
                     })}
