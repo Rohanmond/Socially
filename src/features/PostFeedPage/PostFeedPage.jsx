@@ -97,9 +97,9 @@ export const PostFeedPage = () => {
     <>
       <Nav />
       {isLoading || customLoader ? (
-        <div className='fixed z-50 top-0 left-0 w-full h-full flex justify-center items-center'>
+        <div className='fixed z-50 top-0 bg-background-dim left-0 w-full h-full flex justify-center items-center'>
           <img
-            src='https://res.cloudinary.com/donqbxlnc/image/upload/v1651565040/auth-loader_atroq7.gif'
+            src='https://res.cloudinary.com/donqbxlnc/image/upload/v1652687732/Eclipse-1s-200px_1_aq2n6f.gif'
             alt='loader'
           />
         </div>
