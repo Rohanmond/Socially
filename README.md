@@ -46,6 +46,10 @@ $ npm start
 - Tailwind CSS
 
 ## **Demo -**
-https://user-images.githubusercontent.com/52956782/168445310-449657d4-1494-4dba-9814-55ffd936588c.mov
+
+
+https://user-images.githubusercontent.com/52956782/168848701-9af61773-8372-4752-b611-ab4af3175d62.mov
+
+
 
 
