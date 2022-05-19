@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { Nav } from '../../components';
+import { Nav, ScrollToTop } from '../../components';
 import PostFeedCard from '../PostFeedPage/components/PostFeedCard/PostFeedCard';
 import { getPostById } from './PostIndividualSlice';
 
@@ -26,6 +26,7 @@ export const PostIndividualPage = () => {
   return (
     <>
       <Nav />
+      <ScrollToTop />
       {isLoading ? (
         <div className='fixed z-50 bg-background-dim top-0 left-0 w-full h-full flex justify-center items-center'>
           <img

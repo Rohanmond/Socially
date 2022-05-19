@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { Nav } from '../../components';
+import { Nav, ScrollToTop } from '../../components';
 import { useOutsideClickHandler } from '../../custom-hooks';
 import { getUserByHandler } from '../../Services/userServices';
 import { ToastHandler, ToastType } from '../../utils/toastUtils';
@@ -65,6 +65,7 @@ export const Profile = () => {
 
   return (
     <>
+      <ScrollToTop />
       {showProfileModal ? (
         <ProfileModal setShowProfileModal={setShowProfileModal} />
       ) : null}

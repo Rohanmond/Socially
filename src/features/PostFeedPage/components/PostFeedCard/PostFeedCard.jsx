@@ -64,7 +64,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
               <div className='flex flex-col'>
                 <p
                   onClick={() => navigate(`/profile/${user?.userHandler}`)}
-                  className='text-xl'
+                  className='text-xl cursor-pointer'
                 >{`${user.firstName} ${user.lastName}`}</p>
                 <p className='text-xs dark:text-dark-txt-secondary-color text-txt-secondary-color'>
                   {new Date(createdAt).toDateString()}{' '}

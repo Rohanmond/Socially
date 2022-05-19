@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Nav } from '../../components';
+import { Nav, ScrollToTop } from '../../components';
 import './PostFeedPage.css';
 import { useOutsideClickHandler } from '../../custom-hooks';
 
@@ -96,6 +96,7 @@ export const PostFeedPage = () => {
   return (
     <>
       <Nav />
+      <ScrollToTop />
       {isLoading || customLoader ? (
         <div className='fixed z-50 top-0 bg-background-dim left-0 w-full h-full flex justify-center items-center'>
           <img
