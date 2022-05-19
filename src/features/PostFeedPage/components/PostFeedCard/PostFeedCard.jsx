@@ -61,14 +61,13 @@ const PostFeedCard = ({ postData, individualPage }) => {
               alt='post-hero'
             />
             <div className='flex justify-between flex-grow'>
-              <div
-                onClick={() => navigate(`/profile/${user?.userHandler}`)}
-                className='flex flex-col cursor-pointer'
-              >
-                <p className='text-xl'>{`${user.firstName} ${user.lastName}`}</p>
+              <div className='flex flex-col'>
+                <p
+                  onClick={() => navigate(`/profile/${user?.userHandler}`)}
+                  className='text-xl'
+                >{`${user.firstName} ${user.lastName}`}</p>
                 <p className='text-xs dark:text-dark-txt-secondary-color text-txt-secondary-color'>
                   {new Date(createdAt).toDateString()}{' '}
-                  {new Date(createdAt).toLocaleTimeString()}
                 </p>
               </div>
               <div className='relative'>
@@ -106,7 +105,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
                           Save post
                         </button>
                       )}
-                      {user._id === authUser._id && !individualPage && (
+                      {user._id === authUser._id && (
                         <button
                           type='button'
                           onClick={() =>
@@ -118,12 +117,13 @@ const PostFeedCard = ({ postData, individualPage }) => {
                           Edit post
                         </button>
                       )}
-                      {user._id === authUser._id && !individualPage && (
+                      {user._id === authUser._id && (
                         <button
                           onClick={() => {
                             dispatch(
                               deletePost({ postId: _id, authToken: token })
                             );
+                            if (individualPage) navigate('/');
                           }}
                           type='button'
                           className='relative flex gap-2 items-center w-full px-4 py-2 text-sm font-medium  rounded-lg hover:text-red-500 focus:z-10   focus:text-red-700'

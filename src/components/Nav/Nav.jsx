@@ -138,7 +138,7 @@ export const Nav = () => {
                       className='px-4 pt-3 last-of-type:pb-3 cursor-pointer  flex gap-4 items-center'
                     >
                       <img
-                        className='w-20 sm:w-16 sm:h-16 h-20 object-cover rounded-full'
+                        className='w-14  h-14 object-cover rounded-full'
                         src={user.pic}
                         alt='user pic'
                       />

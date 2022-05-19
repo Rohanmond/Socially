@@ -10,14 +10,19 @@ export const FollowChip = ({ user }) => {
   const { token } = useSelector((store) => store.authentication);
   return (
     <div className='h-48 follow-container-width bg-nav-background dark:bg-dark-secondary-background rounded-lg flex flex-col gap-4 items-center justify-center'>
-      <div className=''>
+      <div
+        onClick={() => navigate(`/profile/${user?.userHandler}`)}
+        className='flex-col items-center gap-1'
+      >
         <img
-          onClick={() => navigate(`/profile/${user?.userHandler}`)}
           title={`${user.firstName} ${user.lastName}`}
           className='cursor-pointer h-20 w-20 object-cover rounded-full'
           src={user.pic}
           alt={user.userHandler}
         />
+        <p className='text-xs cursor-pointer font-medium  dark:text-dark-txt-color text-txt-color text-center'>
+          {user.firstName} {user.lastName}
+        </p>
       </div>
       <button
         onClick={() =>

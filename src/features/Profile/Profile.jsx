@@ -80,7 +80,7 @@ export const Profile = () => {
         <div className='h-screen w-screen fixed flex justify-center items-center z-50 bg-background-dim'>
           <div
             ref={openFollowRef}
-            className='flex flex-col gap-4 p-6 h-3/5 z-50 dark:bg-dark-secondary-background overflow-y-scroll rounded-xl  sm:w-9/12  w-1/3 bg-background'
+            className='flex flex-col gap-4 p-6 h-3/5 z-50 dark:bg-dark-secondary-background overflow-y-auto rounded-xl  sm:w-9/12  w-1/3 bg-background'
           >
             {openFollowModal.map((el) => {
               return (
@@ -89,10 +89,10 @@ export const Profile = () => {
                     navigate(`/profile/${el.userHandler}`);
                     setOpenFollowModal([]);
                   }}
-                  className='cursor-pointer  flex justify-between items-center'
+                  className='cursor-pointer  flex gap-4 items-center'
                 >
                   <img
-                    className='w-20 sm:w-16 sm:h-16 h-20 object-cover rounded-full'
+                    className='w-14  h-14 object-cover rounded-full'
                     src={el.pic}
                     alt='user pic'
                   />
@@ -112,16 +112,16 @@ export const Profile = () => {
           {/* profile container */}
           <div className='flex flex-col w-2/5  xl:3/5 lg:w-4/5 md:4/5 sm:w-full  gap-4 '>
             {/* profile */}
-            <div className='flex justify-around items-center  bg-nav-background dark:bg-dark-secondary-background dark:text-dark-txt-color gap-10 sm:gap-6 rounded-lg drop-shadow-2xl  p-5'>
+            <div className='flex justify-around items-center  bg-nav-background dark:bg-dark-secondary-background dark:text-dark-txt-color gap-4  rounded-lg drop-shadow-2xl  p-5'>
               <img
-                className='h-40 object-cover w-40 sm:h-24 sm:w-24 rounded-full'
+                className='h-48 object-cover w-48 sm:h-28 sm:w-28 rounded-full'
                 src={isCurrUser ? authUser?.pic : user?.pic}
                 alt='profile'
               />
 
               <div className=' flex flex-col justify-center  gap-4 sm:gap-2'>
                 <div className='flex  items-center justify-between gap-2'>
-                  <p className='text-3xl  sm:text-base text-center'>
+                  <p className='text-xl sm:text-base text-center'>
                     {user?.firstName} {user?.lastName}
                   </p>
                   {isCurrUser ? (
