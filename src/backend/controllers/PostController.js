@@ -15,6 +15,27 @@ export const getAllpostsHandler = function () {
   return new Response(200, {}, { posts: this.db.posts });
 };
 
+export const getAllPostByObserverHandler = function (schema, request) {
+  const { limit, page } = request.params;
+  console.log(limit, page);
+  // if (this.db.posts.length <= page) {
+  //   return new Response(200, {}, { posts: this.db.posts });
+  // }
+  const trendingPosts = [...this.db.posts].sort((a, b) => {
+    return (
+      b?.likes?.likeCount +
+      b?.comments?.length -
+      (a?.likes?.likeCount + a?.comments?.length)
+    );
+  });
+  const pagenatedPost = trendingPosts.slice(
+    0,
+    Number(page) * Number(limit) + Number(limit)
+  );
+  console.log(pagenatedPost.length);
+  return new Response(200, {}, { posts: pagenatedPost });
+};
+
 /**
  * This handler gets post by postId in the db.
  * send GET Request at /api/posts/:postId

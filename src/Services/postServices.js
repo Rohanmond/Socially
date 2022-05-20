@@ -7,6 +7,9 @@ const getAllPostsOfUserService = (username) =>
 
 const getPostByIdService = (postId) => axios.get(`/api/posts/${postId}`);
 
+const getPostsByObserverService = (limit, page) =>
+  axios.get(`/api/posts/${limit}/${page}`);
+
 const addPostService = (postData, authorization) =>
   axios.post('/api/posts', { postData }, { headers: { authorization } });
 
@@ -42,4 +45,5 @@ export {
   likePostService,
   dislikePostService,
   getPostByIdService,
+  getPostsByObserverService,
 };

@@ -6,17 +6,24 @@ import { useOutsideClickHandler } from '../../custom-hooks';
 
 import { FollowChip } from './components/FollowChip/FollowChip';
 import PostFeedCard from './components/PostFeedCard/PostFeedCard';
-import { addPost, getAllPosts } from './PostsSlice';
+import { addPost, getAllPosts, getAllPostsByObserver } from './PostsSlice';
 import { getAllUsers } from './UserSlice';
 import { useLocation, useNavigate } from 'react-router-dom';
 
+const LIMIT = 2;
+
 export const PostFeedPage = () => {
   const location = useLocation();
+  const [pageNo, setPageNo] = useState(0);
+
+  const loader = useRef(null);
   const { user, token } = useSelector((store) => store.authentication);
   const emojiContainerRef = useRef();
   const { resetMenu } = useOutsideClickHandler(emojiContainerRef);
   const [showEmojis, setShowEmojis] = useState(false);
-  const { allPosts, isLoading } = useSelector((store) => store.posts);
+  const { allPosts, isLoading, isSmallLoading } = useSelector(
+    (store) => store.posts
+  );
 
   const [customLoader, setCustomLoader] = useState(false);
   const { allUsers } = useSelector((store) => store.users);
@@ -30,12 +37,39 @@ export const PostFeedPage = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    dispatch(getAllPosts());
     dispatch(getAllUsers());
-  }, []);
 
+    const elementRef = loader.current;
+    const handleObserver = (entries) => {
+      const target = entries[0];
+      if (target.isIntersecting) {
+        setPageNo((prev) => ++prev);
+      }
+    };
+    const observer = new IntersectionObserver(handleObserver);
+    if (elementRef) observer.observe(elementRef);
+
+    return () => {
+      observer.unobserve(elementRef);
+    };
+  }, []);
   useEffect(() => {
     setCustomLoader(true);
+    setPageNo(0);
+    if (location.pathname !== '/explore') dispatch(getAllPosts());
+    const id = setTimeout(() => {
+      setCustomLoader(false);
+    }, 500);
+    return () => clearTimeout(id);
+  }, [location.pathname]);
+
+  useEffect(() => {
+    if (location.pathname === '/explore')
+      dispatch(getAllPostsByObserver({ limit: LIMIT, page: pageNo }));
+  }, [pageNo, location]);
+
+  console.log(allPosts);
+  useEffect(() => {
     if (location.pathname.includes('explore')) setFilteredPost(allPosts);
     else
       setFilteredPost(
@@ -46,10 +80,6 @@ export const PostFeedPage = () => {
             user?._id === post.userId
         )
       );
-    const id = setTimeout(() => {
-      setCustomLoader(false);
-    }, 500);
-    return () => clearTimeout(id);
   }, [allPosts, user, location]);
 
   useEffect(() => {
@@ -240,26 +270,28 @@ export const PostFeedPage = () => {
               </div>
             ) : null}
 
-            <div className='flex justify-evenly items-center   bg-nav-background dark:bg-dark-secondary-background dark:text-dark-txt-color gap-10 rounded-lg drop-shadow-2xl  p-4 sm:p-3 '>
-              <div
-                onClick={() => setSubNav('trending')}
-                className={`cursor-pointer flex gap-1  ${
-                  subNav === 'trending' ? 'text-primary' : ''
-                }`}
-              >
-                <p>🔥Trending</p>
-              </div>
+            {location.pathname !== '/explore' ? (
+              <div className='flex justify-evenly items-center   bg-nav-background dark:bg-dark-secondary-background dark:text-dark-txt-color gap-10 rounded-lg drop-shadow-2xl  p-4 sm:p-3 '>
+                <div
+                  onClick={() => setSubNav('trending')}
+                  className={`cursor-pointer flex gap-1  ${
+                    subNav === 'trending' ? 'text-primary' : ''
+                  }`}
+                >
+                  <p>🔥Trending</p>
+                </div>
 
-              <div
-                onClick={() => setSubNav('latest')}
-                className={`cursor-pointer items-center flex gap-1  ${
-                  subNav === 'latest' ? 'text-primary' : ''
-                }`}
-              >
-                <i className='far fa-clock'></i>
-                <p>Latest</p>
+                <div
+                  onClick={() => setSubNav('latest')}
+                  className={`cursor-pointer items-center flex gap-1  ${
+                    subNav === 'latest' ? 'text-primary' : ''
+                  }`}
+                >
+                  <i className='far fa-clock'></i>
+                  <p>Latest</p>
+                </div>
               </div>
-            </div>
+            ) : null}
             {/**Scrollable follow chips */}
             <div className='flex flex-col gap-2  rounded-lg drop-shadow-2xl '>
               <div className=''>
@@ -292,7 +324,8 @@ export const PostFeedPage = () => {
                   </p>
                 </div>
               ) : null}
-              {subNav === 'latest'
+
+              {location.pathname !== '/explore' && subNav === 'latest'
                 ? [...filteredPosts]
                     .sort(
                       (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
@@ -300,7 +333,8 @@ export const PostFeedPage = () => {
                     .map((el) => {
                       return <PostFeedCard key={el._id} postData={el} />;
                     })
-                : [
+                : location.pathname !== '/explore'
+                ? [
                     ...filteredPosts.filter(
                       (post) =>
                         post?.likes?.likeCount > 0 || post?.comments?.length > 0
@@ -315,7 +349,25 @@ export const PostFeedPage = () => {
                     })
                     .map((el) => {
                       return <PostFeedCard key={el._id} postData={el} />;
-                    })}
+                    })
+                : null}
+
+              {location.pathname === '/explore' &&
+                filteredPosts.map((el, index) => {
+                  if (index === filteredPosts.length - 1)
+                    return <PostFeedCard key={el._id} postData={el} />;
+                  return <PostFeedCard key={el._id} postData={el} />;
+                })}
+              {isSmallLoading && (
+                <div className='flex justify-center'>
+                  <img
+                    className='w-24 h-24'
+                    src='https://res.cloudinary.com/donqbxlnc/image/upload/v1653034827/Bean_Eater-1s-200px_2_ae7ljg.gif'
+                    alt='loader'
+                  />
+                </div>
+              )}
+              <div ref={loader}></div>
             </div>
           </div>
         </div>
