@@ -17,10 +17,7 @@ export const getAllpostsHandler = function () {
 
 export const getAllPostByObserverHandler = function (schema, request) {
   const { limit, page } = request.params;
-  console.log(limit, page);
-  // if (this.db.posts.length <= page) {
-  //   return new Response(200, {}, { posts: this.db.posts });
-  // }
+
   const trendingPosts = [...this.db.posts].sort((a, b) => {
     return (
       b?.likes?.likeCount +
@@ -32,7 +29,7 @@ export const getAllPostByObserverHandler = function (schema, request) {
     0,
     Number(page) * Number(limit) + Number(limit)
   );
-  console.log(pagenatedPost.length);
+
   return new Response(200, {}, { posts: pagenatedPost });
 };
 

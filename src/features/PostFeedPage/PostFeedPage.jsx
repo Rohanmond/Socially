@@ -68,7 +68,6 @@ export const PostFeedPage = () => {
       dispatch(getAllPostsByObserver({ limit: LIMIT, page: pageNo }));
   }, [pageNo, location]);
 
-  console.log(allPosts);
   useEffect(() => {
     if (location.pathname.includes('explore')) setFilteredPost(allPosts);
     else
