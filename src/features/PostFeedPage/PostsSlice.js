@@ -11,6 +11,7 @@ import {
   dislikePostService,
   editPostService,
   getAllPostsService,
+  getPostsByObserverService,
   likePostService,
 } from '../../Services/postServices';
 import { ToastHandler, ToastType } from '../../utils/toastUtils';
@@ -23,6 +24,18 @@ export const getAllPosts = createAsyncThunk(
       return response.data.posts;
     } catch (err) {
       thunkAPI.rejectWithValue(err.response.data);
+    }
+  }
+);
+
+export const getAllPostsByObserver = createAsyncThunk(
+  'posts/getAllPostsByObserver',
+  async ({ limit, page }, thunkAPI) => {
+    try {
+      const response = await getPostsByObserverService(limit, page);
+      return response.data.posts;
+    } catch (err) {
+      thunkAPI.rejectWithValue(err.response);
     }
   }
 );
@@ -149,12 +162,24 @@ const initialState = {
   allPosts: [],
   userPosts: [],
   isLoading: false,
+  isSmallLoading: false,
 };
 const postsSlice = createSlice({
   name: 'posts',
   initialState,
   reducers: {},
   extraReducers: {
+    [getAllPostsByObserver.pending]: (state) => {
+      state.isSmallLoading = true;
+    },
+    [getAllPostsByObserver.fulfilled]: (state, action) => {
+      state.isSmallLoading = false;
+      state.allPosts = action.payload;
+    },
+    [getAllPostsByObserver.rejected]: (state, action) => {
+      state.isSmallLoading = false;
+      ToastHandler(ToastType.Error, action.payload);
+    },
     [getAllPosts.pending]: (state) => {
       state.isLoading = true;
     },

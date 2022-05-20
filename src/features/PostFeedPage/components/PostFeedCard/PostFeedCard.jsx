@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import './PostFeedCard.css';
@@ -49,9 +49,12 @@ const PostFeedCard = ({ postData, individualPage }) => {
   }, [userId]);
 
   return (
-    <>
+    <Fragment>
       {user ? (
-        <div className='flex flex-col gap-4 bg-nav-background dark:bg-dark-secondary-background dark:text-dark-txt-color rounded-lg drop-shadow-2xl p-5'>
+        <div
+          // ref={loaderRef ? loaderRef : null}
+          className='flex flex-col gap-4 bg-nav-background dark:bg-dark-secondary-background dark:text-dark-txt-color rounded-lg drop-shadow-2xl p-5'
+        >
           {/** post header */}
           <div className='flex gap-4  flex-grow'>
             <img
@@ -246,7 +249,7 @@ const PostFeedCard = ({ postData, individualPage }) => {
           ) : null}
         </div>
       ) : null}
-    </>
+    </Fragment>
   );
 };
 
