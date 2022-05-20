@@ -17,7 +17,7 @@ $ npm start
 
 - Feed Posts
 - Explore & Trending Posts
-- Pagination on Explore page
+- Infinite Scrolling on Explore page
 - Add , Update & Delete Post
 - Add , Update & Delete Comment
 - Reply in comments
