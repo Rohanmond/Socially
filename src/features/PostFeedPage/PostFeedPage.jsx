@@ -125,7 +125,6 @@ export const PostFeedPage = () => {
   return (
     <>
       <Nav />
-      <ScrollToTop />
       {isLoading || customLoader ? (
         <div className='fixed z-50 top-0 bg-background-dim left-0 w-full h-full flex justify-center items-center'>
           <img
